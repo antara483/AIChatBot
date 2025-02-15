@@ -7,7 +7,6 @@
 // //first
 // // const Api_Url="https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=Your-Api-Key"
 // //second
-//  const Api_Url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyB97SPNbgTUXdOGZrBIR05dAl_2atggM2c`;
 // let user={
 //     message:null,
 //     file:{
