@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Aichat Bot</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <button class="logout-button" onclick="logout()">Logout</button>
+<div class="chat-container">
+<!-- <div class="user-chat-box">
+<img src="user.png" at="" id="userImage" width="50">
+<div class="user-chat-area">
+Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit unde fuga consectetur voluptate accusantium, eum autem voluptatem labore vitae dolores natus modi veniam, ipsam quisquam amet aperiam distinctio, sapiente corrupti?
+</div>
+</div> -->
+<div class="ai-chat-box">
+<img src="ai.avif" alt="" id="aiImage" width="10%">
+<div class="ai-chat-area">
+<!-- Lorem ipsum dolor, sit amet consectetur adipisicing elit. Atque illum animi asperiores neque eos, dolor alias possimus quisquam sint dicta expedita maxime voluptates nulla voluptatibus adipisci cum? Praesentium, saepe facilis.
+<img src="loading.webp" alt="" class="load" width="50px"> -->
+Hello!How Can I Help You Today! 
+</div>
+</div>
+</div>
+<div class="prompt-area">
+    <input type="text" id="prompt" placeholder="Message...">
+    <button id="image"><img src="img.svg" alt="">
+    <input type="file" accept="images/*" hidden></button>
+    <button id="submit"><img src="submit.svg" alt=""></button>
+</div>
+<script>
+     function logout() {
+            window.location.href = "login.html";
+        }
+</script>
+<script src="script.js">
+</script>
+</body>
+</html>
