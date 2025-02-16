@@ -121,7 +121,7 @@ app.post("/forgot-password", (req, res) => {
         const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '15m' });
 
         const mailOptions = {
-            from: 'your_email@gmail.com',
+            from: process.env.EMAIL_USER,
             to: email,
             subject: 'Reset Password Link',
             text: `http://127.0.0.1:5502/reset-password.html?token=${token}`
