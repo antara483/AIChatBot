@@ -144,6 +144,11 @@ let chatContainer = document.querySelector(".chat-container");
 let imagebtn = document.querySelector("#image");
 let image = document.querySelector("#image img");
 let imageinput = document.querySelector("#image input");
+// mic
+let micBtn = document.querySelector("#mic");
+let isListening = false;
+let recognition = null;
+// mic
 
 let user = {
     message: null,
@@ -293,3 +298,54 @@ function resetImageSelection() {
 imagebtn.addEventListener("click", () => {
     imagebtn.querySelector("input").click();
 });
+// mic
+micBtn.addEventListener("click", toggleSpeechRecognition);
+
+function toggleSpeechRecognition() {
+    if (!isListening) {
+        startSpeechRecognition();
+    } else {
+        stopSpeechRecognition();
+    }
+}
+
+function startSpeechRecognition() {
+    if (!('webkitSpeechRecognition' in window)) {
+        alert("Speech recognition is not supported in your browser.");
+        return;
+    }
+
+    recognition = new webkitSpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    recognition.onstart = () => {
+        isListening = true;
+        micBtn.classList.add("recording");
+    };
+
+    recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        prompt.value = transcript;
+    };
+
+    recognition.onerror = (event) => {
+        console.error("Speech recognition error:", event.error);
+        stopSpeechRecognition();
+    };
+
+    recognition.onend = () => {
+        stopSpeechRecognition();
+    };
+
+    recognition.start();
+}
+
+function stopSpeechRecognition() {
+    if (recognition) {
+        recognition.stop();
+    }
+    isListening = false;
+    micBtn.classList.remove("recording");
+}
+// mic

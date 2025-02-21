@@ -71,7 +71,7 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 app.get('/api/key', (req, res) => {
     res.json({ apiKey: GEMINI_API_KEY });
 });
-//remove apiiii
+//remove api
 
 // Register User API
 app.post("/register", (req, res) => {
