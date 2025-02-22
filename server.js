@@ -1,3 +1,14 @@
+//video
+// Add at the top of server.js
+// const ffmpeg = require('fluent-ffmpeg');
+// const ffmpegInstaller = require('@ffmpeg-installer/ffmpeg');
+// const ffprobeStatic = require('ffprobe-static');
+// const fs = require('fs');
+// const path = require('path');
+// ffmpeg.setFfmpegPath(ffmpegInstaller.path);
+// ffmpeg.setFfprobePath(ffprobeStatic.path);
+
+//video
 require("dotenv").config();//new
 const express = require("express");
 const mysql = require("mysql");
@@ -21,10 +32,26 @@ const app = express();
 const port = 3000;
 
 // Middleware
-app.use(cors());
+app.use(cors());//uncomment if  cors middleware does not work
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+//video
+//Update CORS middleware
+// app.use(cors({
+//     origin: ['http://localhost:5502', 'http://127.0.0.1:5502'],
+//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//     allowedHeaders: ['Content-Type', 'Authorization'],
+//     credentials: true
+// }));
+//video
 //remove port
 // const PORT = process.env.PORT || 3000;
 app.get('/api/key', (req, res) => {
+    //video
+    // res.header('Access-Control-Allow-Origin', req.headers.origin);
+    // res.header('Access-Control-Allow-Credentials', 'true');
+    //video
     res.json({ apiKey: process.env.GEMINI_API_KEY });
 });
 
@@ -33,7 +60,32 @@ app.get('/api/key', (req, res) => {
 // });
 
 //remove port
-app.use(bodyParser.json());
+// app.use(bodyParser.json());//uncomment it if below code doesnt work
+//video
+// Increase payload limit to 150MB (adjust as needed)
+// app.use(bodyParser.json({ 
+//     limit: '150mb', 
+//     verify: (req, res, buf) => {
+//         req.rawBody = buf
+//     }
+// }));
+
+// app.use(bodyParser.urlencoded({ 
+//     extended: true, 
+//     limit: '150mb' 
+// }));
+
+// // Add error handling middleware
+// app.use((error, req, res, next) => {
+//     if (error instanceof SyntaxError && error.status === 413 && error.message.includes('request entity too large')) {
+//         return res.status(413).json({ 
+//             status: 'error',
+//             message: 'File size too large (max 100MB)'
+//         });
+//     }
+//     next();
+// });
+//video
 
 // MySQL Database Connection
 const db = mysql.createConnection({
@@ -89,6 +141,7 @@ app.post("/register", (req, res) => {
 
 // Login User API
 app.post("/login", (req, res) => {
+   
     const { username, password } = req.body;
 
     const query = "SELECT * FROM users WHERE username = ?";
@@ -110,6 +163,7 @@ app.post("/login", (req, res) => {
 
 // Forgot Password API
 app.post("/forgot-password", (req, res) => {
+    console.log(req.body,'body')
     const { email } = req.body;
     const query = "SELECT * FROM users WHERE email = ?";
     db.query(query, [email], (err, results) => {
@@ -166,7 +220,57 @@ app.post("/reset-password/:token", (req, res) => {
         });
     });
 });
+//video
+// if (!fs.existsSync('./temp')) {
+//     fs.mkdirSync('./temp');
+// }
+// app.use(bodyParser.json({ limit: '100mb' }));
+// app.use(bodyParser.urlencoded({ extended: true, limit: '100mb' }));
+// //video
+// // // Video Processing Endpoint
+// app.post('/process-video', (req, res) => {
+//     const { videoData, mimeType } = req.body;
+    
+//     // Validation
+//     if (!videoData || !mimeType.startsWith('video/')) {
+//         return res.status(400).json({ error: 'Invalid video data' });
+//     }
 
+//     // Process with FFmpeg (Example: Generate thumbnail)
+//     const tempFilePath = `./temp/${Date.now()}.mp4`;
+//     const thumbnailPath = `./temp/thumbnail-${Date.now()}.png`;
+    
+//     try {
+//         fs.writeFileSync(tempFilePath, Buffer.from(videoData, 'base64'));
+        
+//         ffmpeg(tempFilePath)
+//             .screenshots({
+//                 count: 1,
+//                 folder: './temp',
+//                 filename: path.basename(thumbnailPath),
+//                 size: '320x240'
+//             })
+//             .on('end', () => {
+//                 const thumbnail = fs.readFileSync(thumbnailPath);
+//                 res.json({
+//                     status: 'success',
+//                     thumbnail: thumbnail.toString('base64')
+//                 });
+                
+//                 // Cleanup
+//                 fs.unlinkSync(tempFilePath);
+//                 fs.unlinkSync(thumbnailPath);
+//             })
+//             .on('error', (err) => {
+//                 console.error('FFmpeg error:', err);
+//                 res.status(500).json({ error: 'Video processing failed' });
+//             });
+//     } catch (err) {
+//         console.error('File handling error:', err);
+//         res.status(500).json({ error: 'File system error' });
+//     }
+// });
+//video
 // Start Server
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);

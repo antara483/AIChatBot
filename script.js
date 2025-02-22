@@ -137,7 +137,10 @@
 
 
 
-
+//video
+// const defaultIcon = document.querySelector('.default-icon');
+// const videoIcon = document.querySelector('.video-icon');
+//video
 let prompt = document.querySelector("#prompt");
 let submitbtn = document.querySelector("#submit");
 let chatContainer = document.querySelector(".chat-container");
@@ -154,14 +157,14 @@ let user = {
     message: null,
     file: {
         mime_type: null,
-        data: null
+        data: null,
     }
 };
 
 // Function to fetch API key from the backend
 async function fetchApiKey() {
     try {
-        let response = await fetch('http://localhost:3000/api/key'); // Fetch API key securely
+        let response = await fetch('http://localhost:3000/api/key'); // Fetch API key securely//uncomment it
         let data = await response.json();
         return data.apiKey;
     } catch (error) {
@@ -169,13 +172,109 @@ async function fetchApiKey() {
         return null;
     }
 }
+//video
+
+//video
+
 
 // Function to generate AI response
+// async function generateResponse(aiChatBox) {
+//     let text = aiChatBox.querySelector(".ai-chat-area");
+//     let apiKey = await fetchApiKey();//get api key
+//     //video
+//     // if (user.file.data && user.file.mime_type.startsWith('video/')) {
+//     //     try {
+//     //         const response = await fetch('http://localhost:3000/process-video', {
+//     //             method: 'POST',
+//     //             headers: { 'Content-Type': 'application/json' },
+//     //             body: JSON.stringify({
+//     //                 videoData: user.file.data,
+//     //                 mimeType: user.file.mime_type
+//     //             })
+//     //         });
+          
+            
+//             const result = await response.json();//real
+            
+        
+            
+          
+// }
+
+//             //video
+//                 // Add thumbnail to user's message
+//                 // const userChatBox = document.querySelector('.user-chat-box:last-child');
+//                 // if (userChatBox) {
+//                 //     const thumbnail = document.createElement('img');
+//                 //     thumbnail.src = `data:image/png;base64,${result.thumbnail}`;
+//                 //     thumbnail.style.maxWidth = '200px';
+//                 //     userChatBox.querySelector('.user-chat-area').appendChild(thumbnail);
+//                 // }
+                
+            
+//             user.message = `${user.message}\n[Video Processed - Thumbnail Attached]`;
+            
+//     //         // Add thumbnail to chat
+
+//     if (!apiKey) {
+//         text.innerHTML = "Error: API key not found.";
+//         return;
+//     }
+
+//     let Api_Url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+
+//     let requestOptions = {
+//         method: "POST",
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify({
+//             "contents": [
+//                 {
+//                     "parts": [
+//                         { "text": user.message },
+//                         ...(user.file.data ? [{ "inline_data": user.file }] : [])
+//                     ]
+//                 }
+//             ]
+//         })
+//     };
+
+//     try {
+//         let response = await fetch(Api_Url, requestOptions);
+//         let data = await response.json();
+
+//         if (!data.candidates || data.candidates.length === 0) {
+//             text.innerHTML = "Error: No response from AI.";
+//             return;
+//         }
+
+//         let apiResponse = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, "$1").trim();
+//         text.innerHTML = apiResponse;
+
+//     } catch (error) {
+//         console.error("Error fetching AI response:", error);
+//         text.innerHTML = "Error: Unable to fetch response.";
+//     } finally {
+//         chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: "smooth" });
+
+//         resetImageSelection();
+//     }
+
+
+
+// // Function to create a chat message box
+// function createChatBox(html, classes) {
+//     let div = document.createElement("div");
+//     div.innerHTML = html;
+//     div.classList.add(classes);
+//     return div;
+// }
+//testing
+// ... (previous code remains the same)
+
 async function generateResponse(aiChatBox) {
     let text = aiChatBox.querySelector(".ai-chat-area");
-
-    // Get API key
     let apiKey = await fetchApiKey();
+
     if (!apiKey) {
         text.innerHTML = "Error: API key not found.";
         return;
@@ -217,7 +316,7 @@ async function generateResponse(aiChatBox) {
         chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: "smooth" });
         resetImageSelection();
     }
-}
+} // Added missing closing brace
 
 // Function to create a chat message box
 function createChatBox(html, classes) {
@@ -227,20 +326,42 @@ function createChatBox(html, classes) {
     return div;
 }
 
+// ... (rest of the code remains the same)
+//testing
+
 // Function to handle user chat input
 function handleChatResponse(userMessage) {
     if (!userMessage.trim()) return; // Prevent empty messages
 
     user.message = userMessage;
-
-    let html = `
-        <img src="user.png" alt="User" id="userImage" width="8%">
-        <div class="user-chat-area">
-            ${user.message}
-            ${user.file.data ? `<img src="data:${user.file.mime_type};base64,${user.file.data}" class="chooseimg" />` : ""}
-        </div>
-    `;
-
+    //video
+    // const defaultIcon = document.querySelector('.default-icon');
+    // const videoIcon = document.querySelector('.video-icon');
+    // let fileContent = '';
+    // if (user.file.data) {
+    //     if (user.file.isVideo) {
+    //         fileContent = `
+    //             <div class="video-indicator">
+    //                 <img src="video-icon.svg" class="video-icon-small">
+    //             </div>
+    //         `;
+    //     } else {
+    //         fileContent = `<img src="data:${user.file.mime_type};base64,${user.file.data}" class="chooseimg" />`;
+    //     }
+    // }
+    //video
+//video
+let html = `
+<img src="user.png" alt="User" id="userImage" width="8%">
+<div class="user-chat-area">
+    ${user.message}
+    ${user.file.data ? `<img src="data:${user.file.mime_type};base64,${user.file.data}" class="chooseimg" />` : ""}
+</div>
+`;
+//video(real code in notepad)
+// Reset icons
+// defaultIcon.hidden = false;//video
+// videoIcon.hidden = true;//video
     prompt.value = ""; // Clear input field
 
     let userChatBox = createChatBox(html, "user-chat-box");
@@ -270,28 +391,108 @@ submitbtn.addEventListener("click", () => {
 });
 
 // Function to handle image selection
+//repeat
+// imageinput.addEventListener("change", () => {
+//     const file = imageinput.files[0];
+//     if (!file) return;
+//repeat
+    //video
+   // Update file input handler
 imageinput.addEventListener("change", () => {
     const file = imageinput.files[0];
     if (!file) return;
+//video
+//video
+    // Add size validation (100MB limit)
+    // if (file.size > 100 * 1024 * 1024) {
+    //     alert('File size too large (max 100MB)');
+    //     resetImageSelection();
+    //     return;
+    // }
+    //video
+// const defaultIcon = document.querySelector('.default-icon');
+// const videoIcon = document.querySelector('.video-icon');
+//video
+    // user.file.isVideo = file.type.startsWith('video/');
 
+    // // Validate file size (100MB limit)
+    // if (file.size > 100 * 1024 * 1024) {
+    //     alert('Video file too large (max 100MB)');
+    //     return;
+    // }
+//video
     let reader = new FileReader();
     reader.onload = (e) => {
         let base64string = e.target.result.split(",")[1];
         user.file = {
             mime_type: file.type,
-            data: base64string
+            data: base64string,
+            // isVideo: user.file.isVideo
         };
-        image.src = `data:${user.file.mime_type};base64,${user.file.data}`;
+        
+        if (user.file.isVideo) {
+            showVideoPreview(file);//real
+            // defaultIcon.hidden = true;
+            // videoIcon.hidden = false;
+            //video
+            image.src = 'video-icon.svg';
+            //video
+        } else {
+            //video
+            // defaultIcon.hidden = false;
+            // videoIcon.hidden = true;
+            //video
+            image.src = `data:${user.file.mime_type};base64,${user.file.data}`;
+        }
         image.classList.add("choose");
     };
     reader.readAsDataURL(file);
 });
+//video
+// imageinput.accept = "image/*,video/*";
+// // // Add video preview function
+// function showVideoPreview(file) {
+//     const videoPreview = document.createElement('video');
+//     videoPreview.controls = true;
+//     videoPreview.style.maxWidth = '200px';
+//     videoPreview.src = URL.createObjectURL(file);
+    
+//     const previewContainer = document.createElement('div');
+//     previewContainer.className = 'video-preview';
+//     previewContainer.appendChild(videoPreview);
+    
+//     document.body.appendChild(previewContainer);
+// }
+// video
+  
+//testing
+//     let reader = new FileReader();
+//     reader.onload = (e) => {
+//         let base64string = e.target.result.split(",")[1];
+//         user.file = {
+//             mime_type: file.type,
+//             data: base64string,
+          
+//         };
+     
+//         image.src = `data:${user.file.mime_type};base64,${user.file.data}`;
+       
+//         image.classList.add("choose");
+//     };
+//     reader.readAsDataURL(file);
+// //testing
 
 // Function to reset image selection
 function resetImageSelection() {
+    //video
+    // const defaultIcon = document.querySelector('.default-icon');
+    // const videoIcon = document.querySelector('.video-icon');
+    // defaultIcon.hidden = false;
+    // videoIcon.hidden = true;
+    //video
     image.src = `img.svg`;
     image.classList.remove("choose");
-    user.file = { mime_type: null, data: null };
+    user.file = { mime_type: null, data: null,isVideo:false };//uncomment it if video lines do not work in function resetImageSelection(now uncomment it)
 }
 
 // Click event for image upload
