@@ -152,6 +152,10 @@ let micBtn = document.querySelector("#mic");
 let isListening = false;
 let recognition = null;
 // mic
+//updated mic 932025
+// let networkTimeout = null;
+//updated mic932025
+
 
 let user = {
     message: null,
@@ -172,9 +176,7 @@ async function fetchApiKey() {
         return null;
     }
 }
-//video
 
-//video
 
 
 // Function to generate AI response
@@ -281,7 +283,7 @@ async function generateResponse(aiChatBox) {
     }
 
     let Api_Url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-
+//uncomment it if below sentiment code doesnt work
     let requestOptions = {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
@@ -296,9 +298,24 @@ async function generateResponse(aiChatBox) {
             ]
         })
     };
-
+    //uncomment it if below sentiment code doesnt work
+//sentiment
+// let requestOptions = {
+//     method: "POST",
+//     headers: { 'Content-Type': 'application/json' },
+//     body: JSON.stringify({
+//         message: user.message,
+//         sentiment: user.sentiment
+//     })
+// };
+//sentiment
     try {
+        //sentiment
+        // let response = await fetch('http://localhost:3000/chat', requestOptions);
+        //sentiment
+        //uncoment the code if above sentiment code doesnt work
         let response = await fetch(Api_Url, requestOptions);
+                //uncoment the code if above sentiment code doesnt work
         let data = await response.json();
 
         if (!data.candidates || data.candidates.length === 0) {
@@ -330,10 +347,41 @@ function createChatBox(html, classes) {
 //testing
 
 // Function to handle user chat input
-function handleChatResponse(userMessage) {
-    if (!userMessage.trim()) return; // Prevent empty messages
 
+//uncomment it if below code doesnt work
+function handleChatResponse(userMessage)
+//uncomment it if below code doesnt work
+//sementic
+// async function handleChatResponse(userMessage)
+//sementic
+{
+    if (!userMessage.trim()) return; // Prevent empty messages
+//uncomment it if below sentiment code doesnt work
     user.message = userMessage;
+    //uncomment it if below sentiment code doesnt work
+
+   
+ //sentiment
+    // try {
+    //     const sentimentResponse = await fetch('http://localhost:3000/analyze', {
+    //         method: 'POST',
+    //         headers: { 'Content-Type': 'application/json' },
+    //         body: JSON.stringify({ message: userMessage })
+    //     });
+        
+    //     if (!sentimentResponse.ok) {
+    //         throw new Error(`HTTP error! status: ${sentimentResponse.status}`);
+    //     }
+
+    //     const sentimentData = await sentimentResponse.json();
+    //     user.sentiment = sentimentData.sentiment || 'neutral'; // Fallback to neutral
+    // } catch (error) {
+    //     console.error('Sentiment analysis failed:', error);
+    //     user.sentiment = 'neutral'; // Default to neutral on error
+    // }
+    //sentiment
+
+    //
     //video
     // const defaultIcon = document.querySelector('.default-icon');
     // const videoIcon = document.querySelector('.video-icon');
@@ -351,6 +399,9 @@ function handleChatResponse(userMessage) {
     // }
     //video
 //video
+//sentiment
+// user.message = userMessage;
+//sentiment
 let html = `
 <img src="user.png" alt="User" id="userImage" width="8%">
 <div class="user-chat-area">
@@ -499,7 +550,7 @@ function resetImageSelection() {
 imagebtn.addEventListener("click", () => {
     imagebtn.querySelector("input").click();
 });
-// mic
+// mic(uncomment it if below updated mic doesnt work)
 micBtn.addEventListener("click", toggleSpeechRecognition);
 
 function toggleSpeechRecognition() {
@@ -532,9 +583,13 @@ function startSpeechRecognition() {
 
     recognition.onerror = (event) => {
         console.error("Speech recognition error:", event.error);
-        stopSpeechRecognition();
+        if (event.error === "network") {
+            alert("Speech recognition network error. Check your internet connection.");
+        } else {
+            alert(`Speech recognition error: ${event.error}`);
+        }
     };
-
+    
     recognition.onend = () => {
         stopSpeechRecognition();
     };
@@ -549,4 +604,169 @@ function stopSpeechRecognition() {
     isListening = false;
     micBtn.classList.remove("recording");
 }
-// mic
+// mic(uncomment it if below updated mic doesnt work)
+//updated mic
+// Add this at the end of your script.js
+// micBtn.addEventListener("click", toggleSpeechRecognition);
+// async function checkInternetConnection() {
+//     try {
+//         await fetch('https://www.google.com', { mode: 'no-cors' });
+//         return true;
+//     } catch (error) {
+//         return false;
+//     }
+// }
+// function toggleSpeechRecognition() {
+//     if (isListening) {
+//         stopSpeechRecognition();
+//     } else {
+//         if (!window.isSecureContext) {
+//             alert('Speech recognition requires HTTPS. Please use a secure connection.');
+//             return;
+//         }
+//         startSpeechRecognition();
+//     }
+// }
+
+// async function startSpeechRecognition() {
+//     // Clear any existing recognition instances
+//     if (recognition) {
+//         recognition.stop();
+//     }
+
+//     // Check internet connection
+//     if (!await checkInternetConnection()) {
+//         alert('Network connection required for speech recognition');
+//         return;
+//     }
+
+//     // Check browser support
+//     if (!('webkitSpeechRecognition' in window)) {
+//         alert("Speech recognition is not supported in your browser.");
+//         return;
+//     }
+
+//     // Check microphone permissions
+//     try {
+//         const permissionStatus = await navigator.permissions.query({ name: 'microphone' });
+//         if (permissionStatus.state === 'denied') {
+//             alert('Microphone access is blocked. Please enable it in browser settings.');
+//             return;
+//         }
+//     } catch (error) {
+//         console.error('Permission check error:', error);
+//     }
+
+//     recognition = new webkitSpeechRecognition();
+//     recognition.continuous = false;
+//     recognition.interimResults = false;
+//     recognition.lang = navigator.language || 'en-US';
+
+//     // Set network timeout
+//     networkTimeout = setTimeout(() => {
+//         if (!isListening) return;
+//         stopSpeechRecognition();
+//         alert('Connection timeout. Check your internet.');
+//     }, 8000);
+
+//     recognition.onstart = () => {
+//         isListening = true;
+//         micBtn.classList.add("recording");
+//         clearTimeout(networkTimeout);
+//     };
+
+//     recognition.onresult = (event) => {
+//         const transcript = event.results[0][0].transcript;
+//         prompt.value = transcript;
+//     };
+
+//     recognition.onerror = (event) => {
+//         const errors = {
+//             network: 'Network error',
+//             'not-allowed': 'Mic access denied',
+//             'service-not-allowed': 'Service blocked',
+//             'audio-capture': 'No microphone',
+//             default: 'Recognition failed'
+//         };
+//         alert(errors[event.error] || errors.default);
+//         stopSpeechRecognition();
+//     };
+
+//     recognition.onend = stopSpeechRecognition;
+
+//     try {
+//         recognition.start();
+//     } catch (error) {
+//         alert('Failed to start. Refresh and try again.');
+//     }
+// }
+
+// function stopSpeechRecognition() {
+//     if (recognition) {
+//         recognition.stop();
+//         recognition = null;
+//     }
+//     isListening = false;
+//     micBtn.classList.remove("recording");
+//     clearTimeout(networkTimeout);
+// }
+//updated mic
+
+//sentiment
+// async function handleChatResponse(userMessage) {
+//     if (!userMessage.trim()) return;
+
+//     try {
+//         const sentimentResponse = await fetch('http://localhost:3000/analyze', {
+//             method: 'POST',
+//             headers: { 'Content-Type': 'application/json' },
+//             body: JSON.stringify({ message: userMessage })
+//         });
+
+//         let sentimentData;
+//         if (sentimentResponse.ok) {
+//             sentimentData = await sentimentResponse.json();
+//         } else {
+//             const errorData = await sentimentResponse.json();
+//             throw new Error(errorData.error || 'Sentiment analysis failed');
+//         }
+
+//         // Ensure valid sentiment format
+//         user.sentiment = ['positive', 'negative', 'neutral'].includes(sentimentData?.sentiment?.toLowerCase())
+//             ? sentimentData.sentiment.toLowerCase()
+//             : 'neutral';
+
+//     } catch (error) {
+//         console.error('Sentiment analysis failed:', error);
+//         user.sentiment = 'neutral';
+//     }
+
+//     // Safely generate HTML with fallback
+//     const sentimentClass = user.sentiment?.toLowerCase?.() || 'neutral';
+//     user.message = userMessage;
+    
+//     let html = `
+//         <img src="user.png" alt="User" id="userImage" width="8%">
+//         <div class="user-chat-area">
+//             ${user.message}
+//             ${user.file.data ? `<img src="data:${user.file.mime_type};base64,${user.file.data}" class="chooseimg" />` : ""}
+//             <div class="sentiment ${sentimentClass}">${user.sentiment}</div>
+//         </div>`;
+
+//     // ... rest of the existing code
+// }
+//sentiment
+
+
+//sentiment
+// prompt.addEventListener("keydown", async (e) => { // Added async here
+//     if (e.key === "Enter") {
+//         await handleChatResponse(prompt.value);
+//     }
+// });
+
+// submitbtn.addEventListener("click", async () => { // Added async here
+//     await handleChatResponse(prompt.value);
+// });
+//sentiment
+

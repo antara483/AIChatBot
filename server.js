@@ -17,6 +17,10 @@ const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+//sentimennt
+// const { GoogleGenerativeAI } = require('@google/generative-ai');
+// const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+//sentiment
 
 const app = express();
 //remove
@@ -271,6 +275,68 @@ app.post("/reset-password/:token", (req, res) => {
 //     }
 // });
 //video
+//sentiment
+// app.post('/analyze', async (req, res) => {
+//     try {
+//         const { message } = req.body;
+//         if (!message || typeof message !== 'string' || message.trim().length === 0) {
+//             return res.status(400).json({ error: 'Invalid message format' });
+//         }
+//         const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+        
+//         const prompt = `Analyze the sentiment of this message: "${message}". 
+//             Respond ONLY with one of these words: Positive, Negative, or Neutral.`;
+//             const result = await model.generateContent(prompt, {
+//                 safetySettings: [
+//                     {
+//                         category: 'HARM_CATEGORY_DANGEROUS',
+//                         threshold: 'BLOCK_NONE',
+//                     },
+//                 ],
+//             });
+            
+//             const text = (await result.response.text())
+//                 .trim()
+//                 .toLowerCase()
+//                 .replace(/[^a-z]/gi, ''); // Remove non-alphabetic characters
+    
+//             // Validate response
+//             const validSentiments = ['positive', 'negative', 'neutral'];
+//             const finalSentiment = validSentiments.includes(text) ? text : 'neutral';
+            
+//             res.json({ sentiment: finalSentiment });
+            
+//         } catch (error) {
+//             console.error('Sentiment analysis error:', error);
+//             res.status(500).json({ 
+//                 error: 'Sentiment analysis failed',
+//                 details: error.message,
+//                 fallback: 'neutral'
+//             });
+//         }
+//     });
+    
+//sentiment
+
+//sentiment
+// app.post('/chat', async (req, res) => {
+//     try {
+//         const { message, sentiment } = req.body;
+//         const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+        
+//         const prompt = `The user is feeling ${sentiment}. 
+//             Respond to this message as a helpful assistant: "${message}"`;
+        
+//         const result = await model.generateContent(prompt);
+//         const reply = await result.response.getText();
+        
+//         res.json({ reply });
+//     } catch (error) {
+//         console.error('Chat error:', error);
+//         res.status(500).json({ error: 'Chat failed' });
+//     }
+// });
+//sentiment
 // Start Server
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
