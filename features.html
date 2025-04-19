@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Features | QueryQuill</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: #f3f4f6;
+      color: #111;
+    }
+
+    nav {
+      background-color: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      padding: 20px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: #829be4;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    nav ul li {
+      cursor: pointer;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 80px 20px 50px;
+      background-color: #c4c5e3;
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      color: #111;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: 1.2rem;
+      color: #555;
+    }
+
+    .features-container {
+      max-width: 1000px;
+      margin: 50px auto;
+      padding: 0 20px;
+    }
+
+    .section {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      margin-bottom: 30px;
+    }
+
+    .section h2 {
+      color: #a489b4;
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      margin-top: 20px;
+    }
+
+    .feature-card {
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      padding: 25px;
+      border-left: 4px solid #100049;
+    }
+
+    .feature-card h4 {
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+      color: #222;
+    }
+
+    .feature-card p {
+      font-size: 0.95rem;
+      color: #444;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        padding: 15px 20px;
+      }
+      nav ul {
+        gap: 15px;
+      }
+      .hero h1 {
+        font-size: 2rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo" onclick="location.href='landing.html'">QueryQuill</div>
+    <ul>
+      <li onclick="location.href='landing.html'">Home</li>
+      <li onclick="location.href='blog.html'">Blog</li>
+      <li onclick="location.href='features.html'">Features</li>
+      <li onclick="location.href='info.html'">Info</li>
+    </ul>
+  </nav>
+
+  <div class="hero">
+    <h1>Key Features of QueryQuill</h1>
+    <p>Explore the powerful features that make QueryQuill your go-to assistant for intelligent querying and analysis.</p>
+  </div>
+
+  <div class="features-container">
+    <div class="section">
+      <h2>Why Users Love QueryQuill</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h4>Smart Query Generation</h4>
+          <p>Automatically translates your natural language input into optimized queries tailored to your data sources.</p>
+        </div>
+        <div class="feature-card">
+          <h4>Visual Query Builder</h4>
+          <p>Drag and drop interface to help you build, view, and understand complex queries with ease.</p>
+        </div>
+        <div class="feature-card">
+          <h4>Schema Awareness</h4>
+          <p>Understands your database schema to ensure accurate and relevant query generation every time.</p>
+        </div>
+        <div class="feature-card">
+          <h4>Real-Time Suggestions</h4>
+          <p>Provides context-aware hints and suggestions while you're typing or reviewing queries.</p>
+        </div>
+        <div class="feature-card">
+          <h4>Query History & Versioning</h4>
+          <p>Access your previous queries and roll back changes with built-in version control and history logs.</p>
+        </div>
+        <div class="feature-card">
+          <h4>Team Collaboration</h4>
+          <p>Invite team members, comment on queries, and work together in real-time on shared projects.</p>
+        </div>
+        <div class="feature-card">
+          <h4>Data Visualization</h4>
+          <p>Instantly turn your query results into charts and graphs, with export options for reports.</p>
+        </div>
+        <div class="feature-card">
+          <h4>Secure & Compliant</h4>
+          <p>Enterprise-grade encryption, access controls, and compliance with privacy regulations like GDPR & CCPA.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

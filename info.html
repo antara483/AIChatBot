@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About QueryQuill | Your AI-Powered Query Assistant</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: #f3f4f6;
+      color: #111;
+    }
+
+    nav {
+      background-color: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      padding: 20px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      /* color: #00d1b2; */
+      color: #829be4;
+      cursor: pointer;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    nav ul li {
+      cursor: pointer;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 80px 20px 50px;
+      /* background-color: #e6f7f8; */
+      background-color: #c4c5e3;
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      color: #111;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: 1.2rem;
+      color: #555;
+    }
+
+    .info-container {
+      max-width: 1000px;
+      margin: 50px auto;
+      padding: 0 20px;
+    }
+
+    .section {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      margin-bottom: 30px;
+    }
+
+    .section h2 {
+      color: #9a91e2;
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+    }
+
+    .section h3 {
+      color: #333;
+      margin: 25px 0 15px;
+      font-size: 1.3rem;
+    }
+
+    .section p {
+      color: #444;
+      line-height: 1.8;
+      margin-bottom: 15px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      margin: 30px 0;
+    }
+
+    .feature-card {
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      padding: 25px;
+      border-left: 4px solid #94a0ce;
+    }
+
+    .feature-card h4 {
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+      color: #222;
+    }
+
+    .feature-card p {
+      font-size: 0.95rem;
+    }
+
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .tech-item {
+      background-color: #e6f7f8;
+      color: #007a87;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .faq-item {
+      margin-bottom: 20px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 20px;
+    }
+
+    .faq-item:last-child {
+      border-bottom: none;
+    }
+
+    .faq-question {
+      font-weight: 700;
+      color: #222;
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+
+    .cta-section {
+      text-align: center;
+      padding: 40px 20px;
+      background-color: #00d1b2;
+      color: white;
+      border-radius: 12px;
+    }
+
+    .cta-section h2 {
+      color: white;
+      margin-bottom: 20px;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background-color: white;
+      color: #00d1b2;
+      padding: 12px 30px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 700;
+      margin-top: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        padding: 15px 20px;
+      }
+      nav ul {
+        gap: 15px;
+      }
+      .hero h1 {
+        font-size: 2rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo" onclick="location.href='landing.html'">QueryQuill</div>
+    <ul>
+      <li onclick="location.href='landing.html'">Home</li>
+      <li onclick="location.href='blog.html'">Blog</li>
+      <li onclick="location.href='features.html'">Features</li>
+      <li>Info</li>
+    </ul>
+  </nav>
+
+  <div class="hero">
+    <h1>About QueryQuill</h1>
+    <p>Your intelligent assistant for crafting perfect queries, analyzing data, and getting accurate answers faster than ever before.</p>
+  </div>
+
+  <div class="info-container">
+    <div class="section">
+      <h2>What is QueryQuill?</h2>
+      <p>QueryQuill is an AI-powered query assistant that helps you formulate precise questions, generate complex queries, and analyze results with natural language understanding. Whether you're working with databases, APIs, or just need help phrasing your search queries, QueryQuill makes the process intuitive and efficient.</p>
+      
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h4>Natural Language Processing</h4>
+          <p>Convert your thoughts into perfect queries using everyday language. No need to learn complex query syntax.</p>
+        </div>
+        <div class="feature-card">
+          <h4>Multi-Platform Support</h4>
+          <p>Works with SQL databases, NoSQL systems, REST APIs, and even standard search engines.</p>
+        </div>
+        <div class="feature-card">
+          <h4>Context-Aware Assistance</h4>
+          <p>Remembers your previous queries and adapts to your specific needs and preferences.</p>
+        </div>
+        <div class="feature-card">
+          <h4>Visual Query Builder</h4>
+          <p>See your queries constructed visually before executing them, with explanations for each component.</p>
+        </div>
+        <div class="feature-card">
+          <h4>Result Analysis</h4>
+          <p>Not just queries - get insights from your results with automatic summarization and visualization.</p>
+        </div>
+        <div class="feature-card">
+          <h4>Collaboration Tools</h4>
+          <p>Share and annotate queries with team members, with version control and change tracking.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>How It Works</h2>
+      <h3>1. Describe What You Need</h3>
+      <p>Simply tell QueryQuill what information you're looking for in plain English (or your preferred language). For example: "Show me all customers from California who made purchases over $100 last month."</p>
+      
+      <h3>2. Query Generation</h3>
+      <p>Our AI analyzes your request, understands the intent, and generates the appropriate query syntax for your target system. You'll see the query being built in real-time.</p>
+      
+      <h3>3. Review & Refine</h3>
+      <p>Before executing, review the generated query. QueryQuill provides explanations for each part of the query and offers suggestions for optimization. You can make adjustments using natural language.</p>
+      
+      <h3>4. Execute & Analyze</h3>
+      <p>Run your query and get results. QueryQuill can then help analyze the data, create visualizations, and even suggest follow-up questions based on the results.</p>
+    </div>
+
+    <div class="section">
+      <h2>Technology Stack</h2>
+      <p>QueryQuill is built on cutting-edge technologies to deliver fast, accurate, and reliable performance:</p>
+      
+      <div class="tech-stack">
+        <div class="tech-item">Natural Language Processing</div>
+        <div class="tech-item">Transformer Models</div>
+        <div class="tech-item">GraphQL</div>
+        <div class="tech-item">React.js</div>
+        <div class="tech-item">Node.js</div>
+        <div class="tech-item">PostgreSQL</div>
+        <div class="tech-item">Docker</div>
+        <div class="tech-item">Kubernetes</div>
+      </div>
+      
+      <h3>Security & Privacy</h3>
+      <p>We take data security seriously. QueryQuill features:</p>
+      <ul style="margin-left: 20px; margin-bottom: 20px;">
+        <li>End-to-end encryption for sensitive queries</li>
+        <li>On-premise deployment options</li>
+        <li>Granular access controls</li>
+        <li>Compliance with GDPR and CCPA</li>
+        <li>Regular security audits</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Frequently Asked Questions</h2>
+      
+      <div class="faq-item">
+        <div class="faq-question">What databases does QueryQuill support?</div>
+        <p>QueryQuill currently supports MySQL, PostgreSQL, MongoDB, Microsoft SQL Server, Oracle, and Snowflake. We're continuously adding support for more database systems based on user demand.</p>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">Is there a limit to query complexity?</div>
+        <p>While QueryQuill can handle extremely complex queries, very large or nested queries may require optimization. Our system will warn you if a query might have performance issues and suggest alternatives.</p>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">How does QueryQuill learn my specific database schema?</div>
+        <p>QueryQuill can connect to your database's metadata to understand table structures and relationships. You can also provide documentation or sample queries to help it better understand your specific data model.</p>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">Can I use QueryQuill with my existing BI tools?</div>
+        <p>Yes! QueryQuill integrates with most popular BI platforms like Tableau, Power BI, and Looker. You can generate queries in QueryQuill and export them to your BI tool of choice.</p>
+      </div>
+    </div>
+
+    <!-- <div class="cta-section">
+      <h2>Ready to Transform How You Work With Data?</h2>
+      <p>Join thousands of professionals who are already using QueryQuill to save time and get better results from their data.</p>
+      <a href="#" class="cta-button">Get Started with QueryQuill</a>
+    </div> -->
+  </div>
+
+</body>
+</html>

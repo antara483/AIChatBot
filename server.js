@@ -21,8 +21,23 @@ const bodyParser = require("body-parser");
 // const { GoogleGenerativeAI } = require('@google/generative-ai');
 // const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 //sentiment
+//18-3-2025 video
+const ffmpeg = require('fluent-ffmpeg');
+const ffmpegInstaller = require('@ffmpeg-installer/ffmpeg');
+const ffprobeStatic = require('ffprobe-static');
+const fs = require('fs');
+const path = require('path');
+
+ffmpeg.setFfmpegPath(ffmpegInstaller.path);
+ffmpeg.setFfprobePath(ffprobeStatic.path);
+
+//18-3-2025 video
 
 const app = express();
+//18-3-2025
+app.use(bodyParser.json({ limit: '150mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '150mb' }));
+//18-3-2025
 //remove
 // const PORT = process.env.PORT || 3000;
 // app.get('/api/key', (req, res) => {
@@ -337,6 +352,50 @@ app.post("/reset-password/:token", (req, res) => {
 //     }
 // });
 //sentiment
+
+//18-3-2025 video
+app.post('/process-video', (req, res) => {
+    const { videoData, mimeType } = req.body;
+    
+    if (!videoData || !mimeType.startsWith('video/')) {
+        return res.status(400).json({ error: 'Invalid video data' });
+    }
+
+    const tempFilePath = `./temp/${Date.now()}.mp4`;
+    const thumbnailPath = `./temp/thumbnail-${Date.now()}.png`;
+    
+    try {
+        fs.writeFileSync(tempFilePath, Buffer.from(videoData, 'base64'));
+        
+        ffmpeg(tempFilePath)
+            .screenshots({
+                count: 1,
+                folder: './temp',
+                filename: path.basename(thumbnailPath),
+                size: '320x240'
+            })
+            .on('end', () => {
+                const thumbnail = fs.readFileSync(thumbnailPath);
+                res.json({
+                    status: 'success',
+                    thumbnail: thumbnail.toString('base64')
+                });
+                
+                // Cleanup
+                fs.unlinkSync(tempFilePath);
+                fs.unlinkSync(thumbnailPath);
+            })
+            .on('error', (err) => {
+                console.error('FFmpeg error:', err);
+                res.status(500).json({ error: 'Video processing failed' });
+            });
+    } catch (err) {
+        console.error('File handling error:', err);
+        res.status(500).json({ error: 'File system error' });
+    }
+});
+//18-3-2025 video
+
 // Start Server
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);

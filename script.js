@@ -141,6 +141,16 @@
 // const defaultIcon = document.querySelector('.default-icon');
 // const videoIcon = document.querySelector('.video-icon');
 //video
+// take photo
+// const cameraModal = document.getElementById("cameraModal");
+// const uploadOptionsModal = document.getElementById("uploadOptionsModal");
+// const video = document.getElementById("video");
+// const canvas = document.getElementById("canvas");
+// const captureBtn = document.getElementById("capture");
+// const fromComputerBtn = document.getElementById("fromComputer");
+// const takePhotoBtn = document.getElementById("takePhoto");
+// const closeButtons = document.querySelectorAll(".close");
+// take photo
 let prompt = document.querySelector("#prompt");
 let submitbtn = document.querySelector("#submit");
 let chatContainer = document.querySelector(".chat-container");
@@ -273,6 +283,7 @@ async function fetchApiKey() {
 //testing
 // ... (previous code remains the same)
 
+// uncomment if take a photo doesnt work-below code
 async function generateResponse(aiChatBox) {
     let text = aiChatBox.querySelector(".ai-chat-area");
     let apiKey = await fetchApiKey();
@@ -283,7 +294,7 @@ async function generateResponse(aiChatBox) {
     }
 
     let Api_Url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-//uncomment it if below sentiment code doesnt work
+
     let requestOptions = {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
@@ -298,24 +309,12 @@ async function generateResponse(aiChatBox) {
             ]
         })
     };
-    //uncomment it if below sentiment code doesnt work
-//sentiment
-// let requestOptions = {
-//     method: "POST",
-//     headers: { 'Content-Type': 'application/json' },
-//     body: JSON.stringify({
-//         message: user.message,
-//         sentiment: user.sentiment
-//     })
-// };
-//sentiment
+
     try {
-        //sentiment
-        // let response = await fetch('http://localhost:3000/chat', requestOptions);
-        //sentiment
-        //uncoment the code if above sentiment code doesnt work
+       
+       
         let response = await fetch(Api_Url, requestOptions);
-                //uncoment the code if above sentiment code doesnt work
+                
         let data = await response.json();
 
         if (!data.candidates || data.candidates.length === 0) {
@@ -333,7 +332,69 @@ async function generateResponse(aiChatBox) {
         chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: "smooth" });
         resetImageSelection();
     }
-} // Added missing closing brace
+} 
+// uncomment if take a photo doesnt work-below code
+
+// take a photo generate response function
+// async function generateResponse(aiChatBox) {
+//     const text = aiChatBox.querySelector(".ai-chat-area");
+//     const apiKey = await fetchApiKey();
+
+//     if (!apiKey) {
+//         text.innerHTML = "Error: API key not found.";
+//         return;
+//     }
+
+//     // Try current endpoints
+//     // const endpoints = [
+//     //     `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+//     //     `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${apiKey}`
+//     // ];
+
+//         // Replace your endpoints array with this:
+// const endpoints = [
+//     `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+//     `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${apiKey}`
+// ];
+
+//     const parts = [{ text: user.message }];
+//     if (user.file.data) {
+//         parts.push({
+//             inline_data: {
+//                 mime_type: user.file.mime_type,
+//                 data: user.file.data
+//             }
+//         });
+//     }
+
+//     const requestOptions = {
+//         method: "POST",
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify({
+//             contents: [{ parts }],
+//             generationConfig: {
+//                 maxOutputTokens: 2048
+//             }
+//         })
+//     };
+
+//     for (const endpoint of endpoints) {
+//         try {
+//             const response = await fetch(endpoint, requestOptions);
+//             const data = await response.json();
+            
+//             if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
+//                 text.innerHTML = formatResponse(data.candidates[0].content.parts[0].text);
+//                 return;
+//             }
+//         } catch (error) {
+//             console.error(`Failed with endpoint ${endpoint}:`, error);
+//         }
+//     }
+
+//     text.innerHTML = "Error: Could not get response from any API endpoint";
+// }
+// take a photo generate response function
 
 // Function to create a chat message box
 function createChatBox(html, classes) {
@@ -346,40 +407,17 @@ function createChatBox(html, classes) {
 // ... (rest of the code remains the same)
 //testing
 
-// Function to handle user chat input
 
-//uncomment it if below code doesnt work
+
+// uncomment if below take a photo doesnt work
 function handleChatResponse(userMessage)
-//uncomment it if below code doesnt work
-//sementic
-// async function handleChatResponse(userMessage)
-//sementic
+
 {
     if (!userMessage.trim()) return; // Prevent empty messages
-//uncomment it if below sentiment code doesnt work
+
     user.message = userMessage;
-    //uncomment it if below sentiment code doesnt work
-
    
- //sentiment
-    // try {
-    //     const sentimentResponse = await fetch('http://localhost:3000/analyze', {
-    //         method: 'POST',
-    //         headers: { 'Content-Type': 'application/json' },
-    //         body: JSON.stringify({ message: userMessage })
-    //     });
-        
-    //     if (!sentimentResponse.ok) {
-    //         throw new Error(`HTTP error! status: ${sentimentResponse.status}`);
-    //     }
 
-    //     const sentimentData = await sentimentResponse.json();
-    //     user.sentiment = sentimentData.sentiment || 'neutral'; // Fallback to neutral
-    // } catch (error) {
-    //     console.error('Sentiment analysis failed:', error);
-    //     user.sentiment = 'neutral'; // Default to neutral on error
-    // }
-    //sentiment
 
     //
     //video
@@ -431,6 +469,38 @@ let html = `
         generateResponse(aiChatBox);
     }, 600);
 }
+// uncomment if below take a photo doesnt work
+
+// take a photo handle chatresponse
+// function handleChatResponse(userMessage) {
+//     if (!userMessage.trim() && !user.file.data) return;
+    
+//     user.message = userMessage || "Tell me about this image";
+    
+//     let html = `
+//         <img src="user.png" alt="User" id="userImage" width="8%">
+//         <div class="user-chat-area">
+//             ${user.message}
+//             ${user.file.data ? `<img src="data:${user.file.mime_type};base64,${user.file.data}" class="chooseimg" />` : ""}
+//         </div>`;
+    
+//     prompt.value = "";
+//     let userChatBox = createChatBox(html, "user-chat-box");
+//     chatContainer.appendChild(userChatBox);
+//     chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: "smooth" });
+
+//     setTimeout(() => {
+//         let html = `
+//             <img src="ai.avif" alt="AI" id="aiImage" width="10%">
+//             <div class="ai-chat-area">
+//                 <img src="loading.webp" alt="Loading" class="load" width="50px">
+//             </div>`;
+//         let aiChatBox = createChatBox(html, "ai-chat-box");
+//         chatContainer.appendChild(aiChatBox);
+//         generateResponse(aiChatBox);
+//     }, 600);
+// }
+// take a photo handle chatresponse
 
 // Event listeners
 prompt.addEventListener("keydown", (e) => {
@@ -547,9 +617,117 @@ function resetImageSelection() {
 }
 
 // Click event for image upload
+
+
+
+// take photo(uncomment this if below code doesnt work)
 imagebtn.addEventListener("click", () => {
     imagebtn.querySelector("input").click();
 });
+// take photo(uncomment this if below code doesnt work)
+
+// take photo
+// Show upload options when image button is clicked
+// imagebtn.addEventListener("click", (e) => {
+//     e.preventDefault();
+//     uploadOptionsModal.style.display = "block";
+// });
+
+// // Close modals when clicking X
+// closeButtons.forEach(button => {
+//     button.addEventListener("click", () => {
+//         cameraModal.style.display = "none";
+//         uploadOptionsModal.style.display = "none";
+//         stopCamera();
+//     });
+// });
+
+// // Close modals when clicking outside
+// window.addEventListener("click", (e) => {
+//     if (e.target === cameraModal) {
+//         cameraModal.style.display = "none";
+//         stopCamera();
+//     }
+//     if (e.target === uploadOptionsModal) {
+//         uploadOptionsModal.style.display = "none";
+//     }
+// });
+
+// // From Computer option
+// fromComputerBtn.addEventListener("click", () => {
+//     uploadOptionsModal.style.display = "none";
+//     imageinput.click();
+// });
+
+// // Take Photo option
+// takePhotoBtn.addEventListener("click", () => {
+//     uploadOptionsModal.style.display = "none";
+//     cameraModal.style.display = "block";
+//     startCamera();
+// });
+// take photo
+
+// take photo
+// Start camera function
+// function startCamera() {
+//     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+//         navigator.mediaDevices.getUserMedia({ 
+//             video: { 
+//                 width: { ideal: 1280 },
+//                 height: { ideal: 720 },
+//                 facingMode: "user" // Front camera
+//             } 
+//         })
+//         .then(stream => {
+//             video.srcObject = stream;
+//         })
+//         .catch(error => {
+//             console.error("Camera error: ", error);
+//             alert("Could not access the camera. Please check permissions.");
+//         });
+//     } else {
+//         alert("Camera access is not supported in your browser.");
+//     }
+// }
+
+// // Stop camera function
+// function stopCamera() {
+//     if (video.srcObject) {
+//         video.srcObject.getTracks().forEach(track => track.stop());
+//         video.srcObject = null;
+//     }
+// }
+
+// // Capture photo
+// captureBtn.addEventListener("click", () => {
+//     const context = canvas.getContext("2d");
+//     canvas.width = video.videoWidth;
+//     canvas.height = video.videoHeight;
+//     context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    
+//     // Convert canvas to base64
+//     const imageData = canvas.toDataURL("image/jpeg", 0.8); // Higher quality JPEG
+//     const base64Data = imageData.split(",")[1];
+    
+//     // Set user file data
+//     user.file = {
+//         mime_type: "image/jpeg",
+//         data: base64Data
+//     };
+    
+//     // Update the image preview
+//     image.src = imageData;
+//     image.classList.add("choose");
+    
+//     // Close the camera modal
+//     cameraModal.style.display = "none";
+//     stopCamera();
+    
+//     // Auto-focus the prompt input
+//     prompt.focus();
+// });
+// take photo
+
 // mic(uncomment it if below updated mic doesnt work)
 micBtn.addEventListener("click", toggleSpeechRecognition);
 
@@ -769,4 +947,57 @@ function stopSpeechRecognition() {
 //     await handleChatResponse(prompt.value);
 // });
 //sentiment
+
+
+
+
+//18-3-2025 video
+// Video preview handling
+function showVideoPreview(file) {
+    const videoPreview = document.createElement('video');
+    videoPreview.controls = true;
+    videoPreview.style.maxWidth = '200px';
+    videoPreview.src = URL.createObjectURL(file);
+    
+    const previewContainer = document.createElement('div');
+    previewContainer.className = 'video-preview';
+    previewContainer.appendChild(videoPreview);
+    
+    document.body.appendChild(previewContainer);
+}
+
+// Modify imageinput event listener
+imageinput.addEventListener("change", () => {
+    const file = imageinput.files[0];
+    if (!file) return;
+
+    // Add size validation (100MB limit)
+    if (file.size > 100 * 1024 * 1024) {
+        alert('File size too large (max 100MB)');
+        resetImageSelection();
+        return;
+    }
+
+    user.file.isVideo = file.type.startsWith('video/');
+    
+    let reader = new FileReader();
+    reader.onload = (e) => {
+        let base64string = e.target.result.split(",")[1];
+        user.file = {
+            mime_type: file.type,
+            data: base64string,
+            isVideo: user.file.isVideo
+        };
+        
+        if (user.file.isVideo) {
+            showVideoPreview(file);
+            image.src = 'video-icon.svg';
+        } else {
+            image.src = `data:${user.file.mime_type};base64,${user.file.data}`;
+        }
+        image.classList.add("choose");
+    };
+    reader.readAsDataURL(file);
+});
+//18-3-2025 video
 

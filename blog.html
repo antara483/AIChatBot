@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QueryQuill Blog</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: #f3f4f6;
+      color: #111;
+    }
+
+    nav {
+      background-color: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      padding: 20px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #829be4;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    nav ul li {
+      cursor: pointer;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 60px 20px 30px;
+      background-color: #c4c5e3;
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      color: #111;
+    }
+
+    .hero p {
+      margin-top: 10px;
+      font-size: 1.2rem;
+      color: #555;
+    }
+
+    .blog-container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .post {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      margin-bottom: 30px;
+      transition: transform 0.2s ease;
+    }
+
+    .post:hover {
+      transform: translateY(-4px);
+    }
+
+    .post h2 {
+      font-size: 1.6rem;
+      margin-bottom: 10px;
+    }
+
+    .post p {
+      color: #444;
+      line-height: 1.6;
+    }
+
+    .post .date {
+      color: #888;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+    .post h2 a {
+  text-decoration: none;
+  color: #111;
+  transition: color 0.3s ease;
+}
+
+.post h2 a:hover {
+  color: #8ed5c7;
+}
+
+  </style>
+</head>
+<body>
+
+  <nav>
+    <!-- <div class="logo">QueryQuill</div> -->
+    <div class="logo" onclick="location.href='landing.html'">QueryQuill</div>
+    <ul>
+      <li onclick="location.href='landing.html'">Home</li>
+      <li>Blog</li>
+      <li onclick="location.href='features.html'">Features</li>
+      <li onclick="location.href='info.html'">Info</li>
+    </ul>
+  </nav>
+
+  <div class="hero">
+    <h1>QueryQuill Blog</h1>
+    <p>Explore updates, tutorials, and stories from the AI world.</p>
+  </div>
+
+  <div class="blog-container">
+   <div class="post">
+      <div class="date">April 7, 2025</div>
+      <h2><a href="image-voice-support2.html">Introducing Image & Voice Support in QueryQuill</a></h2>
+      <p>We're thrilled to announce that QueryQuill now supports voice commands and image recognition! This update takes the assistant experience to a whole new level. Learn how you can make the most of these new features in this guide.</p>
+    </div>
+
+    <div class="post">
+      <div class="date">March 25, 2025</div>
+      <h2><a href="ai-architecture.html">Behind the Scenes: How QueryQuill Understands You</a></h2>
+      <p>Have you ever wondered how QueryQuill responds so quickly and accurately? In this post, we take a look at the AI architecture and natural language processing behind the scenes.</p>
+    </div>
+
+    <div class="post">
+        <div class="date">March 18, 2025</div>
+        <h2><a href="voice-commands2.html">Voice Commands: Revolutionizing User Interaction in QueryQuill</a></h2>
+        <p>Discover how voice command integration is reshaping the way users interact with AI. From accessibility to hands-free control, this feature empowers seamless user experiences.</p>
+      </div>
+      <div class="post">
+        <div class="date">March 10, 2025</div>
+        <h2><a href="image-insights.html">Making Sense of Images: QueryQuill's Visual Understanding</a></h2>
+        <p>Learn how QueryQuill processes and understands visual data using advanced image recognition and OCR technologies. This post breaks down the technical flow and real-world use cases.</p>
+      </div>
+      
+      <div class="post">
+        <div class="date">March 2, 2025</div>
+        <h2><a href="getting-started.html">Getting Started with QueryQuill: A Beginner’s Guide</a></h2>
+        <p>New to QueryQuill? This beginner-friendly guide walks you through everything from setting up the app to exploring core features like chat, voice, and image support.</p>
+      </div>
+      
+
+  </div>
+  
+
+</body>
+</html>
+
+

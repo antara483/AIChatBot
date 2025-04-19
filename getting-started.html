@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Getting Started | QueryQuill Blog</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: #f3f4f6;
+      color: #111;
+    }
+
+    nav {
+      background-color: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      padding: 20px 100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      /* color: #00d1b2; */
+      color: #829be4;
+      cursor: pointer;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    nav ul li {
+      cursor: pointer;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .blog-header {
+      text-align: center;
+      padding: 60px 20px;
+      /* background-color: #e6f7f8; */
+      background-color: #c4c5e3;
+    }
+
+    .blog-header h1 {
+      font-size: 2.5rem;
+      color: #111;
+      margin-bottom: 10px;
+    }
+
+    .blog-header .meta {
+      color: #666;
+      font-size: 1rem;
+    }
+
+    .blog-content {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .post-content {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      line-height: 1.8;
+    }
+
+    .post-content h2 {
+      margin: 25px 0 15px;
+      color: #222;
+    }
+
+    .post-content p {
+      margin-bottom: 15px;
+      color: #444;
+    }
+
+    .post-content ul {
+      margin-left: 20px;
+      color: #444;
+    }
+
+    .post-content img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 20px 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 30px;
+      color: #00d1b2;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo" onclick="location.href='landing.html'">QueryQuill</div>
+    <ul>
+      <li onclick="location.href='landing.html'">Home</li>
+      <li onclick="location.href='blog.html'">Blog</li>
+      <li onclick="location.href='features.html'">Features</li>
+      <li onclick="location.href='info.html'">Info</li>
+    </ul>
+  </nav>
+
+  <div class="blog-header">
+    <h1>Getting Started with QueryQuill: Your AI Sidekick</h1>
+    <div class="meta">Published on February 29, 2025 by QueryQuill Team</div>
+  </div>
+
+  <div class="blog-content">
+    <div class="post-content">
+      <p>Welcome to QueryQuill — your new AI-powered productivity assistant. This guide will walk you through everything you need to know to get started using QueryQuill like a pro!</p>
+
+      <h2>Step 1: Launch the App</h2>
+      <p>Head over to our <a href="landing.html" style="color:#00b894;">home page</a> and launch QueryQuill. No installation needed — it's web-based and lightweight.</p>
+
+      <h2>Step 2: Choose Your Input</h2>
+      <p>QueryQuill supports multiple ways to interact:</p>
+      <ul>
+        <li>🖊️ Text Input – Type your questions or tasks.</li>
+        <li>🎙️ Voice Input – Use your microphone to speak naturally.</li>
+        <li>🖼️ Image Upload – Drag and drop images to analyze visual content.</li>
+      </ul>
+
+      <h2>Step 3: Use Real-Time Feedback</h2>
+      <p>QueryQuill provides instant responses and suggestions. Whether you're drafting a report, debugging code, or analyzing an image — you’ll get smart help immediately.</p>
+
+      <h2>Step 4: Save or Copy</h2>
+      <p>Click the "Copy to Clipboard" button to reuse generated responses, or save them as notes for later. Handy for writing, studying, and troubleshooting!</p>
+
+      <h2>Tips for Best Results</h2>
+      <ul>
+        <li>Be specific in your queries — details help!</li>
+        <li>Use images with good resolution for better recognition.</li>
+        <li>Speak clearly and use concise commands for voice input.</li>
+      </ul>
+
+      <p>We built QueryQuill to be intuitive and helpful, whether you’re a student, professional, or creator. Try it out today and let us know what you think!</p>
+
+      <a href="blog.html" class="back-link">← Back to all posts</a>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How QueryQuill Understands You | QueryQuill Blog</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: #f3f4f6;
+      color: #111;
+    }
+
+    nav {
+      background-color: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      padding: 20px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      /* color: #00d1b2; */
+      color: #829be4;
+      cursor: pointer;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    nav ul li {
+      cursor: pointer;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .blog-header {
+      text-align: center;
+      padding: 40px 20px;
+      /* background-color: #e6f7f8; */
+      background-color: #c4c5e3;
+    }
+
+    .blog-header h1 {
+      font-size: 2.5rem;
+      color: #111;
+      margin-bottom: 10px;
+    }
+
+    .blog-header .meta {
+      color: #666;
+      font-size: 1rem;
+    }
+
+    .blog-content {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .post-content {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      line-height: 1.8;
+    }
+
+    .post-content h2 {
+      margin: 25px 0 15px;
+      color: #222;
+    }
+
+    .post-content p {
+      margin-bottom: 15px;
+      color: #444;
+    }
+
+    .post-content img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 20px 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .diagram {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 25px 0;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 30px;
+      color: #00d1b2;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo" onclick="location.href='landing.html'">QueryQuill</div>
+    <ul>
+      <li onclick="location.href='landing.html'">Home</li>
+      <li onclick="location.href='blog.html'">Blog</li>
+      <li onclick="location.href='features.html'">Features</li>
+      <li onclick="location.href='info.html'">Info</li>
+    </ul>
+  </nav>
+
+  <div class="blog-header">
+    <h1>Behind the Scenes: How QueryQuill Understands You</h1>
+    <div class="meta">Published on March 25, 2025 by QueryQuill Engineering Team</div>
+  </div>
+
+  <div class="blog-content">
+    <div class="post-content">
+      <p>Have you ever wondered how QueryQuill responds so quickly and accurately to your questions? In this post, we'll pull back the curtain on the AI architecture and natural language processing that powers your favorite assistant.</p>
+      
+      <h2>The Natural Language Processing Pipeline</h2>
+      <p>When you ask QueryQuill a question, your input goes through several sophisticated processing stages:</p>
+      
+      <div class="diagram">
+        <img src="images/nlp.png" alt="NLP Pipeline Diagram">
+      </div>
+      
+      <ol style="margin-left: 20px; margin-bottom: 20px;">
+        <li><strong>Text Normalization:</strong> Cleaning and standardizing the input text</li>
+        <li><strong>Intent Recognition:</strong> Determining what kind of question or command you're making</li>
+        <li><strong>Entity Extraction:</strong> Identifying key pieces of information in your query</li>
+        <li><strong>Context Analysis:</strong> Understanding the conversation history and context</li>
+        <li><strong>Knowledge Retrieval:</strong> Finding the most relevant information</li>
+        <li><strong>Response Generation:</strong> Formulating a natural, helpful response</li>
+      </ol>
+      
+      <h2>Our Custom Language Model</h2>
+      <p>At the heart of QueryQuill is our proprietary language model, QLM-7B, which we've fine-tuned specifically for interactive assistance. Unlike generic models, QLM-7B is optimized for:</p>
+      <ul style="margin-left: 20px; margin-bottom: 20px;">
+        <li>Follow-up questions and multi-turn conversations</li>
+        <li>Admitting when it doesn't know something (rather than hallucinating)</li>
+        <li>Providing concise yet complete answers</li>
+        <li>Adapting to different user knowledge levels</li>
+      </ul>
+      
+      <h2>Real-Time Learning</h2>
+      <p>QueryQuill improves continuously through our real-time learning system. When users provide feedback (thumbs up/down), our system:</p>
+      <ul style="margin-left: 20px; margin-bottom: 20px;">
+        <li>Records which responses were helpful</li>
+        <li>Identifies patterns in successful interactions</li>
+        <li>Updates model weights nightly</li>
+        <li>Preserves privacy by only learning from aggregate patterns</li>
+      </ul>
+      
+      <img src="images/learning loop.png" alt="Learning feedback loop">
+      
+      <h2>Privacy by Design</h2>
+      <p>We know you care about privacy, which is why we've built QueryQuill with these principles:</p>
+      <ul style="margin-left: 20px; margin-bottom: 20px;">
+        <li>No permanent storage of personal conversations</li>
+        <li>On-device processing for sensitive queries</li>
+        <li>Clear indicators when data is being sent to our servers</li>
+        <li>Easy-to-use privacy controls</li>
+      </ul>
+      
+      <p>We're constantly innovating to make QueryQuill smarter, faster, and more helpful while maintaining the trust you've placed in us.</p>
+      
+      <a href="blog.html" class="back-link">← Back to all posts</a>
+    </div>
+  </div>
+
+</body>
+</html>

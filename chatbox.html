@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QueryQuill Chat</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #5C0ACC, #7626E5);
+      color: white;
+      height: 100vh;
+    }
+
+    .chat-widget-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #5C0ACC;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 14px 22px;
+      font-size: 16px;
+      box-shadow: 0 5px 15px rgba(92, 10, 204, 0.5);
+      cursor: pointer;
+      transition: transform 0.2s;
+      z-index: 1000;
+    }
+
+    .chat-widget-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .chat-container {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      width: 350px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+      display: none;
+      flex-direction: column;
+      background-color: white;
+      z-index: 999;
+    }
+
+    .chat-header {
+      background-color: #5C0ACC;
+      color: white;
+      padding: 16px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .chat-messages {
+      background-color: #f9f9f9;
+      padding: 12px;
+      height: 300px;
+      overflow-y: auto;
+    }
+
+    .message {
+      margin: 8px 0;
+      padding: 10px 14px;
+      border-radius: 20px;
+      max-width: 75%;
+      word-wrap: break-word;
+    }
+
+    .message.user {
+      background-color: #5C0ACC;
+      color: white;
+      align-self: flex-end;
+      text-align: right;
+    }
+
+    .message.ai {
+      background-color: #e1dbfc;
+      color: #333;
+      align-self: flex-start;
+    }
+
+    .chat-input {
+      display: flex;
+      border-top: 1px solid #ddd;
+      background-color: #fff;
+    }
+
+    .chat-input input {
+      flex: 1;
+      border: none;
+      padding: 12px;
+      outline: none;
+    }
+
+    .chat-input button {
+      background-color: #5C0ACC;
+      border: none;
+      color: white;
+      padding: 12px 20px;
+      cursor: pointer;
+    }
+
+    .full-chat {
+      text-align: center;
+      padding: 40px 20px;
+      color: white;
+    }
+
+    .chat-title {
+      font-size: 36px;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .chat-description {
+      font-size: 18px;
+      max-width: 600px;
+      margin: 0 auto 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Gradient Header -->
+  <div class="full-chat">
+    <div class="chat-title">QueryQuill Assistant</div>
+    <div class="chat-description">
+      Your AI assistant for smart conversations, image analysis, and voice commands.
+    </div>
+  </div>
+
+  <!-- Chat Widget Button -->
+  <button class="chat-widget-btn" onclick="toggleChat()">💬 Chat</button>
+
+  <!-- Chat Box -->
+  <div class="chat-container" id="chatBox">
+    <div class="chat-header">QueryQuill Chat</div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="message ai">Hello! How can I assist you today?</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="chatInput" placeholder="Type a message..." onkeydown="handleEnter(event)">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    const chatBox = document.getElementById('chatBox');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+
+    function toggleChat() {
+      chatBox.style.display = chatBox.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    function sendMessage() {
+      const message = chatInput.value.trim();
+      if (message === '') return;
+
+      const userMsg = document.createElement('div');
+      userMsg.className = 'message user';
+      userMsg.textContent = message;
+      chatMessages.appendChild(userMsg);
+
+      chatInput.value = '';
+
+      // Simulate bot reply
+      setTimeout(() => {
+        const botMsg = document.createElement('div');
+        botMsg.className = 'message ai';
+        botMsg.textContent = "This is a demo response.";
+        chatMessages.appendChild(botMsg);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }, 600);
+
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function handleEnter(e) {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    }
+  </script>
+</body>
+</html>

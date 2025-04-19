@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image Insights | QueryQuill Blog</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: #f3f4f6;
+      color: #111;
+    }
+
+    nav {
+      background-color: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      padding: 20px 100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #829be4;
+      cursor: pointer;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    nav ul li {
+      cursor: pointer;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .blog-header {
+      text-align: center;
+      padding: 60px 20px;
+      /* background-color: #e6f7f8; */
+      background-color: #c4c5e3;
+    }
+
+    .blog-header h1 {
+      font-size: 2.5rem;
+      color: #111;
+      margin-bottom: 10px;
+    }
+
+    .blog-header .meta {
+      color: #666;
+      font-size: 1rem;
+    }
+
+    .blog-content {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .post-content {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      line-height: 1.8;
+    }
+
+    .post-content h2 {
+      margin: 25px 0 15px;
+      color: #222;
+    }
+
+    .post-content p {
+      margin-bottom: 15px;
+      color: #444;
+    }
+
+    .post-content img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 20px 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 30px;
+      color: #00d1b2;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+    /* image upload */
+    .flow-diagram {
+      max-width: 900px;
+      margin: 2rem auto;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .flow-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      position: relative;
+      padding: 2rem 0;
+    }
+    
+    .step {
+      display: flex;
+      align-items: flex-start;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .step-number {
+      width: 50px;
+      height: 50px;
+      background: #d3c1e8;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      flex-shrink: 0;
+      margin-right: 1.5rem;
+      box-shadow: 0 4px 8px rgba(0, 209, 178, 0.2);
+    }
+    
+    .step-content {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      flex-grow: 1;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      border-left: 4px solid #00d1b2;
+    }
+    
+    .step-title {
+      color: #007a87;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .step-icon {
+      width: 20px;
+      height: 20px;
+      margin-right: 8px;
+    }
+    
+    .step-desc {
+      color: #555;
+      line-height: 1.6;
+    }
+    
+    .example {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 0.8rem;
+      margin-top: 0.8rem;
+      font-family: monospace;
+      border-left: 3px solid #00d1b2;
+      position: relative;
+      overflow-x: auto;
+    }
+    
+    .example:before {
+      content: "Example";
+      position: absolute;
+      top: -10px;
+      left: 10px;
+      background: #00d1b2;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .connector-line {
+      position: absolute;
+      left: 25px;
+      top: 50px;
+      bottom: -1.5rem;
+      width: 2px;
+      background: linear-gradient(to bottom, #00d1b2, #007a87);
+      z-index: 1;
+    }
+    
+    .step:last-child .connector-line {
+      display: none;
+    }
+    
+    .image-preview {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-top: 10px;
+      border: 1px solid #eee;
+    }
+    
+    @media (max-width: 768px) {
+      .step {
+        flex-direction: column;
+      }
+      
+      .step-number {
+        margin-bottom: 1rem;
+        margin-right: 0;
+      }
+      
+      .connector-line {
+        left: 25px;
+        top: 50px;
+        bottom: -1.5rem;
+        height: calc(100% + 1.5rem);
+      }
+    }
+    /* image upload */
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo" onclick="location.href='landing.html'">QueryQuill</div>
+    <ul>
+      <li onclick="location.href='landing.html'">Home</li>
+      <li onclick="location.href='blog.html'">Blog</li>
+      <li onclick="location.href='features.html'">Features</li>
+      <li onclick="location.href='info.html'">Info</li>
+    </ul>
+  </nav>
+
+  <div class="blog-header">
+    <h1>Making Sense of Images: QueryQuill's Visual Understanding</h1>
+    <div class="meta">Published on March 10, 2025 by QueryQuill Team</div>
+  </div>
+
+  <div class="blog-content">
+    <div class="post-content">
+      <p>With the introduction of image support in QueryQuill, we're entering a new era of visual AI interaction. This blog breaks down how our system understands images and helps users extract actionable insights.</p>
+      
+      <h2>Image Upload & Preprocessing</h2>
+      <p>Once you upload an image, QueryQuill preprocesses it by resizing, normalizing, and scanning for text (OCR). This ensures the image is optimized for analysis and language models.</p>
+      <img src="images/image-upload.png" alt="Image upload flow">
+      <!-- image upload flow -->
+      
+       <!-- image upload flow -->
+
+      <h2>Object & Scene Recognition</h2>
+      <p>Our AI uses pre-trained vision models to identify common objects, text, and patterns within the image. Whether it's a photo of a whiteboard, chart, or product, QueryQuill detects what's important.</p>
+
+      <ul style="margin-left: 20px; margin-bottom: 20px;">
+        <li>Object detection using YOLOv8</li>
+        <li>Text detection with Tesseract OCR</li>
+        <li>Scene classification using Vision Transformers</li>
+      </ul>
+
+      <h2>Generating Insights</h2>
+      <p>After analyzing the image content, QueryQuill cross-references the visual data with your query to generate a response. This could be a description, chart analysis, or recommended action.</p>
+      <img src="images/chart-analysis.png" alt="Chart analysis example">
+
+      <h2>Privacy & Control</h2>
+      <p>We’ve built image processing with privacy in mind. All uploaded content is processed locally (when possible), and temporary cloud data is automatically deleted within 24 hours.</p>
+
+      <p>QueryQuill's image understanding feature unlocks huge potential for visual data — from business intelligence to day-to-day convenience.</p>
+
+      <a href="blog.html" class="back-link">← Back to all posts</a>
+    </div>
+  </div>
+
+</body>
+</html>

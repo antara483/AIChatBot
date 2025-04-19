@@ -5,8 +5,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Aichat Bot</title>
     <link rel="stylesheet" href="style.css">
+    
 </head>
 <body>
+    <!-- side bar menu -->
+     
+     <!-- side bar menu -->
     <button class="logout-button" onclick="logout()">Logout</button>
 <div class="chat-container">
 <!-- <div class="user-chat-box">
@@ -24,12 +28,46 @@ Hello!How Can I Help You Today!
 </div>
 </div>
 </div>
+<!--my photo  -->
+<!-- <div id="cameraModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <video id="video" autoplay playsinline></video>
+        <button id="capture">Capture Photo</button>
+        <canvas id="canvas" style="display:none;"></canvas>
+    </div>
+</div>
+
+
+<div id="uploadOptionsModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <button id="fromComputer">From Computer</button>
+        <button id="takePhoto">Take a Photo</button>
+    </div>
+</div> -->
+
+<!-- my photo -->
 <div class="prompt-area">
     <input type="text" id="prompt" placeholder="Message...">
- 
-    <button id="image">
+ <!-- //original change if below code doesnt work  -->
+    <!-- <button id="image">
         <img src="img.svg" alt="">/
-    <input type="file" accept="images/*" hidden></button>  
+    <input type="file" accept="images/*" hidden></button>  -->
+    <!-- //original change if below code doesnt work  -->
+    <!-- 18-3-2025 video-->
+
+<button id="image">
+    <img src="img.svg" alt="Upload" class="default-icon">
+    <!-- <img src="video-icon.svg" alt="Video" class="video-icon" hidden> -->
+    <input type="file" id="fileInput" accept="image/*,video/*" hidden>
+</button>
+<!-- added id=fileInput above for 18-3-2025 video 2 -->
+       <!-- 18-3-2025 video-->
+
+
+
+
      <!-- video -->
      <!-- Update the file input button -->
 <!-- <button id="image">
@@ -59,6 +97,32 @@ Hello!How Can I Help You Today!
      function logout() {
             window.location.href = "login.html";
         }
+        //18-3-2025 video 2
+        // JavaScript
+const fileInput = document.querySelector('#fileInput');
+const defaultIcon = document.querySelector('.default-icon');
+const videoIcon = document.querySelector('.video-icon');
+
+fileInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    
+    if (file) {
+        if (file.type.startsWith('video/')) {
+            // Show video icon and hide default icon for video files
+            defaultIcon.hidden = true;
+            videoIcon.hidden = false;
+        } else {
+            // Show default icon for other files (images)
+            defaultIcon.hidden = false;
+            videoIcon.hidden = true;
+        }
+    } else {
+        // Reset to default if no file selected
+        defaultIcon.hidden = false;
+        videoIcon.hidden = true;
+    }
+});
+        //18-3-2025 video 2
 </script>
 <script src="script.js">
 </script>
