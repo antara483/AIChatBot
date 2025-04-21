@@ -9,7 +9,34 @@
 </head>
 <body>
     <!-- side bar menu -->
-     
+         <!-- Sidebar Toggle Button -->
+    <button id="menu-toggle">&#9776;</button>
+
+    <!-- Sidebar Menu -->
+    <div id="sidebar" class="sidebar">
+        <button class="close-btn" id="close-sidebar">&times;</button>
+        <h2>Menu</h2>
+        <ul class="sidebar-links">
+            <!-- <li><a href="#">New Chat</a></li> -->
+            <li><a href="#" id="new-chat-btn">New Chat</a></li>
+            <li><a href="#">History</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Help</a></li>
+        </ul>
+        <!-- chat history -->
+         <!-- Chat History Section -->
+         <!-- <div class="chat-history-section">
+            <h3>Chat History</h3>
+            <ul id="chatHistoryList"></ul>
+        </div> -->
+        
+         <!-- chat history -->
+        <div class="upgrade-section">
+            <h3>Upgrade Plan</h3>
+            <p>Get access to faster responses and priority support.</p>
+            <button class="upgrade-btn">Upgrade</button>
+        </div>
+    </div>
      <!-- side bar menu -->
     <button class="logout-button" onclick="logout()">Logout</button>
 <div class="chat-container">
@@ -91,38 +118,56 @@ Hello!How Can I Help You Today!
      <!-- Update the file input button -->
 
     <button id="mic"><img src="mic.svg" alt=""></button>
-    <button id="submit"><img src="submit.svg" alt=""></button>
+    <button id="submit" type="button"><img src="submit.svg" alt="Submit"></button>
 </div>
 <script>
      function logout() {
             window.location.href = "login.html";
         }
+       
         //18-3-2025 video 2
         // JavaScript
-const fileInput = document.querySelector('#fileInput');
-const defaultIcon = document.querySelector('.default-icon');
-const videoIcon = document.querySelector('.video-icon');
+// const fileInput = document.querySelector('#fileInput');
+// const defaultIcon = document.querySelector('.default-icon');
+// const videoIcon = document.querySelector('.video-icon');
 
-fileInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
+// fileInput.addEventListener('change', (e) => {
+//     const file = e.target.files[0];
     
-    if (file) {
-        if (file.type.startsWith('video/')) {
-            // Show video icon and hide default icon for video files
-            defaultIcon.hidden = true;
-            videoIcon.hidden = false;
-        } else {
-            // Show default icon for other files (images)
-            defaultIcon.hidden = false;
-            videoIcon.hidden = true;
-        }
-    } else {
-        // Reset to default if no file selected
-        defaultIcon.hidden = false;
-        videoIcon.hidden = true;
-    }
-});
+//     if (file) {
+//         if (file.type.startsWith('video/')) {
+//             // Show video icon and hide default icon for video files
+//             defaultIcon.hidden = true;
+//             videoIcon.hidden = false;
+//         } else {
+//             // Show default icon for other files (images)
+//             defaultIcon.hidden = false;
+//             videoIcon.hidden = true;
+//         }
+//     } else {
+//         // Reset to default if no file selected
+//         defaultIcon.hidden = false;
+//         videoIcon.hidden = true;
+//     }
+// });
         //18-3-2025 video 2
+
+
+        // chat history
+        
+        // chat history
+ // side bar menu
+                // Sidebar toggle logic
+                document.getElementById('menu-toggle').addEventListener('click', () => {
+            document.getElementById('sidebar').style.width = '250px';
+        });
+
+        document.getElementById('close-sidebar').addEventListener('click', () => {
+            document.getElementById('sidebar').style.width = '0';
+        });
+
+        // side bar menu
+
 </script>
 <script src="script.js">
 </script>

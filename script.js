@@ -151,6 +151,9 @@
 // const takePhotoBtn = document.getElementById("takePhoto");
 // const closeButtons = document.querySelectorAll(".close");
 // take photo
+// chat history
+
+// chat history
 let prompt = document.querySelector("#prompt");
 let submitbtn = document.querySelector("#submit");
 let chatContainer = document.querySelector(".chat-container");
@@ -1000,4 +1003,70 @@ imageinput.addEventListener("change", () => {
     reader.readAsDataURL(file);
 });
 //18-3-2025 video
+    // chat history
+  
+    
+    // document.addEventListener("DOMContentLoaded", () => {
+    //     // Sidebar toggle
+    //     document.getElementById('menu-toggle').addEventListener('click', () => {
+    //         document.getElementById('sidebar').style.width = '250px';
+    //     });
+    
+    //     document.getElementById('close-sidebar').addEventListener('click', () => {
+    //         document.getElementById('sidebar').style.width = '0';
+    //     });
+    
+    //     const fileInput = document.querySelector('#fileInput');
+    //     const defaultIcon = document.querySelector('.default-icon');
+    //     const videoIcon = document.querySelector('.video-icon');
+    
+    //     fileInput.addEventListener('change', (e) => {
+    //         const file = e.target.files[0];
+    
+    //         if (file) {
+    //             if (file.type.startsWith('video/')) {
+    //                 defaultIcon.hidden = true;
+    //                 videoIcon.hidden = false;
+    //             } else {
+    //                 defaultIcon.hidden = false;
+    //                 videoIcon.hidden = true;
+    //             }
+    //         } else {
+    //             defaultIcon.hidden = false;
+    //             videoIcon.hidden = true;
+    //         }
+    //     });
+    
+    //     // Chat history logic
+    //     let chatHistory = [];
+    
+    //     function addToChatHistory(promptText) {
+    //         if (promptText.trim() === "") return;
+    //         const timestamp = new Date().toLocaleTimeString();
+    //         const chatEntry = { text: promptText, time: timestamp };
+    //         chatHistory.unshift(chatEntry);
+    //         updateChatHistoryUI();
+    //     }
+    
+    //     function updateChatHistoryUI() {
+    //         const chatHistoryList = document.getElementById("chatHistoryList");
+    //         chatHistoryList.innerHTML = "";
+    //         chatHistory.forEach((entry) => {
+    //             const li = document.createElement("li");
+    //             li.textContent = `${entry.text.slice(0, 25)}...`;
+    //             li.title = entry.text;
+    //             chatHistoryList.appendChild(li);
+    //         });
+    //     }
+    
+    //     document.getElementById("submit").addEventListener("click", () => {
+    //         const promptInput = document.getElementById("prompt");
+    //         const promptText = promptInput.value;
+    //         addToChatHistory(promptText);
+    //         promptInput.value = "";
+    //     });
+    // });
+    
+    // Chat storage and management
 
+    // chat history

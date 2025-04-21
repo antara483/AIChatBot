@@ -27,7 +27,10 @@ const ffmpegInstaller = require('@ffmpeg-installer/ffmpeg');
 const ffprobeStatic = require('ffprobe-static');
 const fs = require('fs');
 const path = require('path');
-
+// voice open app
+// const express = require('express');
+// const { exec } = require('child_process');
+// voice open app
 ffmpeg.setFfmpegPath(ffmpegInstaller.path);
 ffmpeg.setFfprobePath(ffprobeStatic.path);
 
@@ -395,6 +398,7 @@ app.post('/process-video', (req, res) => {
     }
 });
 //18-3-2025 video
+
 
 // Start Server
 app.listen(port, () => {
