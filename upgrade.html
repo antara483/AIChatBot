@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Upgrade to Aichat Pro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .upgrade-container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      color: #fff;
+      max-width: 500px;
+      width: 90%;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .upgrade-container h1 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+    }
+
+    .upgrade-container p {
+      font-size: 1rem;
+      margin-bottom: 30px;
+      color: #a68fd5;
+    }
+
+    .plan-box {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 25px;
+      border-left: 5px solid #9a71c1;
+    }
+
+    .plan-box h2 {
+      font-size: 2rem;
+      color: #e8e6f1;
+      margin-bottom: 10px;
+    }
+
+    .plan-box ul {
+      list-style: none;
+      padding: 0;
+      text-align: left;
+    }
+
+    .plan-box ul li {
+      padding: 10px 0;
+      display: flex;
+      align-items: center;
+      font-size: 0.95rem;
+    }
+
+    .plan-box ul li::before {
+      content: "✨";
+      margin-right: 10px;
+      font-size: 1.1rem;
+      color: #3700ff;
+    }
+
+    .upgrade-btn {
+      background: linear-gradient(135deg, #9668ca, #9176b0);
+      border: none;
+      padding: 14px 28px;
+      border-radius: 30px;
+      color: #000;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.3s;
+      box-shadow: 0 5px 20px rgba(0, 255, 204, 0.4);
+    }
+
+    .upgrade-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(121, 86, 186, 0.6);
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: #aaa;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: #9688d4;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="upgrade-container">
+    <h1>Upgrade to <span style="color:#9778db">Aichat Pro</span></h1>
+    <p>Unlock the full potential of your AI assistant with Pro features and blazing speed.</p>
+
+    <div class="plan-box">
+      <h2>$20/month</h2>
+      <ul>
+        <li>Blazing fast responses ⚡</li>
+        <li>Priority support 📞</li>
+        <li>Advanced image/video input 🖼️🎥</li>
+        <li>Access to latest AI models 🚀</li>
+        <li>Early feature access 🧪</li>
+      </ul>
+    </div>
+
+    <a href="billing.html"><button class="upgrade-btn">Upgrade Now</button></a>
+    <br>
+    <a href="index.html" class="back-link">← Back to Chat</a>
+  </div>
+</body>
+</html>
+
+

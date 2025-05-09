@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Center - Aichat Bot</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #7209b7;
+            --light-bg: #f8f9fa;
+            --dark-text: #2b2d42;
+            --light-text: #8d99ae;
+        }
+        
+        .help-container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        
+        .help-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .help-header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .help-header h1:after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            bottom: -10px;
+            left: 20%;
+            border-radius: 2px;
+        }
+        
+        .help-header p {
+            color: var(--light-text);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .help-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .help-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .help-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        
+        .card-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .help-card h2 {
+            color: var(--dark-text);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        .help-card p {
+            color: var(--light-text);
+            line-height: 1.6;
+        }
+        
+        .faq-section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+        }
+        
+        .faq-section h2 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+        }
+        
+        .faq-item {
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+        
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 12px 0;
+            font-weight: 600;
+            color: var(--dark-text);
+            transition: color 0.2s;
+        }
+        
+        .faq-question:hover {
+            color: var(--primary-color);
+        }
+        
+        .faq-question i {
+            transition: transform 0.3s;
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            color: var(--light-text);
+            line-height: 1.6;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            padding-top: 10px;
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        
+        .contact-section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        
+        .contact-section h2 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+        }
+        
+        .contact-form .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .contact-form label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--dark-text);
+            font-weight: 500;
+        }
+        
+        .contact-form input,
+        .contact-form textarea,
+        .contact-form select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .contact-form input:focus,
+        .contact-form textarea:focus,
+        .contact-form select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+        
+        .contact-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: block;
+            margin: 30px auto 0;
+            width: 200px;
+            text-align: center;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .help-header h1 {
+                font-size: 2rem;
+            }
+            
+            .help-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Toggle Button -->
+    <button id="menu-toggle">&#9776;</button>
+
+    <!-- Sidebar Menu -->
+    <div id="sidebar" class="sidebar">
+        <button class="close-btn" id="close-sidebar">&times;</button>
+        <h2>Menu</h2>
+        <ul class="sidebar-links">
+            <li><a href="index.html">Chat</a></li>
+            <li><a href="history.html">History</a></li>
+            <!-- <li><a href="#">Settings</a></li> -->
+            <li><a href="help.html" class="active">Help</a></li>
+        </ul>
+        <div class="upgrade-section">
+            <h3>Upgrade Plan</h3>
+            <p>Get access to premium support and features.</p>
+            <a href="upgrade.html"><button class="upgrade-btn">Upgrade Now</button></a>
+        </div>
+    </div>
+
+    <button class="logout-button" onclick="logout()">Logout</button>
+
+    <div class="help-container">
+        <div class="help-header">
+            <h1>How Can We Help?</h1>
+            <p>Find answers to common questions, learn how to get the most out of Aichat Bot, or contact our support team directly.</p>
+        </div>
+        
+        <div class="help-grid">
+            <div class="help-card">
+                <div class="card-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h2>Getting Started</h2>
+                <p>New to Aichat Bot? Learn the basics of how to interact with our AI assistant and make the most of your conversations.</p>
+            </div>
+            
+            <div class="help-card">
+                <div class="card-icon">
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <h2>FAQs</h2>
+                <p>Find quick answers to frequently asked questions about features, usage, and troubleshooting.</p>
+            </div>
+            
+            <div class="help-card">
+                <div class="card-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <h2>Features Guide</h2>
+                <p>Discover all the powerful features available in Aichat Bot and how to use them effectively.</p>
+            </div>
+        </div>
+        
+        <div class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How do I start a new conversation?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Click on "New Chat" in the sidebar menu to begin a fresh conversation. Your previous chats will be saved in the History section.</p>
+                </div>
+            </div>
+            
+            <!-- <div class="faq-item">
+                <div class="faq-question">
+                    <span>Can I access my chat history?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! All your conversations are saved automatically. Click "History" in the sidebar to view and restore previous chats.</p>
+                </div>
+            </div> -->
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Can I upload Images?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes,You can upload images (JPG, JPEG) and get your queries answered.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How do I use voice input?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Click the microphone icon and grant browser permissions when prompted. Speak clearly and the AI will transcribe and respond to your voice commands.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Is my data secure?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Absolutely. We use end-to-end encryption for all conversations and never share your data with third parties.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="contact-section">
+            <h2>Contact Support</h2>
+            <form class="contact-form" id="supportForm">
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <select id="subject" required>
+                        <option value="">Select a topic</option>
+                        <option value="technical">Technical Issue</option>
+                        <option value="account">Account Help</option>
+                        <option value="billing">Billing Question</option>
+                        <option value="feedback">Feedback</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Your Message</label>
+                    <textarea id="message" required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function logout() {
+            window.location.href = "login.html";
+        }
+
+        // Sidebar toggle logic
+        document.getElementById('menu-toggle').addEventListener('click', () => {
+            document.getElementById('sidebar').style.width = '250px';
+        });
+
+        document.getElementById('close-sidebar').addEventListener('click', () => {
+            document.getElementById('sidebar').style.width = '0';
+        });
+
+        // FAQ toggle functionality
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                item.classList.toggle('active');
+                
+                // Close other open FAQs
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains('active')) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+            });
+        });
+
+        // Form submission
+        document.getElementById('supportForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // In a real app, you would send this data to your server
+            // For now, we'll just show a confirmation
+            alert('Thank you for your message! Our support team will get back to you within 24 hours.');
+            this.reset();
+            
+            // You could add AJAX form submission here
+            /* 
+            fetch('/api/support', {
+                method: 'POST',
+                body: JSON.stringify({
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    subject: document.getElementById('subject').value,
+                    message: document.getElementById('message').value
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Message sent successfully!');
+                this.reset();
+            })
+            .catch(error => {
+                alert('There was an error sending your message. Please try again.');
+            });
+            */
+        });
+    </script>
+</body>
+</html>

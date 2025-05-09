@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Settings - AiChat Bot</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Sidebar Toggle Button -->
+<button id="menu-toggle">&#9776;</button>
+
+<!-- Sidebar Menu -->
+<div id="sidebar" class="sidebar">
+    <button class="close-btn" id="close-sidebar">&times;</button>
+    <h2>Menu</h2>
+    <ul class="sidebar-links">
+        <li><a href="index.html">New Chat</a></li>
+        <li><a href="history.html">History</a></li>
+        <li><a href="settings.html">Settings</a></li>
+        <li><a href="help.html">Help</a></li>
+    </ul>
+
+    <div class="upgrade-section">
+        <h3>Upgrade Plan</h3>
+        <p>Get access to faster responses and priority support.</p>
+        <a href="upgrade.html"><button class="upgrade-btn">Upgrade</button></a>
+    </div>
+</div>
+
+<button class="logout-button" onclick="logout()">Logout</button>
+
+<!-- Settings Content -->
+<div class="settings-container">
+    <h1>Settings</h1>
+
+    <div class="setting-item">
+        <label for="theme-select">Theme:</label>
+        <select id="theme-select">
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+        </select>
+    </div>
+
+    <div class="setting-item">
+        <label>
+            <input type="checkbox" id="notifications-toggle" checked>
+            Enable Notifications
+        </label>
+    </div>
+
+    <div class="setting-item">
+        <label>
+            <input type="checkbox" id="sound-toggle">
+            Sound Effects
+        </label>
+    </div>
+
+    <button class="save-settings-btn">Save Settings</button>
+</div>
+
+<script>
+    function logout() {
+        window.location.href = "login.html";
+    }
+
+    // Sidebar toggle logic
+    document.getElementById('menu-toggle').addEventListener('click', () => {
+        document.getElementById('sidebar').style.width = '250px';
+    });
+
+    document.getElementById('close-sidebar').addEventListener('click', () => {
+        document.getElementById('sidebar').style.width = '0';
+    });
+</script>
+
+</body>
+</html>

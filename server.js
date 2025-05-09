@@ -29,7 +29,7 @@ const fs = require('fs');
 const path = require('path');
 // voice open app
 // const express = require('express');
-// const { exec } = require('child_process');
+const { exec } = require('child_process');
 // voice open app
 ffmpeg.setFfmpegPath(ffmpegInstaller.path);
 ffmpeg.setFfprobePath(ffprobeStatic.path);
@@ -51,8 +51,9 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '150mb' }));
 //     console.log(`Server running at http://localhost:${PORT}`);
 // });
 //remove
-const port = 3000;
-
+// test
+const port = 3001;//original is 3000
+// test
 // Middleware
 app.use(cors());//uncomment if  cors middleware does not work
 app.use(bodyParser.json());
@@ -141,12 +142,14 @@ const transporter = nodemailer.createTransport({
 //remove apiii
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
+
+// testing
 // Example usage
 app.get('/api/key', (req, res) => {
     res.json({ apiKey: GEMINI_API_KEY });
 });
 //remove api
-
+// testing
 // Register User API
 app.post("/register", (req, res) => {
     const { username, email, password } = req.body;
@@ -398,8 +401,107 @@ app.post('/process-video', (req, res) => {
     }
 });
 //18-3-2025 video
+// voice app open app
 
 
+// uncomment this voice if whtasapp below doesnt work
+// app.get('/open-app/:app', (req, res) => {
+    
+//     const app = req.params.app;
+
+//     let command = '';
+//     if (app === 'chrome') command = 'start chrome'; // Windows
+//     if (app === 'notepad') command = 'start notepad';
+//     // chrome
+//     if (!command) return res.status(400).send("Unknown app");
+//     // chrome
+//     exec(command, (err) => {
+//         if (err) return res.status(500).send("Error opening app");
+//         res.send("App launched");
+//     });
+// });
+// uncomment this voice if whtasapp belowdoesnt work
+
+
+// comment if doesnt work and uncomment above
+// app.get('/open-app/:app', (req, res) => {
+//     const app = req.params.app.toLowerCase();
+
+//     let command = '';
+//     if (app === 'chrome') command = 'start chrome';
+//     else if (app === 'notepad') command = 'start notepad';
+//     else if (app === 'whatsapp') command = 'start chrome https://web.whatsapp.com/'; // 👈 Only works if WhatsApp is in PATH
+//     else return res.status(404).send("No matching app command found.");
+
+//     exec(command, (err) => {
+//         if (err) return res.status(500).send("Error opening app");
+//         res.send("App launched");
+//     });
+// });
+
+// comment if doesnt work and uncomment above
+// final touch
+// test
+// const PORT = 3000;
+// test
+app.get('/open-app/:app', (req, res) => {
+    const appName = req.params.app.toLowerCase();
+
+    let command = '';
+
+    if (appName === 'chrome') command = 'start chrome';
+    if (appName === 'notepad') command = 'start notepad';
+    if (appName === 'whatsapp') command = 'start chrome https://web.whatsapp.com/';
+
+    if (!command) {
+        return res.status(404).send("No matching app command found.");
+    }
+
+    exec(command, (err) => {
+        if (err) return res.status(500).send("Error opening app");
+        res.send("App launched");
+    });
+});
+
+
+
+// final touch
+
+// ori uncomment if below code doesnt work
+// app.listen(3000, () => console.log("Server running on port 3000"));
+// ori uncomment if below code doesnt work
+// it is 3000 ori
+// app.listen(4000, () => console.log("Server running on port 4000"));
+// it is 3000 ori
+// voic open app
+
+
+
+// whatsapp
+const contacts = {
+    mummy: '919483064646',
+    papa: '919482786946'
+   
+};
+
+app.get('/send-whatsapp', (req, res) => {
+    const name = req.query.name?.toLowerCase();
+    const message = encodeURIComponent(req.query.message || "");
+
+    const phone = contacts[name];
+    if (!phone) return res.status(404).send("Contact not found");
+
+    const url = `https://web.whatsapp.com/send?phone=${phone}&text=${message}`;
+    const command = `start chrome "${url}"`; // for Windows. use "open" for macOS
+
+    exec(command, (err) => {
+        if (err) return res.status(500).send("Error opening WhatsApp Web");
+        res.send("WhatsApp Web launched");
+    });
+});
+
+// app.listen(5000, () => console.log("Server running on port 4000"));
+// whatsapp
 // Start Server
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);

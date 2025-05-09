@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat History - Aichat Bot</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .history-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .history-item {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .history-query {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .history-response {
+            color: #555;
+        }
+        .history-date {
+            font-size: 0.8em;
+            color: #888;
+            text-align: right;
+            margin-top: 10px;
+        }
+        .back-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* extra */
+        
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f3e8ff;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1 {
+        color: #5e2ca5;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .history-container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fef9ff;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(94, 44, 165, 0.1);
+    }
+
+    .history-item {
+        background-color: #ffffff;
+        border-left: 5px solid #a259ff;
+        border-radius: 8px;
+        padding: 15px 20px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 6px rgba(162, 89, 255, 0.15);
+    }
+
+    .history-query {
+        font-weight: bold;
+        color: #6a1b9a;
+        margin-bottom: 8px;
+    }
+
+    .history-response {
+        color: #4a148c;
+    }
+
+    .history-date {
+        font-size: 0.8em;
+        color: #9370db;
+        text-align: right;
+        margin-top: 10px;
+    }
+
+    .back-button {
+        display: block;
+        margin: 30px auto 0;
+        padding: 10px 24px;
+        background-color: #7e57c2;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .back-button:hover {
+        background-color: #673ab7;
+    }
+
+    #menu-toggle {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        font-size: 24px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #29262a;
+    }
+
+    .sidebar {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #0e0d0e;
+        overflow-x: hidden;
+        transition: 0.3s;
+        padding-top: 60px;
+        color: white;
+        z-index: 1000;
+    }
+
+    .sidebar h2, .sidebar h3 {
+        padding-left: 20px;
+    }
+
+    .sidebar-links {
+        list-style-type: none;
+        padding: 0;
+        margin: 20px 0;
+    }
+
+    .sidebar-links li {
+        padding: 10px 20px;
+    }
+
+    .sidebar-links a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .sidebar-links a.active,
+    .sidebar-links a:hover {
+        text-decoration: underline;
+    }
+
+    .upgrade-section {
+        padding: 20px;
+        background-color: #f0eef3;
+        border-radius: 8px;
+        margin: 0px;
+    }
+
+    .upgrade-btn {
+        /* background-color: #9575cd; */
+        background-color: #1510a3;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    .upgrade-btn:hover {
+        background-color: #b39ddb;
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 28px;
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+    }
+
+    .logout-button {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        padding: 8px 14px;
+        background-color: #ba68c8;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .logout-button:hover {
+        background-color: #9c27b0;
+    }
+
+
+        /* extra */
+    </style>
+</head>
+<body>
+    <!-- Sidebar Toggle Button -->
+    <button id="menu-toggle">&#9776;</button>
+
+    <!-- Sidebar Menu -->
+    <div id="sidebar" class="sidebar">
+        <button class="close-btn" id="close-sidebar">&times;</button>
+        <!-- <h2>Menu</h2> -->
+        <ul class="sidebar-links">
+            <li><a href="index.html">Chat</a></li>
+            <li><a href="history.html" class="active">History</a></li>
+            <!-- <li><a href="#">Settings</a></li> -->
+            <li><a href="help.html">Help</a></li>
+        </ul>
+        <div class="upgrade-section">
+            <h3>Upgrade Plan</h3>
+            <p>Get access to faster responses and priority support.</p>
+            <a href="upgrade.html"><button class="upgrade-btn">Upgrade</button></a>
+        </div>
+    </div>
+
+    <button class="logout-button" onclick="logout()">Logout</button>
+
+    <div class="history-container">
+        <h1>Your Query History</h1>
+        
+        <div class="history-item">
+            <div class="history-query">How do I create a responsive website?</div>
+            <div class="history-response">To create a responsive website, use CSS media queries, flexible grid layouts, and responsive images. Start with a mobile-first approach and test on different devices.</div>
+            <div class="history-date">April 22, 2024 - 10:30 AM</div>
+        </div>
+        
+        <div class="history-item">
+            <div class="history-query">What's the best way to learn JavaScript?</div>
+            <div class="history-response">The best way to learn JavaScript is through practice. Start with fundamentals, work on small projects, and gradually tackle more complex concepts. Online platforms like freeCodeCamp and Codecademy offer great interactive courses.</div>
+            <div class="history-date">April 20, 2024 - 3:15 PM</div>
+        </div>
+        
+        <div class="history-item">
+            <div class="history-query">Explain the difference between let and var in JavaScript</div>
+            <div class="history-response">The main differences are: 1) var is function-scoped while let is block-scoped. 2) var declarations are hoisted to the top of their scope, let declarations are not. 3) You can redeclare var variables in the same scope, but not let variables.</div>
+            <div class="history-date">April 18, 2024 - 9:45 AM</div>
+        </div>
+        
+        <div class="history-item">
+            <div class="history-query">What is the difference between SQL and NoSQL?</div>
+            <div class="history-response">SQL databases are relational, structured, and use schemas. NoSQL databases are non-relational, schema-less, and are better suited for unstructured or semi-structured data.</div>
+            <div class="history-date">April 16, 2024 - 2:00 PM</div>
+        </div>
+        
+        <div class="history-item">
+            <div class="history-query">How can I center a div in CSS?</div>
+            <div class="history-response">You can center a div using flexbox: display: flex; justify-content: center; align-items: center; or using margin: auto for block elements with a set width.</div>
+            <div class="history-date">April 5, 2024 - 2:00 PM</div>
+        </div>
+      
+        
+        <div class="history-item">
+            <div class="history-query">How does JWT authentication work in Node.js?</div>
+            <div class="history-response">JWTs are signed tokens that encode user identity. In Node.js, use libraries like jsonwebtoken. On login, issue a token, and verify it on protected routes via middleware.</div>
+            <div class="history-date">April 12, 2024 - 11:10 AM</div>
+        </div>
+        
+        <div class="history-item">
+            <div class="history-query">Tips for optimizing a Flask web application?</div>
+            <div class="history-response">Use caching (Flask-Caching), compress responses, minimize DB queries, serve static files via CDN, and deploy with a WSGI server like Gunicorn or uWSGI behind Nginx.</div>
+            <div class="history-date">April 9, 2024 - 1:25 PM</div>
+        </div>
+        
+        <div class="history-item">
+            <div class="history-query">Can I convert speech to text using JavaScript?</div>
+            <div class="history-response">Yes! Use the Web Speech API (SpeechRecognition). It lets you capture microphone input and convert spoken words into text in real time.</div>
+            <div class="history-date">April 6, 2024 - 4:40 PM</div>
+        </div>
+        
+        <button class="back-button" onclick="window.location.href='index.html'">Back to Chat</button>
+    </div>
+
+    <script>
+        function logout() {
+            window.location.href = "login.html";
+        }
+
+        // Sidebar toggle logic
+        document.getElementById('menu-toggle').addEventListener('click', () => {
+            document.getElementById('sidebar').style.width = '250px';
+        });
+
+        document.getElementById('close-sidebar').addEventListener('click', () => {
+            document.getElementById('sidebar').style.width = '0';
+        });
+    </script>
+</body>
+</html>

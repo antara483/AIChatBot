@@ -137,7 +137,8 @@ box-shadow:2px 2px 10px black;
         position: absolute;
         top: 10px;
         right: 10px;
-        background-color: #ff4d4d;
+        /* background-color: #ff4d4d; */
+        background-color: #ba68c8;
         color: white;
         border: none;
         padding: 10px 15px;
@@ -580,14 +581,14 @@ box-shadow:2px 2px 10px black;
     left: 0;
     right: 0;
     padding: 15px;
-    background-color: #343541;
-    border-top: 1px solid #444;
+    background-color: #acaec3;
+    border-top: 1px solid #7e6969;
 }
 
 .upgrade-btn {
     width: 100%;
     padding: 10px;
-    background-color: #10a37f;
+    background-color: #1510a3;
     color: white;
     border: none;
     border-radius: 5px;
@@ -596,7 +597,7 @@ box-shadow:2px 2px 10px black;
 }
 
 .upgrade-btn:hover {
-    background-color: #0d8a6d;
+    background-color: #0d528a;
 }
 
 /* Chat message styles */

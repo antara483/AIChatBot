@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Aichat Bot</title>
     <link rel="stylesheet" href="style.css">
-    
+    <!-- format para -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!-- format para -->
 </head>
 <body>
     <!-- side bar menu -->
@@ -18,10 +22,12 @@
         <h2>Menu</h2>
         <ul class="sidebar-links">
             <!-- <li><a href="#">New Chat</a></li> -->
-            <li><a href="#" id="new-chat-btn">New Chat</a></li>
-            <li><a href="#">History</a></li>
-            <li><a href="#">Settings</a></li>
-            <li><a href="#">Help</a></li>
+            <li><a href="index.html" id="new-chat-btn">New Chat</a></li>
+            <!-- <li><a href="#">History</a></li> -->
+            <li><a href="history.html">History</a></li>
+
+            <!-- <li><a href="#">Settings</a></li> -->
+            <li><a href="help.html">Help</a></li>
         </ul>
         <!-- chat history -->
          <!-- Chat History Section -->
@@ -34,7 +40,7 @@
         <div class="upgrade-section">
             <h3>Upgrade Plan</h3>
             <p>Get access to faster responses and priority support.</p>
-            <button class="upgrade-btn">Upgrade</button>
+           <a href="upgrade.html"><button class="upgrade-btn">Upgrade</button></a>
         </div>
     </div>
      <!-- side bar menu -->
@@ -87,10 +93,11 @@ Hello!How Can I Help You Today!
 <button id="image">
     <img src="img.svg" alt="Upload" class="default-icon">
     <!-- <img src="video-icon.svg" alt="Video" class="video-icon" hidden> -->
-    <input type="file" id="fileInput" accept="image/*,video/*" hidden>
+   
 </button>
-<!-- added id=fileInput above for 18-3-2025 video 2 -->
-       <!-- 18-3-2025 video-->
+<!-- uncomment if below doc format  -->
+<input type="file" id="fileInput" accept="image/*,video/*" hidden>
+
 
 
 
@@ -120,6 +127,25 @@ Hello!How Can I Help You Today!
     <button id="mic"><img src="mic.svg" alt=""></button>
     <button id="submit" type="button"><img src="submit.svg" alt="Submit"></button>
 </div>
+<!-- real time image -->
+ <!-- CAMERA MODAL -->
+<div id="cameraModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <video id="video" autoplay playsinline></video>
+        <button id="capture">Capture Photo</button>
+        <canvas id="canvas" style="display:none;"></canvas>
+    </div>
+</div>
+<div id="uploadOptionsModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <button id="fromComputer">From Computer</button>
+        <button id="takePhoto">Take a Photo</button>
+    </div>
+</div>
+
+ <!-- real time image -->
 <script>
      function logout() {
             window.location.href = "login.html";
@@ -168,8 +194,12 @@ Hello!How Can I Help You Today!
 
         // side bar menu
 
+// real time image
+
+
+// real time image
 </script>
-<script src="script.js">
-</script>
+<script src="script.js"></script>
 </body>
+
 </html>

@@ -154,16 +154,39 @@
 // chat history
 
 // chat history
+// real time image
+document.addEventListener("DOMContentLoaded", function() {
+    // real time image
 let prompt = document.querySelector("#prompt");
 let submitbtn = document.querySelector("#submit");
 let chatContainer = document.querySelector(".chat-container");
 let imagebtn = document.querySelector("#image");
 let image = document.querySelector("#image img");
-let imageinput = document.querySelector("#image input");
+// uncomment if below real time dont work
+// let imageinput = document.querySelector("#image input");
+// uncomment if below real time dont work
+
+// real time img
+let imageinput = document.getElementById("fileInput"); // Correct selector
+// real time img
 // mic
 let micBtn = document.querySelector("#mic");
+// real time image
+const cameraModal = document.getElementById("cameraModal");
+const uploadOptionsModal = document.getElementById("uploadOptionsModal");
+const video = document.getElementById("video");
+const canvas = document.getElementById("canvas");
+const captureBtn = document.getElementById("capture");
+const fromComputerBtn = document.getElementById("fromComputer");
+
+const takePhotoBtn = document.getElementById("takePhoto");
+const closeButtons = document.querySelectorAll(".close");
+
+// real time image
 let isListening = false;
 let recognition = null;
+// voice open app
+// voice open app
 // mic
 //updated mic 932025
 // let networkTimeout = null;
@@ -181,7 +204,7 @@ let user = {
 // Function to fetch API key from the backend
 async function fetchApiKey() {
     try {
-        let response = await fetch('http://localhost:3000/api/key'); // Fetch API key securely//uncomment it
+        let response = await fetch('http://localhost:3001/api/key'); // Fetch API key securely//uncomment it
         let data = await response.json();
         return data.apiKey;
     } catch (error) {
@@ -305,7 +328,22 @@ async function generateResponse(aiChatBox) {
             "contents": [
                 {
                     "parts": [
+                        // uncomment format if below line dont work
                         { "text": user.message },
+                        // uncomment format if below line dont work
+
+                        // format para
+                        // {
+                        //     "text": `Please answer this question in a well-formatted manner using:
+                        //   - Bullet points
+                        //   - Headings
+                        //   - Step-by-step explanation
+                        //   - Code blocks (if needed)
+                          
+                        //   Question: ${user.message}`
+                        //   },
+                          
+                        // format para
                         ...(user.file.data ? [{ "inline_data": user.file }] : [])
                     ]
                 }
@@ -326,8 +364,15 @@ async function generateResponse(aiChatBox) {
         }
 
         let apiResponse = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, "$1").trim();
-        text.innerHTML = apiResponse;
+        // uncomment if below format doesnt work
+        
+        // text.innerHTML = apiResponse;
+        // uncomment if below format doesnt work
 
+        // format para
+        text.innerHTML = marked.parse(apiResponse);
+
+        // format para
     } catch (error) {
         console.error("Error fetching AI response:", error);
         text.innerHTML = "Error: Unable to fetch response.";
@@ -417,9 +462,27 @@ function handleChatResponse(userMessage)
 
 {
     if (!userMessage.trim()) return; // Prevent empty messages
+    // uncomment if below line dont work
+    // user.message = userMessage;
+    // uncomment it if below line dont work
 
-    user.message = userMessage;
-   
+    // format
+    const basePrompt = userMessage.trim();
+user.message = basePrompt.length > 60
+  ? `Please answer the following clearly and in well-formatted style using bullet points, headers, and code blocks where needed:\n\n${basePrompt}`
+  : basePrompt;
+
+    // format
+//    format para
+// If message is small-talk, keep it short and casual
+// const smallTalk = ["hello", "hi", "hey", "how are you", "what's up"];
+// const normalizedMessage = userMessage.toLowerCase().trim();
+
+// if (smallTalk.some(q => normalizedMessage.includes(q))) {
+//     user.message = `Give a short and friendly response to: "${userMessage}"`;
+// }
+
+// format para
 
 
     //
@@ -522,9 +585,100 @@ submitbtn.addEventListener("click", () => {
 //repeat
     //video
    // Update file input handler
-imageinput.addEventListener("change", () => {
-    const file = imageinput.files[0];
-    if (!file) return;
+
+//    uncomment it if below real time dont work
+// imageinput.addEventListener("change", () => {
+//     const file = imageinput.files[0];
+//     if (!file) return;
+    //    uncomment it if below real time dont work
+
+    // real time image
+    imagebtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        uploadOptionsModal.style.display = "block";
+    });
+    
+    // real time image
+
+    // real time image code
+    closeButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            cameraModal.style.display = "none";
+            uploadOptionsModal.style.display = "none";
+            stopCamera();
+        });
+    });
+    
+    window.addEventListener("click", (e) => {
+        if (e.target === cameraModal) {
+            cameraModal.style.display = "none";
+            stopCamera();
+        }
+        if (e.target === uploadOptionsModal) {
+            uploadOptionsModal.style.display = "none";
+        }
+    });
+    
+    fromComputerBtn.addEventListener("click", () => {
+        uploadOptionsModal.style.display = "none";
+        imageinput.click();
+    });
+    
+    takePhotoBtn.addEventListener("click", () => {
+        uploadOptionsModal.style.display = "none";
+        cameraModal.style.display = "block";
+        startCamera();
+    });
+    
+    function startCamera() {
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                video.srcObject = stream;
+            })
+            .catch(err => {
+                alert("Camera access denied or not available.");
+            });
+        } else {
+            alert("Camera not supported.");
+        }
+    }
+    
+    function stopCamera() {
+        if (video.srcObject) {
+            video.srcObject.getTracks().forEach(track => track.stop());
+            video.srcObject = null;
+        }
+    }
+    captureBtn.addEventListener("click", () => {
+        const context = canvas.getContext("2d");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        
+        const imageData = canvas.toDataURL("image/jpeg");
+        const base64Data = imageData.split(",")[1];
+    
+        user.file = {
+            mime_type: "image/jpeg",
+            data: base64Data
+        };
+    
+        image.src = imageData;
+        image.classList.add("choose");
+    
+        cameraModal.style.display = "none";
+        stopCamera();
+    });
+    //  test
+    window.addEventListener("click", (e) => {
+        if (e.target === uploadOptionsModal) {
+            uploadOptionsModal.style.display = "none";
+        }
+    });
+    
+    // test
+    // real time image code
 //video
 //video
     // Add size validation (100MB limit)
@@ -545,33 +699,33 @@ imageinput.addEventListener("change", () => {
     //     return;
     // }
 //video
-    let reader = new FileReader();
-    reader.onload = (e) => {
-        let base64string = e.target.result.split(",")[1];
-        user.file = {
-            mime_type: file.type,
-            data: base64string,
-            // isVideo: user.file.isVideo
-        };
+//     let reader = new FileReader();
+//     reader.onload = (e) => {
+//         let base64string = e.target.result.split(",")[1];
+//         user.file = {
+//             mime_type: file.type,
+//             data: base64string,
+//             // isVideo: user.file.isVideo
+//         };
         
-        if (user.file.isVideo) {
-            showVideoPreview(file);//real
-            // defaultIcon.hidden = true;
-            // videoIcon.hidden = false;
-            //video
-            image.src = 'video-icon.svg';
-            //video
-        } else {
-            //video
-            // defaultIcon.hidden = false;
-            // videoIcon.hidden = true;
-            //video
-            image.src = `data:${user.file.mime_type};base64,${user.file.data}`;
-        }
-        image.classList.add("choose");
-    };
-    reader.readAsDataURL(file);
-});
+//         if (user.file.isVideo) {
+//             showVideoPreview(file);//real
+//             // defaultIcon.hidden = true;
+//             // videoIcon.hidden = false;
+//             //video
+//             image.src = 'video-icon.svg';
+//             //video
+//         } else {
+//             //video
+//             // defaultIcon.hidden = false;
+//             // videoIcon.hidden = true;
+//             //video
+//             image.src = `data:${user.file.mime_type};base64,${user.file.data}`;
+//         }
+//         image.classList.add("choose");
+//     };
+//     reader.readAsDataURL(file);
+// });
 //video
 // imageinput.accept = "image/*,video/*";
 // // // Add video preview function
@@ -624,9 +778,12 @@ function resetImageSelection() {
 
 
 // take photo(uncomment this if below code doesnt work)
-imagebtn.addEventListener("click", () => {
-    imagebtn.querySelector("input").click();
-});
+
+// alert
+// imagebtn.addEventListener("click", () => {
+//     imagebtn.querySelector("input").click();
+// });
+// alert
 // take photo(uncomment this if below code doesnt work)
 
 // take photo
@@ -756,12 +913,48 @@ function startSpeechRecognition() {
         isListening = true;
         micBtn.classList.add("recording");
     };
-
+    // uncmomment if below voice app open doesnt work
+    // recognition.onresult = (event) => {
+    //     const transcript = event.results[0][0].transcript;
+    //     prompt.value = transcript;
+    // };
+    // uncomment if below voice app open doesnt work
+    
+    // voie open app
     recognition.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
+        const transcript = event.results[0][0].transcript.toLowerCase();
+        console.log("You said:", transcript);
         prompt.value = transcript;
-    };
+    // whatsapp
+    if (transcript.includes("send whatsapp to")) {
+        // Example: "send whatsapp to john saying hello how are you"
+        const parts = transcript.split("send whatsapp to")[1].trim().split("saying");
+        if (parts.length === 2) {
+            const name = parts[0].trim();
+            const message = parts[1].trim();
 
+            fetch(`http://localhost:5000/send-whatsapp?name=${encodeURIComponent(name)}&message=${encodeURIComponent(message)}`)
+                .then(res => {
+                    if (!res.ok) throw new Error("Failed to open WhatsApp");
+                    console.log("WhatsApp launched successfully");
+                })
+                .catch(err => console.error("Error:", err));
+        } else {
+            alert("Please say: Send WhatsApp to [name] saying [your message]");
+        }
+    }
+    // whatsapp
+        // 👇 Paste your voice command action here
+        if (transcript.includes("open notepad")) {
+            fetch("http://localhost:3001/open-app/notepad");//0ri 4000
+        } else if (transcript.includes("open chrome")) {
+            fetch("http://localhost:3001/open-app/chrome");//ori 4000
+        } else {
+            console.log("No matching app command found.");
+        }
+    };
+    
+    // voice open app
     recognition.onerror = (event) => {
         console.error("Speech recognition error:", event.error);
         if (event.error === "network") {
@@ -970,38 +1163,69 @@ function showVideoPreview(file) {
 }
 
 // Modify imageinput event listener
-imageinput.addEventListener("change", () => {
-    const file = imageinput.files[0];
-    if (!file) return;
 
-    // Add size validation (100MB limit)
-    if (file.size > 100 * 1024 * 1024) {
-        alert('File size too large (max 100MB)');
-        resetImageSelection();
-        return;
-    }
+// uncomment if below real time img dont work
+// imageinput.addEventListener("change", () => {
+//     const file = imageinput.files[0];
+//     if (!file) return;
 
-    user.file.isVideo = file.type.startsWith('video/');
+//     // Add size validation (100MB limit)
+//     if (file.size > 100 * 1024 * 1024) {
+//         alert('File size too large (max 100MB)');
+//         resetImageSelection();
+//         return;
+//     }
+
+//     user.file.isVideo = file.type.startsWith('video/');
     
-    let reader = new FileReader();
-    reader.onload = (e) => {
-        let base64string = e.target.result.split(",")[1];
-        user.file = {
-            mime_type: file.type,
-            data: base64string,
-            isVideo: user.file.isVideo
-        };
+//     let reader = new FileReader();
+//     reader.onload = (e) => {
+//         let base64string = e.target.result.split(",")[1];
+//         user.file = {
+//             mime_type: file.type,
+//             data: base64string,
+//             isVideo: user.file.isVideo
+//         };
         
-        if (user.file.isVideo) {
-            showVideoPreview(file);
-            image.src = 'video-icon.svg';
-        } else {
-            image.src = `data:${user.file.mime_type};base64,${user.file.data}`;
+//         if (user.file.isVideo) {
+//             showVideoPreview(file);
+//             image.src = 'video-icon.svg';
+//         } else {
+//             image.src = `data:${user.file.mime_type};base64,${user.file.data}`;
+//         }
+//         image.classList.add("choose");
+//     };
+//     reader.readAsDataURL(file);
+// });
+// uncomment if below real time img dont work
+
+// real time img
+if (imageinput) {
+    imageinput.addEventListener("change", () => {
+        const file = imageinput.files[0];
+        if (!file) return;
+
+        // Add size validation (optional)
+        if (file.size > 100 * 1024 * 1024) {
+            alert('File size too large (max 100MB)');
+            return;
         }
-        image.classList.add("choose");
-    };
-    reader.readAsDataURL(file);
-});
+
+        let reader = new FileReader();
+        reader.onload = (e) => {
+            let base64string = e.target.result.split(",")[1];
+            user.file = {
+                mime_type: file.type,
+                data: base64string
+            };
+            image.src = `data:${user.file.mime_type};base64,${user.file.data}`;
+            image.classList.add("choose");
+        };
+        reader.readAsDataURL(file);
+    });
+}
+// real time img
+
 //18-3-2025 video
     // chat history
   
@@ -1070,3 +1294,40 @@ imageinput.addEventListener("change", () => {
     // Chat storage and management
 
     // chat history
+// real time image
+
+document.addEventListener("DOMContentLoaded", () => {
+    const fromComputerBtn = document.getElementById("fromComputer");
+    const imageinput = document.getElementById("fileInput");
+//   uncomment it if below real time image dont work
+    // if (fromComputerBtn && imageinput) {
+    //   fromComputerBtn.addEventListener("click", () => {
+    //     const modal = document.getElementById("uploadOptionsModal");
+    //     if (modal) modal.style.display = "none";
+    //     imageinput.click(); // ✅ opens file picker
+    //   });
+    // } else {
+    //   console.warn("❗ Missing #fromComputer or #fileInput");
+    // }
+    //   uncomment it if below real time image dont work
+
+    // real time img
+    if (fromComputerBtn && imageinput) {
+        fromComputerBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            if (uploadOptionsModal) {
+                uploadOptionsModal.style.display = "none";
+            }
+            imageinput.click(); // This will trigger the file selection dialog
+        });
+    } else {
+        console.error("From computer button or file input not found");
+    }
+    // real time img
+  });
+  
+// real time image
+});
+// real time image
+
+// real time image
