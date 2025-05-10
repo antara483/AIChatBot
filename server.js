@@ -10,6 +10,17 @@
 
 //video
 require("dotenv").config();//new
+// doc format
+// const XLSX = require('xlsx');
+// const multer = require("multer");
+// const upload = multer(); // Use memory storage
+
+// doc format
+// doc format
+// const multer = require('multer');
+// const pdf = require('pdf-parse');
+// const mammoth = require('mammoth');
+// doc format
 const express = require("express");
 const mysql = require("mysql");
 const bcrypt = require("bcryptjs");
@@ -403,6 +414,103 @@ app.post('/process-video', (req, res) => {
 //18-3-2025 video
 // voice app open app
 
+// doc format
+// const upload = multer({ dest: 'uploads/' });
+
+// // Endpoint to handle file upload
+// app.post('/upload', upload.array('files'), async (req, res) => {
+//   const fileContents = [];
+
+//   for (let file of req.files) {
+//     const filePath = file.path;
+
+//     if (file.mimetype === 'application/pdf') {
+//       // Handle PDF file
+//       const data = await fs.promises.readFile(filePath);
+//       const pdfData = await pdf(data);
+//       fileContents.push({ filename: file.originalname, content: pdfData.text });
+//     } else if (file.mimetype === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+//       // Handle DOCX file
+//       const data = await fs.promises.readFile(filePath);
+//       const docxData = await mammoth.extractRawText({ buffer: data });
+//       fileContents.push({ filename: file.originalname, content: docxData.value });
+//     } else if (file.mimetype === 'text/plain' || file.mimetype.includes('javascript') || file.mimetype.includes('python')) {
+//       // Handle code files (txt, js, py)
+//       const data = await fs.promises.readFile(filePath, 'utf-8');
+//       fileContents.push({ filename: file.originalname, content: data });
+//     } else {
+//       fileContents.push({ filename: file.originalname, content: 'Unsupported file type' });
+//     }
+
+//     // Optionally, delete the file after processing
+//     await fs.promises.unlink(filePath);
+//   }
+
+//   // Send the file content to the frontend
+//   res.json(fileContents);
+// });
+// doc format
+
+// doc format
+// app.post('/process-document', async (req, res) => {
+//     const { fileData, mimeType, fileName } = req.body;
+
+//     try {
+//         let textContent = '';
+//         const buffer = Buffer.from(fileData, 'base64');
+
+//         if (fileName.endsWith('.pdf')) {
+//             const data = await pdf(buffer);
+//             textContent = data.text;
+//         } else if (fileName.endsWith('.docx')) {
+//             const result = await mammoth.extractRawText({ buffer });
+//             textContent = result.value;
+//         } else if (fileName.endsWith('.xlsx') || fileName.endsWith('.xls')) {
+//             // Process Excel files
+//             const workbook = XLSX.read(buffer, { type: 'buffer' });
+//             workbook.SheetNames.forEach(sheetName => {
+//                 const worksheet = workbook.Sheets[sheetName];
+//                 textContent += `Sheet: ${sheetName}\n`;
+//                 textContent += XLSX.utils.sheet_to_csv(worksheet) + '\n\n';
+//             });
+//         } else if (fileName.endsWith('.csv')) {
+//             textContent = buffer.toString('utf8');
+//         } else if (
+//             fileName.endsWith('.js') || 
+//             fileName.endsWith('.py') ||
+//             fileName.endsWith('.java') ||
+//             fileName.endsWith('.cpp') ||
+//             fileName.endsWith('.c') ||
+//             fileName.endsWith('.html') ||
+//             fileName.endsWith('.css') ||
+//             fileName.endsWith('.php') ||
+//             fileName.endsWith('.rb') ||
+//             fileName.endsWith('.go') ||
+//             fileName.endsWith('.rs') ||
+//             fileName.endsWith('.ts') ||
+//             fileName.endsWith('.json') ||
+//             fileName.endsWith('.xml') ||
+//             fileName.endsWith('.sql')
+//         ) {
+//             // Process code files directly
+//             textContent = buffer.toString('utf8');
+//         } else if (fileName.endsWith('.txt') || fileName.endsWith('.rtf')) {
+//             textContent = buffer.toString('utf8');
+//         } else {
+//             return res.status(400).json({ error: 'Unsupported document type' });
+//         }
+
+//         res.json({ status: 'success', textContent });
+//     } catch (error) {
+//         console.error('Document processing error:', error);
+//         res.status(500).json({ error: 'Document processing failed' });
+//     }
+// });
+// doc format
+
+// doc format
+
+// doc format
 
 // uncomment this voice if whtasapp below doesnt work
 // app.get('/open-app/:app', (req, res) => {
@@ -465,6 +573,9 @@ app.get('/open-app/:app', (req, res) => {
 
 
 
+
+
+
 // final touch
 
 // ori uncomment if below code doesnt work
@@ -502,6 +613,28 @@ app.get('/send-whatsapp', (req, res) => {
 
 // app.listen(5000, () => console.log("Server running on port 4000"));
 // whatsapp
+
+
+// doc format
+// app.post("/process-document", upload.single("file"), (req, res) => {
+//     try {
+//         if (!req.file) {
+//             return res.status(400).json({ error: "No file uploaded" });
+//         }
+
+//         const mimeType = req.file.mimetype;
+//         const base64Data = req.file.buffer.toString("base64");
+
+//         return res.json({
+//             mime_type: mimeType,
+//             data: base64Data
+//         });
+//     } catch (error) {
+//         console.error("Error in /process-document:", error);
+//         return res.status(500).json({ error: "Failed to process document" });
+//     }
+// });
+// doc format
 // Start Server
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);

@@ -172,13 +172,18 @@ let imageinput = document.getElementById("fileInput"); // Correct selector
 // mic
 let micBtn = document.querySelector("#mic");
 // real time image
+// tts
+
+// tts
 const cameraModal = document.getElementById("cameraModal");
 const uploadOptionsModal = document.getElementById("uploadOptionsModal");
 const video = document.getElementById("video");
 const canvas = document.getElementById("canvas");
 const captureBtn = document.getElementById("capture");
 const fromComputerBtn = document.getElementById("fromComputer");
-
+// tts
+const ttsToggle = document.querySelector('#ttsToggle');
+// tts
 const takePhotoBtn = document.getElementById("takePhoto");
 const closeButtons = document.querySelectorAll(".close");
 
@@ -309,7 +314,7 @@ async function fetchApiKey() {
 //testing
 // ... (previous code remains the same)
 
-// uncomment if take a photo doesnt work-below code
+// uncomment if below doc doesnt work
 async function generateResponse(aiChatBox) {
     let text = aiChatBox.querySelector(".ai-chat-area");
     let apiKey = await fetchApiKey();
@@ -369,9 +374,16 @@ async function generateResponse(aiChatBox) {
         // text.innerHTML = apiResponse;
         // uncomment if below format doesnt work
 
+        // tts
+        
+        // tts
         // format para
         text.innerHTML = marked.parse(apiResponse);
 
+
+        // tts
+         speakText(apiResponse);
+        // tts
         // format para
     } catch (error) {
         console.error("Error fetching AI response:", error);
@@ -381,7 +393,76 @@ async function generateResponse(aiChatBox) {
         resetImageSelection();
     }
 } 
-// uncomment if take a photo doesnt work-below code
+// uncomment if doc below code dont work
+
+// doc format 
+// async function generateResponse(aiChatBox) {
+//     let text = aiChatBox.querySelector(".ai-chat-area");
+//     let apiKey = await fetchApiKey();
+
+//     if (!apiKey) {
+//         text.innerHTML = "Error: API key not found.";
+//         return;
+//     }
+
+//     let Api_Url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+
+//     // Prepare the request parts
+//     const parts = [{ text: user.message }];
+
+//     if (user.file) {
+//         if (user.file.isDocument && user.file.textContent) {
+//             // For documents and code files
+//             let prefix = "";
+//             if (user.file.isCode) {
+//                 prefix = "Here is the code content to analyze:\n```\n";
+//             } else if (user.file.isSpreadsheet) {
+//                 prefix = "Here is the spreadsheet data to analyze:\n";
+//             } else {
+//                 prefix = "Here is the document content to analyze:\n";
+//             }
+            
+//             parts.push({ 
+//                 text: prefix + user.file.textContent + (user.file.isCode ? "\n```" : "")
+//             });
+//         } else if (user.file.data) {
+//             // For images/videos
+//             parts.push({ inline_data: user.file });
+//         }
+//     }
+
+//     let requestOptions = {
+//         method: "POST",
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify({
+//             "contents": [{ parts }],
+//             "generationConfig": {
+//                 "maxOutputTokens": 2048
+//             }
+//         })
+//     };
+
+//     try {
+//         let response = await fetch(Api_Url, requestOptions);
+//         let data = await response.json();
+
+//         if (!data.candidates || data.candidates.length === 0) {
+//             text.innerHTML = "Error: No response from AI.";
+//             return;
+//         }
+
+//         let apiResponse = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, "$1").trim();
+//         text.innerHTML = marked.parse(apiResponse);
+//     } catch (error) {
+//         console.error("Error fetching AI response:", error);
+//         text.innerHTML = "Error: Unable to fetch response.";
+//     } finally {
+//         chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: "smooth" });
+//         resetImageSelection();
+//     }
+// }
+// doc format
+
 
 // take a photo generate response function
 // async function generateResponse(aiChatBox) {
@@ -444,6 +525,13 @@ async function generateResponse(aiChatBox) {
 // }
 // take a photo generate response function
 
+
+
+// tts
+
+
+
+// tts
 // Function to create a chat message box
 function createChatBox(html, classes) {
     let div = document.createElement("div");
@@ -510,7 +598,9 @@ let html = `
 <img src="user.png" alt="User" id="userImage" width="8%">
 <div class="user-chat-area">
     ${user.message}
-    ${user.file.data ? `<img src="data:${user.file.mime_type};base64,${user.file.data}" class="chooseimg" />` : ""}
+ ${user.file.data ? `<img src="data:${user.file.mime_type};base64,${user.file.data}" class="chooseimg" />` : ""}
+
+    
 </div>
 `;
 //video(real code in notepad)
@@ -760,7 +850,7 @@ submitbtn.addEventListener("click", () => {
 //     reader.readAsDataURL(file);
 // //testing
 
-// Function to reset image selection
+//uncomment if below doc code dont work
 function resetImageSelection() {
     //video
     // const defaultIcon = document.querySelector('.default-icon');
@@ -772,6 +862,24 @@ function resetImageSelection() {
     image.classList.remove("choose");
     user.file = { mime_type: null, data: null,isVideo:false };//uncomment it if video lines do not work in function resetImageSelection(now uncomment it)
 }
+// uncomment if below code dont work
+
+
+// doc format
+// function resetImageSelection() {
+//     image.src = `img.svg`;
+//     image.classList.remove("choose");
+//     user.file = { 
+//         mime_type: null, 
+//         data: null,
+//         isVideo: false,
+//         isDocument: false,
+//         isCode: false,
+//         isSpreadsheet: false
+//     };
+// }
+// doc format
+
 
 // Click event for image upload
 
@@ -1200,6 +1308,9 @@ function showVideoPreview(file) {
 // uncomment if below real time img dont work
 
 // real time img
+
+
+// uncomment if below video format dont work 10-5-25
 if (imageinput) {
     imageinput.addEventListener("change", () => {
         const file = imageinput.files[0];
@@ -1224,6 +1335,274 @@ if (imageinput) {
         reader.readAsDataURL(file);
     });
 }
+// uncomment if below video format dont work 10-5-25
+
+
+// video format 10-5-25
+// if (imageinput) {
+//     imageinput.addEventListener("change", () => {
+//         const file = imageinput.files[0];
+//         if (!file) return;
+
+//         if (file.size > 100 * 1024 * 1024) {
+//             alert('File size too large (max 100MB)');
+//             return;
+//         }
+
+//         const reader = new FileReader();
+//         reader.onload = async (e) => {
+//             let base64string = e.target.result.split(",")[1];
+
+//             if (file.type.startsWith('video/')) {
+//                 user.file = {
+//                     mime_type: file.type,
+//                     data: base64string
+//                 };
+
+//                 // Request thumbnail from backend
+//                 const response = await fetch("http://localhost:3001/process-video", {
+//                     method: "POST",
+//                     headers: { "Content-Type": "application/json" },
+//                     body: JSON.stringify({
+//                         videoData: base64string,
+//                         mimeType: file.type
+//                     })
+//                 });
+
+//                 const result = await response.json();
+//                 if (result.thumbnail) {
+//                     image.src = `data:image/png;base64,${result.thumbnail}`;
+//                     image.classList.add("choose");
+//                     user.file.thumbnail = result.thumbnail; // Save for chat
+//                 } else {
+//                     alert("Thumbnail generation failed");
+//                 }
+
+//             } else {
+//                 // Image file
+//                 user.file = {
+//                     mime_type: file.type,
+//                     data: base64string
+//                 };
+//                 image.src = `data:${user.file.mime_type};base64,${user.file.data}`;
+//                 image.classList.add("choose");
+//             }
+//         };
+//         reader.readAsDataURL(file);
+//     });
+// }
+
+// video format 10-5-25
+
+// doc format
+// Update the file input event listener
+// imageinput.addEventListener("change", () => {
+//     const file = imageinput.files[0];
+//     if (!file) return;
+
+//     // Add size validation (100MB limit)
+//     if (file.size > 100 * 1024 * 1024) {
+//         alert('File size too large (max 100MB)');
+//         resetImageSelection();
+//         return;
+//     }
+
+//     // Check file type
+//     const fileType = file.type;
+//     const fileExt = file.name.split('.').pop().toLowerCase();
+//     const isImage = fileType.startsWith('image/');
+//     const isVideo = fileType.startsWith('video/');
+//     const isDocument = [
+//         'pdf', 'doc', 'docx', 'txt', 'rtf', 'odt', 
+//         'xls', 'xlsx', 'csv',
+//         'js', 'py', 'java', 'cpp', 'c', 'html', 'css', 
+//         'php', 'rb', 'go', 'rs', 'ts', 'json', 'xml', 'sql'
+//     ].includes(fileExt);
+
+//     if (isImage || isVideo) {
+//         // Existing image/video handling
+//         let reader = new FileReader();
+//         reader.onload = (e) => {
+//             let base64string = e.target.result.split(",")[1];
+//             user.file = {
+//                 mime_type: file.type,
+//                 data: base64string,
+//                 isVideo: isVideo
+//             };
+            
+//             if (isVideo) {
+//                 showVideoPreview(file);
+//                 image.src = 'video-icon.svg';
+//             } else {
+//                 image.src = `data:${user.file.mime_type};base64,${user.file.data}`;
+//             }
+//             image.classList.add("choose");
+//         };
+//         reader.readAsDataURL(file);
+//     } else if (isDocument) {
+//         // New document handling
+//         const reader = new FileReader();
+        
+//         if ([
+//             'pdf', 'txt', 'rtf', 'js', 'py', 'java', 'cpp', 'c', 
+//             'html', 'css', 'php', 'rb', 'go', 'rs', 'ts', 'json', 
+//             'xml', 'sql'
+//         ].includes(fileExt)) {
+//             // For text-based documents and code files
+//             reader.onload = (e) => {
+//                 const content = e.target.result;
+//                 user.file = {
+//                     mime_type: file.type,
+//                     data: null,
+//                     textContent: content,
+//                     isDocument: true,
+//                     isCode: [
+//                         'js', 'py', 'java', 'cpp', 'c', 'html', 
+//                         'css', 'php', 'rb', 'go', 'rs', 'ts', 
+//                         'json', 'xml', 'sql'
+//                     ].includes(fileExt)
+//                 };
+                
+//                 // Show appropriate icon
+//                 if (user.file.isCode) {
+//                     image.src = 'code-icon.svg'; // Add this icon
+//                 } else {
+//                     image.src = 'document-icon.svg';
+//                 }
+//                 image.classList.add("choose");
+                
+//                 // Auto-prompt based on file type
+//                 if (!prompt.value.trim()) {
+//                     if (user.file.isCode) {
+//                         prompt.value = "Please analyze this code and explain its functionality:";
+//                     } else {
+//                         prompt.value = "Please summarize the key points of this document:";
+//                     }
+//                 }
+//             };
+            
+//             reader.readAsText(file);
+//         } else if (['xlsx', 'xls', 'csv'].includes(fileExt)) {
+//             // For Excel files, send to server for processing
+//             reader.onload = async (e) => {
+//                 const base64string = e.target.result.split(",")[1];
+                
+//                 try {
+//                     const response = await fetch('http://localhost:3001/process-document', {
+//                         method: 'POST',
+//                         headers: { 'Content-Type': 'application/json' },
+//                         body: JSON.stringify({
+//                             fileData: base64string,
+//                             mimeType: file.type,
+//                             fileName: file.name
+//                         })
+//                     });
+                    
+//                     const data = await response.json();
+//                     if (data.status === 'success') {
+//                         user.file = {
+//                             mime_type: file.type,
+//                             data: null,
+//                             textContent: data.textContent,
+//                             isDocument: true,
+//                             isSpreadsheet: true
+//                         };
+                        
+//                         image.src = 'spreadsheet-icon.svg'; // Add this icon
+//                         image.classList.add("choose");
+                        
+//                         if (!prompt.value.trim()) {
+//                             prompt.value = "Please analyze this spreadsheet data:";
+//                         }
+//                     }
+//                 } catch (error) {
+//                     console.error('Document processing failed:', error);
+//                     alert('Failed to process spreadsheet');
+//                 }
+//             };
+//             reader.readAsDataURL(file);
+//         } else {
+//             // For other binary documents (like DOCX)
+//             reader.onload = async (e) => {
+//                 const base64string = e.target.result.split(",")[1];
+                
+//                 try {
+//                     const response = await fetch('http://localhost:3001/process-document', {
+//                         method: 'POST',
+//                         headers: { 'Content-Type': 'application/json' },
+//                         body: JSON.stringify({
+//                             fileData: base64string,
+//                             mimeType: file.type,
+//                             fileName: file.name
+//                         })
+//                     });
+                    
+//                     const data = await response.json();
+//                     if (data.status === 'success') {
+//                         user.file = {
+//                             mime_type: file.type,
+//                             data: null,
+//                             textContent: data.textContent,
+//                             isDocument: true
+//                         };
+                        
+//                         image.src = 'document-icon.svg';
+//                         image.classList.add("choose");
+                        
+//                         if (!prompt.value.trim()) {
+//                             prompt.value = "Please analyze this document:";
+//                         }
+//                     }
+//                 } catch (error) {
+//                     console.error('Document processing failed:', error);
+//                     alert('Failed to process document');
+//                 }
+//             };
+//             reader.readAsDataURL(file);
+//         }
+//     } else {
+//         alert('Unsupported file type');
+//         resetImageSelection();
+//     }
+// });
+// doc format
+
+
+// doc format
+// imageinput.addEventListener("change", () => {
+//     const file = imageinput.files[0];
+//     if (!file) return;
+
+//     const formData = new FormData();
+//     formData.append("file", file); // MUST match multer field
+
+//     fetch("http://localhost:3001/process-document", {
+//         method: "POST",
+//         body: formData
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//         if (!data || !data.data || !data.mime_type) {
+//             throw new Error("Invalid response from server");
+//         }
+
+//         user.file = {
+//             mime_type: data.mime_type,
+//             data: data.data
+//         };
+
+//         image.src = `img.svg`; // generic icon instead of preview
+//         image.classList.add("choose");
+//     })
+//     .catch(error => {
+//         console.error("Error uploading file:", error);
+//     });
+// });
+
+
+
+// doc format
+
 // real time img
 
 //18-3-2025 video
@@ -1331,3 +1710,113 @@ document.addEventListener("DOMContentLoaded", () => {
 // real time image
 
 // real time image
+
+
+
+// tts
+
+// TTS Variables (add these at the top with your other variables)
+let ttsEnabled = true; // Enable TTS by default
+let synth = window.speechSynthesis;
+let voices = [];
+// tts new
+
+// tts new
+
+// Initialize TTS (call this when DOM is loaded)
+function initTTS() {
+    // Check if browser supports TTS
+    if (!synth) {
+        console.warn('Text-to-Speech not supported in this browser');
+        return;
+    }
+
+    // Load available voices
+    function loadVoices() {
+        voices = synth.getVoices();
+        console.log('Available voices:', voices);
+    }
+
+    // Some browsers need this event listener
+    if (synth.onvoiceschanged !== undefined) {
+        synth.onvoiceschanged = loadVoices;
+    }
+
+    // Initial voice load
+    loadVoices();
+}
+
+// Speak text with TTS
+function speakText(text) {
+    if (!ttsEnabled || !synth) return;
+    
+    // Cancel any ongoing speech
+    synth.cancel();
+    
+    const utterance = new SpeechSynthesisUtterance(text);
+    // tts new
+    
+    // tts new
+    
+    // Try to find a suitable voice (English preferred)
+    utterance.voice = voices.find(v => v.lang.includes('en')) || null;
+    utterance.rate = 1.0; // Normal speed
+    utterance.pitch = 1.0; // Normal pitch
+    utterance.volume = 1.0; // Max volume
+    
+    utterance.onerror = (event) => {
+        console.error('TTS Error:', event);
+    };
+    
+    synth.speak(utterance);
+}
+
+// Initialize TTS when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    initTTS();
+    
+    // Some browsers need a user interaction to enable TTS
+    document.body.addEventListener('click', () => {
+        if (voices.length === 0) {
+            voices = synth.getVoices();
+        }
+    }, { once: true });
+});
+
+
+// new
+if (ttsToggle) {
+    ttsToggle.addEventListener('click', () => {
+        ttsEnabled = !ttsEnabled;
+        // tts new
+       
+        // tts new
+
+        updateTtsButton();
+        
+        // Store preference
+        localStorage.setItem('ttsEnabled', ttsEnabled);
+        
+        // Provide feedback
+        speakText(ttsEnabled ? 'Text to speech enabled' : 'Text to speech disabled');
+    });
+
+    function updateTtsButton() {
+        if (ttsEnabled) {
+            ttsToggle.classList.remove('tts-off');
+            ttsToggle.title = 'Text-to-Speech: ON (Click to disable)';
+        } else {
+            ttsToggle.classList.add('tts-off');
+            ttsToggle.title = 'Text-to-Speech: OFF (Click to enable)';
+        }
+    }
+
+    // Load saved preference
+    const savedTtsEnabled = localStorage.getItem('ttsEnabled');
+    if (savedTtsEnabled !== null) {
+        ttsEnabled = savedTtsEnabled === 'true';
+    }
+    updateTtsButton();
+}
+// new
+// tts

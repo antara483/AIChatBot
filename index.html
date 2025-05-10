@@ -89,16 +89,25 @@ Hello!How Can I Help You Today!
     <input type="file" accept="images/*" hidden></button>  -->
     <!-- //original change if below code doesnt work  -->
     <!-- 18-3-2025 video-->
-
+<!-- uncomment if below doc format doesnt work -->
 <button id="image">
     <img src="img.svg" alt="Upload" class="default-icon">
     <!-- <img src="video-icon.svg" alt="Video" class="video-icon" hidden> -->
-   
-</button>
-<!-- uncomment if below doc format  -->
+   </button>
 <input type="file" id="fileInput" accept="image/*,video/*" hidden>
 
+<!-- uncomment if below doc format doesnt work -->
 
+<!-- doc format -->
+ 
+<!-- <label for="fileUpload" id="image" style="cursor: pointer;">
+    <img src="img.svg" alt="Upload" class="default-icon">
+</label>
+<input type="file" id="fileUpload" accept=".pdf,.doc,.docx,.txt,image/*,video/*" multiple hidden />
+<button onclick="handleFileUpload()">Upload and Ask</button> -->
+
+ 
+ <!-- doc format -->
 
 
 
@@ -123,8 +132,17 @@ Hello!How Can I Help You Today!
     </button> -->
     <!-- //video -->
      <!-- Update the file input button -->
+      
+    <!-- <button id="ttsToggle" title="Toggle Text-to-Speech">🔊 </button> -->
+     <button id="ttsToggle" title="Toggle Text-to-Speech">
+     <img src="tts.svg" alt="TTS" />
+     </button>
 
     <button id="mic"><img src="mic.svg" alt=""></button>
+    
+    <!-- tts -->
+     
+     <!-- tts -->
     <button id="submit" type="button"><img src="submit.svg" alt="Submit"></button>
 </div>
 <!-- real time image -->
@@ -195,9 +213,55 @@ Hello!How Can I Help You Today!
         // side bar menu
 
 // real time image
+// doc format
+// async function handleFileUpload() {
+//   const input = document.getElementById('fileUpload');
+//   const files = input.files;
+//   const formData = new FormData();
+  
+//   // Append all files to the form data
+//   for (let file of files) {
+//     formData.append('files', file);
+//   }
+
+//   // Send files to the server
+//   const response = await fetch('/upload', {
+//     method: 'POST',
+//     body: formData
+//   });
+
+//   const data = await response.json();
+//   const extractedText = data.map(file => file.content).join('\n');
+  
+//   // Display extracted content for user to interact with
+// //   document.getElementById('output').innerText = JSON.stringify(data, null, 2);
+// document.getElementById('output').innerText = await fetchAnswerFromAI(extractedText);
+// }
+
+// async function fetchAnswerFromAI(text) {
+//   const response = await fetch('https://your-ai-endpoint', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify({ query: text }),
+//   });
+
+//   const result = await response.json();
+//   return result.answer;  // Assuming the AI returns an answer field
+// }
 
 
-// real time image
+
+
+// doc format
+
+// real time 
+
+
+// tts
+   
+// tts
 </script>
 <script src="script.js"></script>
 </body>
