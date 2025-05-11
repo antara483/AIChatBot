@@ -671,9 +671,95 @@ box-shadow:2px 2px 10px black;
 /* tts shift */
 
 /* video 10-5-25 */
-/* #image img {
-  width: 80px;
-  height: 60px;
-  border: 2px solid red; 
+/* .chooseimg {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+#image img.choose {
+    max-width: 50px;
+    max-height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+} */
+
+/* Add these styles to your CSS file */
+/* #image {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#image .processing {
+    font-size: 12px;
+    color: #666;
+}
+
+#image .video-thumbnail,
+#image .image-preview {
+    max-width: 50px;
+    max-height: 50px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+#image img {
+    transition: all 0.3s ease;
 } */
 /* video 10-5-25 */
+/* Video upload status indicators */
+/* .upload-status {
+    padding: 8px;
+    font-size: 12px;
+    color: #555;
+    background: #f5f5f5;
+    border-radius: 4px;
+    min-width: 120px;
+    text-align: center;
+}
+
+.video-thumbnail {
+    max-width: 60px;
+    max-height: 60px;
+    border-radius: 4px;
+    object-fit: cover;
+    border: 1px solid #ddd;
+} */
+
+/* Error state */
+/* #image.error {
+    border: 1px solid #ff6b6b;
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+} */
+
+
+/* video icon */
+.video-indicator {
+    display: inline-block;
+    padding: 5px;
+    background: #f0f0f0;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.video-icon-small {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+}
+
+.default-icon, .video-icon {
+    width: 24px;
+    height: 24px;
+    transition: all 0.3s ease;
+}
+/* video icon */

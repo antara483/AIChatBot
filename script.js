@@ -1,155 +1,4 @@
-// let prompt=document.querySelector("#prompt")
-// let submitbtn=document.querySelector("#submit")
-// let chatContainer=document.querySelector(".chat-container")
-// let imagebtn=document.querySelector("#image")
-// let image=document.querySelector("#image img")
-// let imageinput=document.querySelector("#image input")
-// //first
-// // const Api_Url="https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=Your-Api-Key"
-// //second
-// let user={
-//     message:null,
-//     file:{
-//         mime_type:null,
-//           data:null
-//     }
 
-// }
-// //api adjust
-// // async function fetchApiKey() {
-// //     try {
-// //         let response = await fetch('http://localhost:3000/api/key'); // Fetch API key from backend
-// //         let data = await response.json();
-// //         return data.apiKey;
-// //     } catch (error) {
-// //         console.error('Error fetching API key:', error);
-// //         return null;
-// //     }
-// // }
-// // //api adjust
-// async function generateResponse(aiChatBox){
-//     let text=aiChatBox.querySelector(".ai-chat-area")
-//     //api adjust
-//     // let apiKey = await fetchApiKey();
-//     // if (!apiKey) {
-//     //     text.innerHTML = "Error: API key not found.";
-//     //     return;
-//     // }
-
-//     // let Api_Url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-
-    
-       
-//     //api adjust
-//     let RequestOption={
-//         method:"POST",
-//         headers:{'Content-Type': 'application/json'},
-//         body:JSON.stringify({
-            
-//                 "contents": [
-//                     {"parts":[{"text": user.message},(user.file.data?[{"inline_data":user.file}]:[])
-
-//                     ]
-//                   }]
-                 
-//         })
-//     }
-//     try{
-//         let response=await fetch(Api_Url,RequestOption)
-//         let data=await response.json()
-//         // console.log(data);
-//         let apiResponse=data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g,"$1").trim()
-//         text.innerHTML=apiResponse
-        
-//     }
-//   catch(error){
-//     console.log(error);
-//   }
-//   finally{
-//     chatContainer.scrollTo({top:chatContainer.scrollHeight,behavior:"smooth"})
-//     image.src=`img.svg`
-//     image.classList.remove("choose")
-//     user.file={}
-//   }
-
-// }
-// function createChatBox(html,classes){
-//     let div=document.createElement("div")
-//     div.innerHTML=html
-//     div.classList.add(classes)
-//     return div
-// }
-
-
-// function handlechatResponse(userMessage){
-//     user.message=userMessage
-//     let html=`<img src="user.png" at="" id="userImage" width="8%">
-// <div class="user-chat-area">
-// ${user.message}
-// ${user.file.data?`<img src="data:${user.file.mime_type};base64,${user.file.data}" class="chooseimg" />` : ""}
-// </div>`
-// prompt.value=""
-// let userChatBox=createChatBox(html,"user-chat-box")
-// chatContainer.appendChild(userChatBox)
-// chatContainer.scrollTo({top:chatContainer.scrollHeight,behavior:"smooth"})
-// setTimeout(()=>{
-// let html=`<img src="ai.avif" alt="" id="aiImage" width="10%">
-// <div class="ai-chat-area">
-// <img src="loading.webp" alt="" class="load" width="50px">
-// </div>`
-// let aiChatBox=createChatBox(html,"ai-chat-box")
-// chatContainer.appendChild(aiChatBox)
-// generateResponse(aiChatBox)
-// },600)
-
-// }
-// prompt.addEventListener("keydown",(e)=>{
-//     if(e.key=="Enter"){
-//     handlechatResponse(prompt.value)
-
-
-//     }
-
-// })
-// submitbtn.addEventListener("click",()=>{
-//     handlechatResponse(prompt.value)
-// })
-// imageinput.addEventListener("change",()=>{
-//     const file=imageinput.files[0]
-//     if(!file) return
-//     let reader= new FileReader()
-//     reader.onload=(e)=>{
-//         let base64string=e.target.result.split(",")[1]
-//         user.file={
-//             mime_type:file.type,
-//               data:base64string
-//         }
-//      image.src=`data:${user.file.mime_type};base64,${user.file.data}`
-//      image.classList.add("choose")
-//     }
-   
-//     reader.readAsDataURL(file)
-// })
-
-// imagebtn.addEventListener("click",()=>{
-//     imagebtn.querySelector("input").click()
-// })
-
-
-
-//video
-// const defaultIcon = document.querySelector('.default-icon');
-// const videoIcon = document.querySelector('.video-icon');
-//video
-// take photo
-// const cameraModal = document.getElementById("cameraModal");
-// const uploadOptionsModal = document.getElementById("uploadOptionsModal");
-// const video = document.getElementById("video");
-// const canvas = document.getElementById("canvas");
-// const captureBtn = document.getElementById("capture");
-// const fromComputerBtn = document.getElementById("fromComputer");
-// const takePhotoBtn = document.getElementById("takePhoto");
-// const closeButtons = document.querySelectorAll(".close");
 // take photo
 // chat history
 
@@ -191,13 +40,12 @@ const closeButtons = document.querySelectorAll(".close");
 let isListening = false;
 let recognition = null;
 // voice open app
-// voice open app
-// mic
-//updated mic 932025
-// let networkTimeout = null;
-//updated mic932025
+// video icon 11-5-25
+const defaultIcon = document.querySelector(".default-icon");
+const videoIcon = document.querySelector(".video-icon");
+// video icon 11-5-245
 
-
+// uncomment if below doc 11-5-25 dont work
 let user = {
     message: null,
     file: {
@@ -205,7 +53,24 @@ let user = {
         data: null,
     }
 };
+// uncomment if below doc 11-5-25 dont work
 
+
+// doc 11-5-25
+// let user = {
+//     message: null,
+//     file: {
+//         mime_type: null,
+//         data: null,
+//         isDocument: false,
+//         isCode: false,
+//         isSpreadsheet: false,
+//         textContent: null,
+//         fileName: null
+//     }
+// };
+
+// do 11-5-25
 // Function to fetch API key from the backend
 async function fetchApiKey() {
     try {
@@ -220,44 +85,11 @@ async function fetchApiKey() {
 
 
 
-// Function to generate AI response
+
+// uncomment if below video 11-5-25  doesnt work
 // async function generateResponse(aiChatBox) {
 //     let text = aiChatBox.querySelector(".ai-chat-area");
-//     let apiKey = await fetchApiKey();//get api key
-//     //video
-//     // if (user.file.data && user.file.mime_type.startsWith('video/')) {
-//     //     try {
-//     //         const response = await fetch('http://localhost:3000/process-video', {
-//     //             method: 'POST',
-//     //             headers: { 'Content-Type': 'application/json' },
-//     //             body: JSON.stringify({
-//     //                 videoData: user.file.data,
-//     //                 mimeType: user.file.mime_type
-//     //             })
-//     //         });
-          
-            
-//             const result = await response.json();//real
-            
-        
-            
-          
-// }
-
-//             //video
-//                 // Add thumbnail to user's message
-//                 // const userChatBox = document.querySelector('.user-chat-box:last-child');
-//                 // if (userChatBox) {
-//                 //     const thumbnail = document.createElement('img');
-//                 //     thumbnail.src = `data:image/png;base64,${result.thumbnail}`;
-//                 //     thumbnail.style.maxWidth = '200px';
-//                 //     userChatBox.querySelector('.user-chat-area').appendChild(thumbnail);
-//                 // }
-                
-            
-//             user.message = `${user.message}\n[Video Processed - Thumbnail Attached]`;
-            
-//     //         // Add thumbnail to chat
+//     let apiKey = await fetchApiKey();
 
 //     if (!apiKey) {
 //         text.innerHTML = "Error: API key not found.";
@@ -273,7 +105,22 @@ async function fetchApiKey() {
 //             "contents": [
 //                 {
 //                     "parts": [
+//                         // uncomment format if below line dont work
 //                         { "text": user.message },
+//                         // uncomment format if below line dont work
+
+//                         // format para
+//                         // {
+//                         //     "text": `Please answer this question in a well-formatted manner using:
+//                         //   - Bullet points
+//                         //   - Headings
+//                         //   - Step-by-step explanation
+//                         //   - Code blocks (if needed)
+                          
+//                         //   Question: ${user.message}`
+//                         //   },
+                          
+//                         // format para
 //                         ...(user.file.data ? [{ "inline_data": user.file }] : [])
 //                     ]
 //                 }
@@ -282,7 +129,10 @@ async function fetchApiKey() {
 //     };
 
 //     try {
+       
+       
 //         let response = await fetch(Api_Url, requestOptions);
+                
 //         let data = await response.json();
 
 //         if (!data.candidates || data.candidates.length === 0) {
@@ -291,30 +141,33 @@ async function fetchApiKey() {
 //         }
 
 //         let apiResponse = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, "$1").trim();
-//         text.innerHTML = apiResponse;
+//         // uncomment if below format doesnt work
+        
+//         // text.innerHTML = apiResponse;
+//         // uncomment if below format doesnt work
 
+//         // tts
+        
+//         // tts
+//         // format para
+//         text.innerHTML = marked.parse(apiResponse);
+
+
+//         // tts
+//          speakText(apiResponse);
+//         // tts
+//         // format para
 //     } catch (error) {
 //         console.error("Error fetching AI response:", error);
 //         text.innerHTML = "Error: Unable to fetch response.";
 //     } finally {
 //         chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: "smooth" });
-
 //         resetImageSelection();
 //     }
+// } 
+// uncomment if below video 11-5-25 dont work
 
-
-
-// // Function to create a chat message box
-// function createChatBox(html, classes) {
-//     let div = document.createElement("div");
-//     div.innerHTML = html;
-//     div.classList.add(classes);
-//     return div;
-// }
-//testing
-// ... (previous code remains the same)
-
-// uncomment if below doc doesnt work
+// video format 11-5-25
 async function generateResponse(aiChatBox) {
     let text = aiChatBox.querySelector(".ai-chat-area");
     let apiKey = await fetchApiKey();
@@ -333,34 +186,26 @@ async function generateResponse(aiChatBox) {
             "contents": [
                 {
                     "parts": [
-                        // uncomment format if below line dont work
                         { "text": user.message },
-                        // uncomment format if below line dont work
-
-                        // format para
-                        // {
-                        //     "text": `Please answer this question in a well-formatted manner using:
-                        //   - Bullet points
-                        //   - Headings
-                        //   - Step-by-step explanation
-                        //   - Code blocks (if needed)
-                          
-                        //   Question: ${user.message}`
-                        //   },
-                          
-                        // format para
-                        ...(user.file.data ? [{ "inline_data": user.file }] : [])
+                        ...(user.file && user.file.data && user.file.mime_type
+                            ? [{
+                                inline_data: {
+                                    mime_type: user.file.mime_type,
+                                    data: user.file.data
+                                }
+                            }]
+                            : [])
                     ]
                 }
             ]
         })
     };
 
+    // Debug log (optional)
+    console.log("Sending request to Gemini:", JSON.stringify(JSON.parse(requestOptions.body), null, 2));
+
     try {
-       
-       
         let response = await fetch(Api_Url, requestOptions);
-                
         let data = await response.json();
 
         if (!data.candidates || data.candidates.length === 0) {
@@ -369,22 +214,10 @@ async function generateResponse(aiChatBox) {
         }
 
         let apiResponse = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, "$1").trim();
-        // uncomment if below format doesnt work
-        
-        // text.innerHTML = apiResponse;
-        // uncomment if below format doesnt work
-
-        // tts
-        
-        // tts
-        // format para
         text.innerHTML = marked.parse(apiResponse);
 
-
-        // tts
-         speakText(apiResponse);
-        // tts
-        // format para
+        // Optional TTS
+        speakText(apiResponse);
     } catch (error) {
         console.error("Error fetching AI response:", error);
         text.innerHTML = "Error: Unable to fetch response.";
@@ -392,142 +225,14 @@ async function generateResponse(aiChatBox) {
         chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: "smooth" });
         resetImageSelection();
     }
-} 
-// uncomment if doc below code dont work
-
-// doc format 
-// async function generateResponse(aiChatBox) {
-//     let text = aiChatBox.querySelector(".ai-chat-area");
-//     let apiKey = await fetchApiKey();
-
-//     if (!apiKey) {
-//         text.innerHTML = "Error: API key not found.";
-//         return;
-//     }
-
-//     let Api_Url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-
-//     // Prepare the request parts
-//     const parts = [{ text: user.message }];
-
-//     if (user.file) {
-//         if (user.file.isDocument && user.file.textContent) {
-//             // For documents and code files
-//             let prefix = "";
-//             if (user.file.isCode) {
-//                 prefix = "Here is the code content to analyze:\n```\n";
-//             } else if (user.file.isSpreadsheet) {
-//                 prefix = "Here is the spreadsheet data to analyze:\n";
-//             } else {
-//                 prefix = "Here is the document content to analyze:\n";
-//             }
-            
-//             parts.push({ 
-//                 text: prefix + user.file.textContent + (user.file.isCode ? "\n```" : "")
-//             });
-//         } else if (user.file.data) {
-//             // For images/videos
-//             parts.push({ inline_data: user.file });
-//         }
-//     }
-
-//     let requestOptions = {
-//         method: "POST",
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify({
-//             "contents": [{ parts }],
-//             "generationConfig": {
-//                 "maxOutputTokens": 2048
-//             }
-//         })
-//     };
-
-//     try {
-//         let response = await fetch(Api_Url, requestOptions);
-//         let data = await response.json();
-
-//         if (!data.candidates || data.candidates.length === 0) {
-//             text.innerHTML = "Error: No response from AI.";
-//             return;
-//         }
-
-//         let apiResponse = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, "$1").trim();
-//         text.innerHTML = marked.parse(apiResponse);
-//     } catch (error) {
-//         console.error("Error fetching AI response:", error);
-//         text.innerHTML = "Error: Unable to fetch response.";
-//     } finally {
-//         chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: "smooth" });
-//         resetImageSelection();
-//     }
-// }
-// doc format
-
-
-// take a photo generate response function
-// async function generateResponse(aiChatBox) {
-//     const text = aiChatBox.querySelector(".ai-chat-area");
-//     const apiKey = await fetchApiKey();
-
-//     if (!apiKey) {
-//         text.innerHTML = "Error: API key not found.";
-//         return;
-//     }
-
-//     // Try current endpoints
-//     // const endpoints = [
-//     //     `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
-//     //     `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${apiKey}`
-//     // ];
-
-//         // Replace your endpoints array with this:
-// const endpoints = [
-//     `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
-//     `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${apiKey}`
-// ];
-
-//     const parts = [{ text: user.message }];
-//     if (user.file.data) {
-//         parts.push({
-//             inline_data: {
-//                 mime_type: user.file.mime_type,
-//                 data: user.file.data
-//             }
-//         });
-//     }
-
-//     const requestOptions = {
-//         method: "POST",
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify({
-//             contents: [{ parts }],
-//             generationConfig: {
-//                 maxOutputTokens: 2048
-//             }
-//         })
-//     };
-
-//     for (const endpoint of endpoints) {
-//         try {
-//             const response = await fetch(endpoint, requestOptions);
-//             const data = await response.json();
-            
-//             if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
-//                 text.innerHTML = formatResponse(data.candidates[0].content.parts[0].text);
-//                 return;
-//             }
-//         } catch (error) {
-//             console.error(`Failed with endpoint ${endpoint}:`, error);
-//         }
-//     }
-
-//     text.innerHTML = "Error: Could not get response from any API endpoint";
-// }
-// take a photo generate response function
+}
+// video format 11-5-25
 
 
 
-// tts
+
+
+
 
 
 
@@ -545,69 +250,116 @@ function createChatBox(html, classes) {
 
 
 
-// uncomment if below take a photo doesnt work
-function handleChatResponse(userMessage)
+// uncomment if below video format doesnt work 11-5-25
+// function handleChatResponse(userMessage)
 
-{
-    if (!userMessage.trim()) return; // Prevent empty messages
-    // uncomment if below line dont work
-    // user.message = userMessage;
-    // uncomment it if below line dont work
+// {
+//     if (!userMessage.trim()) return; // Prevent empty messages
+//     // uncomment if below line dont work
+//     // user.message = userMessage;
+//     // uncomment it if below line dont work
 
-    // format
-    const basePrompt = userMessage.trim();
-user.message = basePrompt.length > 60
-  ? `Please answer the following clearly and in well-formatted style using bullet points, headers, and code blocks where needed:\n\n${basePrompt}`
-  : basePrompt;
+//     // format
+//     const basePrompt = userMessage.trim();
+// user.message = basePrompt.length > 60
+//   ? `Please answer the following clearly and in well-formatted style using bullet points, headers, and code blocks where needed:\n\n${basePrompt}`
+//   : basePrompt;
 
-    // format
-//    format para
-// If message is small-talk, keep it short and casual
-// const smallTalk = ["hello", "hi", "hey", "how are you", "what's up"];
-// const normalizedMessage = userMessage.toLowerCase().trim();
+//     // format
+// //    format para
+// // If message is small-talk, keep it short and casual
+// // const smallTalk = ["hello", "hi", "hey", "how are you", "what's up"];
+// // const normalizedMessage = userMessage.toLowerCase().trim();
 
-// if (smallTalk.some(q => normalizedMessage.includes(q))) {
-//     user.message = `Give a short and friendly response to: "${userMessage}"`;
-// }
+// // if (smallTalk.some(q => normalizedMessage.includes(q))) {
+// //     user.message = `Give a short and friendly response to: "${userMessage}"`;
+// // }
 
-// format para
+// // format para
 
 
-    //
-    //video
-    // const defaultIcon = document.querySelector('.default-icon');
-    // const videoIcon = document.querySelector('.video-icon');
-    // let fileContent = '';
-    // if (user.file.data) {
-    //     if (user.file.isVideo) {
-    //         fileContent = `
-    //             <div class="video-indicator">
-    //                 <img src="video-icon.svg" class="video-icon-small">
-    //             </div>
-    //         `;
-    //     } else {
-    //         fileContent = `<img src="data:${user.file.mime_type};base64,${user.file.data}" class="chooseimg" />`;
-    //     }
-    // }
-    //video
-//video
-//sentiment
-// user.message = userMessage;
-//sentiment
-let html = `
-<img src="user.png" alt="User" id="userImage" width="8%">
-<div class="user-chat-area">
-    ${user.message}
- ${user.file.data ? `<img src="data:${user.file.mime_type};base64,${user.file.data}" class="chooseimg" />` : ""}
+//     //
+//     //video
+//     // const defaultIcon = document.querySelector('.default-icon');
+//     // const videoIcon = document.querySelector('.video-icon');
+//     // let fileContent = '';
+//     // if (user.file.data) {
+//     //     if (user.file.isVideo) {
+//     //         fileContent = `
+//     //             <div class="video-indicator">
+//     //                 <img src="video-icon.svg" class="video-icon-small">
+//     //             </div>
+//     //         `;
+//     //     } else {
+//     //         fileContent = `<img src="data:${user.file.mime_type};base64,${user.file.data}" class="chooseimg" />`;
+//     //     }
+//     // }
+//     //video
+// //video
+// //sentiment
+// // user.message = userMessage;
+// //sentiment
+// let html = `
+// <img src="user.png" alt="User" id="userImage" width="8%">
+// <div class="user-chat-area">
+//     ${user.message}
+//  ${user.file.data ? `<img src="data:${user.file.mime_type};base64,${user.file.data}" class="chooseimg" />` : ""}
 
     
-</div>
-`;
-//video(real code in notepad)
-// Reset icons
-// defaultIcon.hidden = false;//video
-// videoIcon.hidden = true;//video
+// </div>
+// `;
+// //video(real code in notepad)
+// // Reset icons
+// // defaultIcon.hidden = false;//video
+// // videoIcon.hidden = true;//video
+//     prompt.value = ""; // Clear input field
+
+//     let userChatBox = createChatBox(html, "user-chat-box");
+//     chatContainer.appendChild(userChatBox);
+//     chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: "smooth" });
+
+//     setTimeout(() => {
+//         let html = `
+//             <img src="ai.avif" alt="AI" id="aiImage" width="10%">
+//             <div class="ai-chat-area">
+//                 <img src="loading.webp" alt="Loading" class="load" width="50px">
+//             </div>
+//         `;
+//         let aiChatBox = createChatBox(html, "ai-chat-box");
+//         chatContainer.appendChild(aiChatBox);
+//         generateResponse(aiChatBox);
+//     }, 600);
+// }
+// uncomment if below take video format doesnt work 11-5-25
+
+
+// video format 11-5-25
+function handleChatResponse(userMessage) {
+    if (!userMessage.trim() && !user.file.data) return;
+
+    user.message = userMessage || (user.file.isVideo ? "Tell me about this video" : "Tell me about this image");
+    
+    let html = `
+        <img src="user.png" alt="User" id="userImage" width="8%">
+        <div class="user-chat-area">
+            ${user.message}
+            ${user.file.data ? 
+                (user.file.isVideo ? 
+                    `<div class="video-indicator">
+                        <img src="video-icon.svg" class="video-icon-small">
+                    </div>` 
+                    : 
+                    `<img src="data:${user.file.mime_type};base64,${user.file.data}" class="chooseimg" />`
+                ) 
+                : ""
+            }
+        </div>
+    `;
+    
     prompt.value = ""; // Clear input field
+    // Reset icons
+    defaultIcon.hidden = false;
+    videoIcon.hidden = true;
 
     let userChatBox = createChatBox(html, "user-chat-box");
     chatContainer.appendChild(userChatBox);
@@ -625,8 +377,7 @@ let html = `
         generateResponse(aiChatBox);
     }, 600);
 }
-// uncomment if below take a photo doesnt work
-
+// video format 11-5-25
 // take a photo handle chatresponse
 // function handleChatResponse(userMessage) {
 //     if (!userMessage.trim() && !user.file.data) return;
@@ -833,36 +584,33 @@ submitbtn.addEventListener("click", () => {
 // }
 // video
   
-//testing
-//     let reader = new FileReader();
-//     reader.onload = (e) => {
-//         let base64string = e.target.result.split(",")[1];
-//         user.file = {
-//             mime_type: file.type,
-//             data: base64string,
-          
-//         };
-     
-//         image.src = `data:${user.file.mime_type};base64,${user.file.data}`;
-       
-//         image.classList.add("choose");
-//     };
-//     reader.readAsDataURL(file);
-// //testing
 
-//uncomment if below doc code dont work
+
+//uncomment if below doc code dont work 11-5-25
 function resetImageSelection() {
-    //video
-    // const defaultIcon = document.querySelector('.default-icon');
-    // const videoIcon = document.querySelector('.video-icon');
-    // defaultIcon.hidden = false;
-    // videoIcon.hidden = true;
-    //video
     image.src = `img.svg`;
     image.classList.remove("choose");
     user.file = { mime_type: null, data: null,isVideo:false };//uncomment it if video lines do not work in function resetImageSelection(now uncomment it)
 }
-// uncomment if below code dont work
+// uncomment if below  doc code dont work 11-5-25
+// doc 11-5-25
+// function resetImageSelection() {
+//     image.src = `img.svg`;
+//     image.classList.remove("choose");
+//     user.file = { 
+//         mime_type: null, 
+//         data: null,
+//         isDocument: false,
+//         isCode: false,
+//         isSpreadsheet: false,
+//         textContent: null,
+//         fileName: null
+//     };
+//     defaultIcon.hidden = false;
+//     videoIcon.hidden = true;
+// }
+// doc 11-5-25
+
 
 
 // doc format
@@ -1310,89 +1058,81 @@ function showVideoPreview(file) {
 // real time img
 
 
-// uncomment if below video format dont work 10-5-25
-if (imageinput) {
-    imageinput.addEventListener("change", () => {
-        const file = imageinput.files[0];
-        if (!file) return;
-
-        // Add size validation (optional)
-        if (file.size > 100 * 1024 * 1024) {
-            alert('File size too large (max 100MB)');
-            return;
-        }
-
-        let reader = new FileReader();
-        reader.onload = (e) => {
-            let base64string = e.target.result.split(",")[1];
-            user.file = {
-                mime_type: file.type,
-                data: base64string
-            };
-            image.src = `data:${user.file.mime_type};base64,${user.file.data}`;
-            image.classList.add("choose");
-        };
-        reader.readAsDataURL(file);
-    });
-}
-// uncomment if below video format dont work 10-5-25
-
-
-// video format 10-5-25
+// uncomment if below video format dont work 11-5-25
 // if (imageinput) {
 //     imageinput.addEventListener("change", () => {
 //         const file = imageinput.files[0];
 //         if (!file) return;
 
+//         // Add size validation (optional)
 //         if (file.size > 100 * 1024 * 1024) {
 //             alert('File size too large (max 100MB)');
 //             return;
 //         }
 
-//         const reader = new FileReader();
-//         reader.onload = async (e) => {
+//         let reader = new FileReader();
+//         reader.onload = (e) => {
 //             let base64string = e.target.result.split(",")[1];
-
-//             if (file.type.startsWith('video/')) {
-//                 user.file = {
-//                     mime_type: file.type,
-//                     data: base64string
-//                 };
-
-//                 // Request thumbnail from backend
-//                 const response = await fetch("http://localhost:3001/process-video", {
-//                     method: "POST",
-//                     headers: { "Content-Type": "application/json" },
-//                     body: JSON.stringify({
-//                         videoData: base64string,
-//                         mimeType: file.type
-//                     })
-//                 });
-
-//                 const result = await response.json();
-//                 if (result.thumbnail) {
-//                     image.src = `data:image/png;base64,${result.thumbnail}`;
-//                     image.classList.add("choose");
-//                     user.file.thumbnail = result.thumbnail; // Save for chat
-//                 } else {
-//                     alert("Thumbnail generation failed");
-//                 }
-
-//             } else {
-//                 // Image file
-//                 user.file = {
-//                     mime_type: file.type,
-//                     data: base64string
-//                 };
-//                 image.src = `data:${user.file.mime_type};base64,${user.file.data}`;
-//                 image.classList.add("choose");
-//             }
+//             user.file = {
+//                 mime_type: file.type,
+//                 data: base64string
+//             };
+//             image.src = `data:${user.file.mime_type};base64,${user.file.data}`;
+//             image.classList.add("choose");
 //         };
 //         reader.readAsDataURL(file);
 //     });
 // }
+// uncomment if below video format dont work 11-5-25
 
-// video format 10-5-25
+
+//  uncomment if below doc  format 11-5-25 dont work
+if (imageinput) {
+    imageinput.addEventListener("change", () => {
+    const file = imageinput.files[0];
+    if (!file) return;
+
+    // Add size validation (100MB limit)
+    if (file.size > 100 * 1024 * 1024) {
+        alert('File size too large (max 100MB)');
+        resetImageSelection();
+        return;
+    }
+
+    user.file = {
+        mime_type: file.type,
+        isVideo: file.type.startsWith('video/')
+    };
+
+    let reader = new FileReader();
+    reader.onload = (e) => {
+        let base64string = e.target.result.split(",")[1];
+        user.file.data = base64string;
+        
+        if (user.file.isVideo) {
+            // Show video icon
+            defaultIcon.hidden = true;
+            videoIcon.hidden = false;
+            image.src = 'video-icon.svg';
+        } else {
+            // Show image preview
+            defaultIcon.hidden = false;
+            videoIcon.hidden = true;
+            image.src = `data:${user.file.mime_type};base64,${user.file.data}`;
+        }
+        image.classList.add("choose");
+    };
+    reader.readAsDataURL(file);
+});
+}
+//  uncomment if below doc  format 11-5-25 dont work
+
+
+// doc format 11-5-25
+// if (imageinput) {
+
+// }
+// doc format 11-5-25
 
 // doc format
 // Update the file input event listener
@@ -1820,3 +1560,125 @@ if (ttsToggle) {
 }
 // new
 // tts
+
+// video format 10-5-25
+// async function handleVideoUpload(file) {
+//     const imageBtn = document.getElementById('image');
+//     const statusDisplay = document.createElement('div');
+//     statusDisplay.className = 'upload-status';
+//     imageBtn.innerHTML = '';
+//     imageBtn.appendChild(statusDisplay);
+    
+//     try {
+//         // Step 1: Read file
+//         statusDisplay.textContent = 'Reading video...';
+//         const base64Data = await readFileAsBase64(file);
+        
+//         // Step 2: Process with server
+//         statusDisplay.textContent = 'Processing video...';
+//         const result = await processVideoWithServer(base64Data, file.type);
+        
+//         // Step 3: Display thumbnail
+//         statusDisplay.textContent = '';
+//         const thumbnail = createThumbnail(result.thumbnail);
+//         imageBtn.innerHTML = '';
+//         imageBtn.appendChild(thumbnail);
+        
+//         return {
+//             mime_type: file.type,
+//             data: base64Data,
+//             thumbnail: result.thumbnail
+//         };
+//     } catch (error) {
+//         console.error('Video upload error:', error);
+//         imageBtn.innerHTML = '<img src="img.svg" alt="Upload">';
+//         throw error;
+//     }
+// }
+
+// Helper functions
+// function readFileAsBase64(file) {
+//     return new Promise((resolve, reject) => {
+//         const reader = new FileReader();
+//         reader.onload = e => resolve(e.target.result.split(',')[1]);
+//         reader.onerror = reject;
+//         reader.readAsDataURL(file);
+//     });
+// }
+
+// async function processVideoWithServer(base64Data, mimeType) {
+//     const response = await fetch('http://localhost:3001/process-video', {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify({ videoData: base64Data, mimeType })
+//     });
+    
+//     if (!response.ok) {
+//         const error = await response.json().catch(() => ({}));
+//         throw new Error(error.message || 'Server processing failed');
+//     }
+    
+//     return await response.json();
+// }
+
+// function createThumbnail(thumbnailData) {
+//     const img = document.createElement('img');
+//     img.src = `data:image/png;base64,${thumbnailData}`;
+//     img.className = 'video-thumbnail';
+//     img.alt = 'Video thumbnail';
+//     return img;
+// }
+// video format 10-5-25
+// video format 10-5-25
+// async function uploadVideo(file) {
+//     const statusElement = document.getElementById('upload-status');
+//     statusElement.textContent = 'Processing video...';
+    
+//     try {
+//         // Read file as base64
+//         const base64Data = await new Promise((resolve, reject) => {
+//             const reader = new FileReader();
+//             reader.onload = () => resolve(reader.result.split(',')[1]);
+//             reader.onerror = reject;
+//             reader.readAsDataURL(file);
+//         });
+
+//         // Send to server
+//         const response = await fetch('/process-video', {
+//             method: 'POST',
+//             headers: { 'Content-Type': 'application/json' },
+//             body: JSON.stringify({
+//                 videoData: base64Data,
+//                 mimeType: file.type
+//             })
+//         });
+
+//         if (!response.ok) {
+//             const error = await response.json();
+//             throw new Error(error.error || 'Processing failed');
+//         }
+
+//         const result = await response.json();
+//         return result.thumbnail;
+
+//     } catch (error) {
+//         console.error('Upload failed:', error);
+//         statusElement.textContent = `Error: ${error.message}`;
+//         throw error;
+//     }
+// }
+
+// Usage example
+// document.getElementById('video-upload').addEventListener('change', async (e) => {
+//     const file = e.target.files[0];
+//     if (!file) return;
+
+//     try {
+//         const thumbnail = await uploadVideo(file);
+//         document.getElementById('thumbnail-preview').src = 
+//             `data:image/jpeg;base64,${thumbnail}`;
+//     } catch {
+//         // Error already displayed
+//     }
+// });
+// video upload 10-5-25

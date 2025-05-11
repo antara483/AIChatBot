@@ -370,7 +370,7 @@ app.post("/reset-password/:token", (req, res) => {
 // });
 //sentiment
 
-//18-3-2025 video
+// uncomment if below video format dont work 10-5-25
 app.post('/process-video', (req, res) => {
     const { videoData, mimeType } = req.body;
     
@@ -411,7 +411,74 @@ app.post('/process-video', (req, res) => {
         res.status(500).json({ error: 'File system error' });
     }
 });
-//18-3-2025 video
+// uncomment if below video format dont work 10-5-25
+
+// video format 10-5-25
+
+
+
+// app.post('/process-video', async (req, res) => {
+//     const { videoData, mimeType } = req.body;
+
+//     // Validate input
+//     if (!videoData || !mimeType?.startsWith('video/')) {
+//         return res.status(400).json({ 
+//             error: 'Invalid video data or format' 
+//         });
+//     }
+
+//     const tempDir = './temp';
+//     const videoPath = path.join(tempDir, `video-${Date.now()}.mp4`);
+//     const thumbPath = path.join(tempDir, `thumb-${Date.now()}.jpg`);
+
+//     try {
+//         // Ensure temp directory exists
+//         if (!fs.existsSync(tempDir)) {
+//             fs.mkdirSync(tempDir, { recursive: true });
+//         }
+
+//         // Write video file
+//         fs.writeFileSync(videoPath, Buffer.from(videoData, 'base64'));
+
+//         // Process with FFmpeg
+//         await new Promise((resolve, reject) => {
+//             ffmpeg(videoPath)
+//                 .on('start', (cmd) => console.log('Executing:', cmd))
+//                 .on('error', (err) => {
+//                     console.error('FFmpeg error:', err);
+//                     reject(err);
+//                 })
+//                 .on('end', () => resolve())
+//                 .screenshot({
+//                     count: 1,
+//                     folder: tempDir,
+//                     filename: path.basename(thumbPath),
+//                     size: '320x240'
+//                 });
+//         });
+
+//         // Read and send thumbnail
+//         const thumbData = fs.readFileSync(thumbPath);
+//         res.json({
+//             success: true,
+//             thumbnail: thumbData.toString('base64')
+//         });
+
+//     } catch (err) {
+//         console.error('Processing failed:', err);
+//         res.status(500).json({
+//             error: 'Video processing failed',
+//             details: err.message
+//         });
+//     } finally {
+//         // Cleanup
+//         [videoPath, thumbPath].forEach(file => {
+//             if (fs.existsSync(file)) fs.unlinkSync(file);
+//         });
+//     }
+// });
+// video format 10-5-25
+
 // voice app open app
 
 // doc format
