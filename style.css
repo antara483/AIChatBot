@@ -763,3 +763,49 @@ box-shadow:2px 2px 10px black;
     transition: all 0.3s ease;
 }
 /* video icon */
+
+/* doc 11-5-25 */
+.doc-icon {
+    max-width: 100px;
+    max-height: 100px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    background: white;
+}
+
+.video-icon-small {
+    width: 50px;
+    height: 50px;
+}
+
+.video-indicator {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 5px;
+    background: #f0f0f0;
+    border-radius: 4px;
+}
+/* doc 11-5-25 */
+
+/* doc 11-5 */
+.file-preview {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.doc-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.file-name {
+    font-size: 14px;
+    color: #333;
+    word-break: break-word;
+}
+
+/* doc 11-5 */

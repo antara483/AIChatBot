@@ -17,7 +17,34 @@ let image = document.querySelector("#image img");
 
 // real time img
 let imageinput = document.getElementById("fileInput"); // Correct selector
+
 // real time img
+// image format
+//  imageinput.addEventListener("change", () => {
+//     const file = imageinput.files[0];
+//     if (!file) return;
+
+//     const reader = new FileReader();
+//     reader.onload = (e) => {
+//         const base64Data = e.target.result.split(",")[1];
+
+//         user.file = {
+//             mime_type: file.type,
+//             data: base64Data
+//         };
+
+//         image.src = e.target.result;
+//         image.classList.add("choose");
+
+//         // ✅ Call chat immediately
+//         handleChatResponse("");  // or pass a default prompt
+//     };
+//     reader.readAsDataURL(file);
+// });
+
+// image format
+
+
 // mic
 let micBtn = document.querySelector("#mic");
 // real time image
@@ -167,7 +194,132 @@ async function fetchApiKey() {
 // } 
 // uncomment if below video 11-5-25 dont work
 
-// video format 11-5-25
+// uncomment if below java sql cpp format 12-5-25 dont work
+// async function generateResponse(aiChatBox) {
+//     let text = aiChatBox.querySelector(".ai-chat-area");
+//     let apiKey = await fetchApiKey();
+
+//     if (!apiKey) {
+//         text.innerHTML = "Error: API key not found.";
+//         return;
+//     }
+
+//     let Api_Url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+
+//     let requestOptions = {
+//         method: "POST",
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify({
+//             "contents": [
+//                 {
+//                     "parts": [
+//                         { "text": user.message },
+//                         ...(user.file && user.file.data && user.file.mime_type
+//                             ? [{
+//                                 inline_data: {
+//                                     mime_type: user.file.mime_type,
+//                                     data: user.file.data
+//                                 }
+//                             }]
+//                             : [])
+//                     ]
+//                 }
+//             ]
+//         })
+//     };
+
+//     // Debug log (optional)
+//     console.log("Sending request to Gemini:", JSON.stringify(JSON.parse(requestOptions.body), null, 2));
+
+//     try {
+//         let response = await fetch(Api_Url, requestOptions);
+//         let data = await response.json();
+
+//         if (!data.candidates || data.candidates.length === 0) {
+//             text.innerHTML = "Error: No response from AI.";
+//             return;
+//         }
+
+//         let apiResponse = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, "$1").trim();
+//         text.innerHTML = marked.parse(apiResponse);
+
+//         // Optional TTS
+//         speakText(apiResponse);
+//     } catch (error) {
+//         console.error("Error fetching AI response:", error);
+//         text.innerHTML = "Error: Unable to fetch response.";
+//     } finally {
+//         chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: "smooth" });
+//         resetImageSelection();
+//     }
+// }
+// uncomment if below java,cpp,sql  format 12-5-25 dont work
+
+// java cpp sql 12-5
+// async function generateResponse(aiChatBox) {
+//     let text = aiChatBox.querySelector(".ai-chat-area");
+//     let apiKey = await fetchApiKey();
+
+//     if (!apiKey) {
+//         text.innerHTML = "Error: API key not found.";
+//         return;
+//     }
+
+//     const Api_Url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+
+//     // Prepare parts for the request
+//     const parts = [{ text: user.message }];
+
+//     if (user.file?.textContent) {
+//         parts.push({
+//             text: `Please explain the contents of this file (${user.file.fileName}):\n\n${user.file.textContent}`
+//         });
+//     } else if (user.file?.data && user.file?.mime_type) {
+//         parts.push({
+//             inline_data: {
+//                 mime_type: user.file.mime_type,
+//                 data: user.file.data
+//             }
+//         });
+//     }
+
+//     const requestOptions = {
+//         method: "POST",
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify({
+//             contents: [
+//                 {
+//                     parts: parts
+//                 }
+//             ]
+//         })
+//     };
+
+//     console.log("Sending request to Gemini:", JSON.stringify(JSON.parse(requestOptions.body), null, 2));
+
+//     try {
+//         const response = await fetch(Api_Url, requestOptions);
+//         const data = await response.json();
+
+//         if (!data.candidates || data.candidates.length === 0) {
+//             text.innerHTML = "Error: No response from AI.";
+//             return;
+//         }
+
+//         const apiResponse = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, "$1").trim();
+//         text.innerHTML = marked.parse(apiResponse);
+
+//         // Optional TTS
+//         speakText(apiResponse);
+//     } catch (error) {
+//         console.error("Error fetching AI response:", error);
+//         text.innerHTML = "Error: Unable to fetch response.";
+//     } finally {
+//         chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: "smooth" });
+//         resetImageSelection();
+//     }
+// }
+
 async function generateResponse(aiChatBox) {
     let text = aiChatBox.querySelector(".ai-chat-area");
     let apiKey = await fetchApiKey();
@@ -179,44 +331,48 @@ async function generateResponse(aiChatBox) {
 
     let Api_Url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
-    let requestOptions = {
+    const parts = [{ text: user.message }];
+
+    // Use decoded file content if available and is a text/code file
+    if (user.file && user.file.data && user.file.mime_type.startsWith("text/")) {
+        try {
+            const decodedText = decodeURIComponent(escape(atob(user.file.data)));
+            const filePrompt = `Here is the file content:\n\n\`\`\`\n${decodedText}\n\`\`\`\n\nPlease analyze or explain it.`;
+            parts.push({ text: filePrompt });
+        } catch (err) {
+            console.error("Error decoding file text:", err);
+            parts.push({ text: "Note: File content could not be decoded." });
+        }
+    }
+    // Otherwise, fallback to sending raw file (e.g., image/video)
+    else if (user.file && user.file.data && user.file.mime_type) {
+        parts.push({
+            inline_data: {
+                mime_type: user.file.mime_type,
+                data: user.file.data
+            }
+        });
+    }
+
+    const requestOptions = {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            "contents": [
-                {
-                    "parts": [
-                        { "text": user.message },
-                        ...(user.file && user.file.data && user.file.mime_type
-                            ? [{
-                                inline_data: {
-                                    mime_type: user.file.mime_type,
-                                    data: user.file.data
-                                }
-                            }]
-                            : [])
-                    ]
-                }
-            ]
+            contents: [{ parts }]
         })
     };
 
-    // Debug log (optional)
-    console.log("Sending request to Gemini:", JSON.stringify(JSON.parse(requestOptions.body), null, 2));
-
     try {
-        let response = await fetch(Api_Url, requestOptions);
-        let data = await response.json();
+        const response = await fetch(Api_Url, requestOptions);
+        const data = await response.json();
 
         if (!data.candidates || data.candidates.length === 0) {
             text.innerHTML = "Error: No response from AI.";
             return;
         }
 
-        let apiResponse = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, "$1").trim();
+        const apiResponse = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, "$1").trim();
         text.innerHTML = marked.parse(apiResponse);
-
-        // Optional TTS
         speakText(apiResponse);
     } catch (error) {
         console.error("Error fetching AI response:", error);
@@ -226,7 +382,80 @@ async function generateResponse(aiChatBox) {
         resetImageSelection();
     }
 }
-// video format 11-5-25
+
+
+// java cpp sql 12-5
+
+// doc 11-5-25
+// async function generateResponse(aiChatBox) {
+//     let text = aiChatBox.querySelector(".ai-chat-area");
+//     let apiKey = await fetchApiKey();
+
+//     if (!apiKey) {
+//         text.innerHTML = "Error: API key not found.";
+//         return;
+//     }
+
+//     let Api_Url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+
+//     // Prepare the request parts
+//     const parts = [{ text: user.message }];
+
+//     if (user.file.isDocument && user.file.textContent) {
+//         // For documents and code files
+//         let prefix = "";
+//         if (user.file.isCode) {
+//             prefix = "Here is the code content to analyze:\n```\n";
+//         } else if (user.file.isSpreadsheet) {
+//             prefix = "Here is the spreadsheet data to analyze:\n";
+//         } else {
+//             prefix = "Here is the document content to analyze:\n";
+//         }
+        
+//         parts.push({ 
+//             text: prefix + user.file.textContent + (user.file.isCode ? "\n```" : "")
+//         });
+//     } else if (user.file.data) {
+//         // For images/videos
+//         parts.push({ inline_data: {
+//             mime_type: user.file.mime_type,
+//             data: user.file.data
+//         }});
+//     }
+
+//     let requestOptions = {
+//         method: "POST",
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify({
+//             "contents": [{ parts }],
+//             "generationConfig": {
+//                 "maxOutputTokens": 2048
+//             }
+//         })
+//     };
+
+//     try {
+//         let response = await fetch(Api_Url, requestOptions);
+//         let data = await response.json();
+
+//         if (!data.candidates || data.candidates.length === 0) {
+//             text.innerHTML = "Error: No response from AI.";
+//             return;
+//         }
+
+//         let apiResponse = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, "$1").trim();
+//         text.innerHTML = marked.parse(apiResponse);
+//         speakText(apiResponse);
+//     } catch (error) {
+//         console.error("Error fetching AI response:", error);
+//         text.innerHTML = "Error: Unable to fetch response.";
+//     } finally {
+//         chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: "smooth" });
+//         resetImageSelection();
+//     }
+// }
+// doc 11-5-25
+
 
 
 
@@ -333,51 +562,184 @@ function createChatBox(html, classes) {
 // uncomment if below take video format doesnt work 11-5-25
 
 
-// video format 11-5-25
+// uncomment if below doc format 11-5 dont work
+// function handleChatResponse(userMessage) {
+//     if (!userMessage.trim() && !user.file.data) return;
+
+//     user.message = userMessage || (user.file.isVideo ? "Tell me about this video" : "Tell me about this image");
+    
+//     let html = `
+//         <img src="user.png" alt="User" id="userImage" width="8%">
+//         <div class="user-chat-area">
+//             ${user.message}
+//             ${user.file.data ? 
+//                 (user.file.isVideo ? 
+//                     `<div class="video-indicator">
+//                         <img src="video-icon.svg" class="video-icon-small">
+//                     </div>` 
+//                     : 
+//                     `<img src="data:${user.file.mime_type};base64,${user.file.data}" class="chooseimg" />`
+//                 ) 
+//                 : ""
+//             }
+//         </div>
+//     `;
+    
+//     prompt.value = ""; // Clear input field
+//     // Reset icons
+//     defaultIcon.hidden = false;
+//     videoIcon.hidden = true;
+
+//     let userChatBox = createChatBox(html, "user-chat-box");
+//     chatContainer.appendChild(userChatBox);
+//     chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: "smooth" });
+
+//     setTimeout(() => {
+//         let html = `
+//             <img src="ai.avif" alt="AI" id="aiImage" width="10%">
+//             <div class="ai-chat-area">
+//                 <img src="loading.webp" alt="Loading" class="load" width="50px">
+//             </div>
+//         `;
+//         let aiChatBox = createChatBox(html, "ai-chat-box");
+//         chatContainer.appendChild(aiChatBox);
+//         generateResponse(aiChatBox);
+//     }, 600);
+// }
+// uncomment if below doc format 11-5 dont work
+
+
+// doc 11-5
 function handleChatResponse(userMessage) {
     if (!userMessage.trim() && !user.file.data) return;
 
-    user.message = userMessage || (user.file.isVideo ? "Tell me about this video" : "Tell me about this image");
-    
+    user.message = userMessage || "Tell me about this file";
+
+    // Determine file preview (icon + name)
+    const filePreviewHTML = user.file.data ? (() => {
+        const ext = user.file.fileName?.split('.').pop().toLowerCase();
+        const iconMap = {
+            pdf: "icons/pdf-icon.svg",
+            doc: "icons/word-icon.svg",
+            docx: "icons/word-icon.svg",
+            txt: "icons/text-icon.svg",
+            js: "icons/js-icon.svg",
+            py: "icons/python-icon.svg",
+            html: "icons/html-icon.svg",
+            css: "icons/css-icon.svg",
+            java: "icons/java-icon.svg",
+            cpp: "icons/cpp-icon.svg",
+            sql: "icons/sql-icon.svg"
+        };
+        const iconSrc = iconMap[ext] || "icons/file-icon.svg";
+
+        return `
+            <div class="file-preview">
+                <img src="${iconSrc}" class="doc-icon" title="${user.file.fileName || 'Document'}" />
+                <div class="file-name">${user.file.fileName || 'Unnamed file'}</div>
+            </div>
+        `;
+    })() : "";
+
+    // Build user chat bubble HTML
     let html = `
         <img src="user.png" alt="User" id="userImage" width="8%">
         <div class="user-chat-area">
             ${user.message}
-            ${user.file.data ? 
-                (user.file.isVideo ? 
-                    `<div class="video-indicator">
-                        <img src="video-icon.svg" class="video-icon-small">
-                    </div>` 
-                    : 
-                    `<img src="data:${user.file.mime_type};base64,${user.file.data}" class="chooseimg" />`
-                ) 
-                : ""
-            }
+           ${user.file.data && user.file.mime_type.startsWith("image/") 
+    ? `<img src="data:${user.file.mime_type};base64,${user.file.data}" class="chooseimg" />` 
+    : filePreviewHTML}
+
         </div>
     `;
-    
-    prompt.value = ""; // Clear input field
-    // Reset icons
+
+    // Clear prompt field & reset upload icons
+    prompt.value = "";
     defaultIcon.hidden = false;
     videoIcon.hidden = true;
 
-    let userChatBox = createChatBox(html, "user-chat-box");
+    const userChatBox = createChatBox(html, "user-chat-box");
     chatContainer.appendChild(userChatBox);
     chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: "smooth" });
 
+    // Show Gemini response loading + call API
     setTimeout(() => {
-        let html = `
+        const html = `
             <img src="ai.avif" alt="AI" id="aiImage" width="10%">
             <div class="ai-chat-area">
                 <img src="loading.webp" alt="Loading" class="load" width="50px">
-            </div>
-        `;
-        let aiChatBox = createChatBox(html, "ai-chat-box");
+            </div>`;
+        const aiChatBox = createChatBox(html, "ai-chat-box");
         chatContainer.appendChild(aiChatBox);
         generateResponse(aiChatBox);
     }, 600);
 }
-// video format 11-5-25
+
+// doc 11-5
+
+// doc 11-5-25
+// function handleChatResponse(userMessage) {
+//     if (!userMessage.trim() && !user.file.data && !user.file.textContent) return;
+
+//     user.message = userMessage || 
+//         (user.file.isVideo ? "Tell me about this video" : 
+//          user.file.isCode ? "Analyze this code" :
+//          user.file.isSpreadsheet ? "Analyze this spreadsheet" :
+//          user.file.isDocument ? "Analyze this document" : 
+//          "Tell me about this image");
+    
+//     let fileContent = "";
+//     if (user.file.isDocument) {
+//         // Show document icon in chat
+//         if (user.file.isCode) {
+//             fileContent = `<img src="code-icon.svg" class="doc-icon" title="${user.file.fileName}" />`;
+//         } else if (user.file.isSpreadsheet) {
+//             fileContent = `<img src="spreadsheet-icon.svg" class="doc-icon" title="${user.file.fileName}" />`;
+//         } else if (user.file.mime_type.includes('pdf')) {
+//             fileContent = `<img src="pdf-icon.svg" class="doc-icon" title="${user.file.fileName}" />`;
+//         } else if (user.file.mime_type.includes('word') || user.file.fileName.endsWith('.docx') || user.file.fileName.endsWith('.doc')) {
+//             fileContent = `<img src="word-icon.svg" class="doc-icon" title="${user.file.fileName}" />`;
+//         } else if (user.file.mime_type.includes('powerpoint') || user.file.fileName.endsWith('.pptx') || user.file.fileName.endsWith('.ppt')) {
+//             fileContent = `<img src="ppt-icon.svg" class="doc-icon" title="${user.file.fileName}" />`;
+//         } else {
+//             fileContent = `<img src="document-icon.svg" class="doc-icon" title="${user.file.fileName}" />`;
+//         }
+//     } else if (user.file.data) {
+//         fileContent = user.file.isVideo ? 
+//             `<div class="video-indicator">
+//                 <img src="video-icon.svg" class="video-icon-small">
+//             </div>` : 
+//             `<img src="data:${user.file.mime_type};base64,${user.file.data}" class="chooseimg" />`;
+//     }
+    
+//     let html = `
+//         <img src="user.png" alt="User" id="userImage" width="8%">
+//         <div class="user-chat-area">
+//             ${user.message}
+//             ${fileContent}
+//         </div>`;
+    
+//     prompt.value = "";
+//     defaultIcon.hidden = false;
+//     videoIcon.hidden = true;
+
+//     let userChatBox = createChatBox(html, "user-chat-box");
+//     chatContainer.appendChild(userChatBox);
+//     chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: "smooth" });
+
+//     setTimeout(() => {
+//         let html = `
+//             <img src="ai.avif" alt="AI" id="aiImage" width="10%">
+//             <div class="ai-chat-area">
+//                 <img src="loading.webp" alt="Loading" class="load" width="50px">
+//             </div>`;
+//         let aiChatBox = createChatBox(html, "ai-chat-box");
+//         chatContainer.appendChild(aiChatBox);
+//         generateResponse(aiChatBox);
+//     }, 600);
+// }
+// doc 11-5-25
+
 // take a photo handle chatresponse
 // function handleChatResponse(userMessage) {
 //     if (!userMessage.trim() && !user.file.data) return;
@@ -491,6 +853,36 @@ submitbtn.addEventListener("click", () => {
             video.srcObject = null;
         }
     }
+
+    // voice photo 20-5-25
+    function openCameraAndCapture() {
+    cameraModal.style.display = "block";
+    startCamera();
+
+    setTimeout(() => {
+        const context = canvas.getContext("2d");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        const imageData = canvas.toDataURL("image/jpeg");
+        const base64Data = imageData.split(",")[1];
+
+        user.file = {
+            mime_type: "image/jpeg",
+            data: base64Data
+        };
+
+        image.src = imageData;
+        image.classList.add("choose");
+
+        handleChatResponse("Tell me about this image"); // Auto-send prompt
+        cameraModal.style.display = "none";
+        stopCamera();
+    }, 3500); // Capture after 3.5 seconds
+}
+
+    // voice photo 20-5-25
     captureBtn.addEventListener("click", () => {
         const context = canvas.getContext("2d");
         canvas.width = video.videoWidth;
@@ -506,6 +898,10 @@ submitbtn.addEventListener("click", () => {
         };
     
         image.src = imageData;
+        // image format
+        // handleChatResponse("");  // triggers chat with captured image
+
+        // image format
         image.classList.add("choose");
     
         cameraModal.style.display = "none";
@@ -781,6 +1177,19 @@ function startSpeechRecognition() {
         const transcript = event.results[0][0].transcript.toLowerCase();
         console.log("You said:", transcript);
         prompt.value = transcript;
+
+        // nec or not 20-5-25
+         recognition.onerror = (event) => {
+        console.error("Speech recognition error:", event.error);
+        if (event.error === "no-speech") {
+            alert("No speech detected. Please try again.");
+        } else if (event.error === "network") {
+            alert("Network error during speech recognition.");
+        } else {
+            alert(`Speech recognition error: ${event.error}`);
+        }
+    };
+        // nec or not 20-5-25
     // whatsapp
     if (transcript.includes("send whatsapp to")) {
         // Example: "send whatsapp to john saying hello how are you"
@@ -800,6 +1209,244 @@ function startSpeechRecognition() {
         }
     }
     // whatsapp
+
+    // voice take pho 20-5-25
+      if (transcript.includes("take photo")) {
+        openCameraAndCapture();  // 👈 Add this new function
+        return;
+    }
+    // voice take pho 20-5-25
+
+    // voice doc 20-5-25
+//     if (transcript.includes("open document")) {
+//     // const match = transcript.match(/open document (.+)/);
+//     const match = transcript.match(/open document(?:s)?(?:\s+)?(.+)/i);
+
+// if (match && match[1]) {
+//     let filename = match[1].trim()
+//         .replace(/\s*dot\s*/g, ".")   // Replace "dot" with "."
+//         .replace(/\s+/g, "")         // Remove extra spaces
+//         .replace(/[.,!?]+$/, "");
+//     console.log("Parsed filename:", filename);
+
+
+//         fetch(`http://localhost:3001/get-file/${encodeURIComponent(filename)}`)
+//             .then(res => res.json())
+//             .then(data => {
+//                 if (data.content) {
+//                     prompt.value = data.content;
+//                     user.message = data.content;
+//                     handleChatResponse(data.content); // Auto-send to Gemini
+//                 } else {
+//                     alert("File content not found.");
+//                 }
+//             })
+//             .catch(err => {
+//                 console.error("File fetch error:", err);
+//                 alert("Could not open the file. Make sure it exists.");
+//             });
+//         return;
+//     } else {
+//         alert("Please say: 'open document example.txt'");
+//         return;
+//     }
+// }
+
+// uncomment if below dont work voice docx 21-5-25
+if (transcript.includes("open document")) {
+    let filenameRaw = transcript
+        .replace(/^open\s+documents?/, "")        // remove "open document" or "open documents"
+        .replace(/\s*dot\s*/gi, ".")              // "dot pdf" → ".pdf"
+        .replace(/\s+/g, "")                      // remove all spaces
+        .replace(/[.,!?]+$/, "");                 // remove punctuation
+    // uncomment if below 21-5 (soon) dont work
+    const filename = filenameRaw.trim().toLowerCase();
+       console.log("Parsed filename:", filename);
+
+    fetch(`http://localhost:3001/get-file/${encodeURIComponent(filename)}`)
+        .then(res => res.json())
+        // uncomment if below 21-5 (soon) dont work
+
+        // voice docx 21-5(soon)
+        // const filename = filenameRaw.trim().toLowerCase().endsWith('.docx') 
+        //     ? filenameRaw.trim().toLowerCase()
+        //     : filenameRaw.trim().toLowerCase() + '.docx';
+            
+        // console.log("Parsed filename:", filename);
+
+        // fetch(`http://localhost:3001/get-file/${encodeURIComponent(filename)}`)
+        //     .then(res => {
+        //         if (!res.ok) throw new Error("File not found");
+        //         return res.json();
+        //     })
+        // voice docx 21-5 (soon)
+        .then(data => {
+            if (data.content) {
+                prompt.value = data.content;
+                user.message = data.content;
+                handleChatResponse(data.content);
+            } else {
+                alert("File content not found.");
+            }
+        })
+        .catch(err => {
+            console.error("File fetch error:", err);
+            alert("Could not open the file. Make sure it exists.");
+        });
+    return;
+}
+// uncomment if below dont work voice docx 21-5-25
+
+// voice docx 21-5-25
+// if (transcript.includes("open document")) {
+//     const match = transcript.match(/open document(?:s)?(?:\s+)?(.+)/i);
+//     if (match && match[1]) {
+//         let filename = match[1]
+//             .trim()
+//             .replace(/\s*dot\s*/g, ".")   // "dot docx" -> ".docx"
+//             .replace(/\s+/g, "")           // remove extra spaces
+//             .replace(/[.,!?]+$/, "");      // strip punctuation
+
+//         console.log("Parsed filename:", filename);
+
+//         fetch(`http://localhost:3001/get-file/${encodeURIComponent(filename)}`)
+//             .then(res => res.json())
+//             .then(data => {
+//                 if (data.content) {
+//                     prompt.value = data.content;
+//                     user.message = data.content;
+//                     handleChatResponse(data.content); // 🔄 Send to Gemini AI
+//                 } else {
+//                     alert("File content not found.");
+//                 }
+//             })
+//             .catch(err => {
+//                 console.error("File fetch error:", err);
+//                 alert("Could not open the file. Make sure it exists.");
+//             });
+
+//         return; // Stop other checks
+//     } else {
+//         alert("Please say: 'Open document resume dot docx'");
+//         return;
+//     }
+// }
+// if (transcript.includes("open document")) {
+//     const match = transcript.match(/open document(?:s)?(?:\s+)?(.+)/i);
+
+//     if (match && match[1]) {
+//         let filename = match[1]
+//             .trim()
+//             .replace(/\s*dot\s*/gi, ".") // "dot docx" → ".docx"
+//             .replace(/\s+/g, "")         // remove all spaces
+//             .replace(/[.,!?]+$/, "");    // remove trailing punctuation
+
+//         console.log("Parsed filename:", filename);
+
+//         fetch(`http://localhost:3001/get-file/${encodeURIComponent(filename)}`)
+//             .then(res => {
+//                 if (!res.ok) throw new Error("File not found on server");
+//                 return res.json();
+//             })
+//             .then(data => {
+//                 if (data.content) {
+//                     prompt.value = data.content;
+//                     user.message = data.content;
+//                     handleChatResponse(data.content); // Send to Gemini AI
+//                 } else {
+//                     alert("File found but content was empty.");
+//                 }
+//             })
+//             .catch(err => {
+//                 console.error("File fetch error:", err);
+//                 alert("Could not open the file. Please ensure it exists in the 'documents' folder.");
+//             });
+
+//         return; // prevent further voice actions
+//     } else {
+//         alert("Please say: 'open document resume dot docx'");
+//         return;
+//     }
+// }
+// if (transcript.includes("open document") || transcript.includes("open file")) {
+//     let filename = transcript
+//         .replace(/^open (document|file|documents)?/, "") // Remove "open document" or "open file"
+//         .trim()
+//         .replace(/\s+/g, "") + ".docx"; // default to .docx
+
+//     console.log("Parsed filename:", filename);
+
+//     fetch(`http://localhost:3001/get-file/${encodeURIComponent(filename)}`)
+//         .then(res => {
+//             if (!res.ok) throw new Error("File not found on server");
+//             return res.json();
+//         })
+//         .then(data => {
+//             if (data.content) {
+//                 prompt.value = data.content;
+//                 user.message = data.content;
+//                 handleChatResponse(data.content);
+//             } else {
+//                 alert("File found but content was empty.");
+//             }
+//         })
+//         .catch(err => {
+//             console.error("File fetch error:", err);
+//             alert("Could not open the file. Please ensure it exists in the 'documents' folder.");
+//         });
+
+//     return;
+// }
+// if (!filename.includes(".")) {
+//     filename += ".docx"; // Assume .docx by default
+// }
+
+// if (transcript.includes("open document") || transcript.includes("open file")) {
+//     let rawName = transcript
+//         .replace(/^open (document|file|documents)?/, "") // Remove voice trigger
+//         .trim()
+//         .replace(/\s*dot\s*/gi, ".")   // Replace "dot" with "."
+//         .replace(/\s+/g, "")           // Remove all extra spaces
+//         .replace(/[.,!?]+$/, "");      // Strip ending punctuation
+
+//     // ✅ Fix double dots like "file..docx"
+//     if (!rawName.includes(".")) {
+//         rawName += ".docx"; // default to .docx if no extension
+//     } else {
+//         // Remove repeated dots (file..docx → file.docx)
+//         rawName = rawName.replace(/\.{2,}/g, ".");
+//     }
+
+//     const filename = rawName;
+//     console.log("Parsed filename:", filename);
+
+//     fetch(`http://localhost:3001/get-file/${encodeURIComponent(filename)}`)
+//         .then(res => {
+//             if (!res.ok) throw new Error("File not found on server");
+//             return res.json();
+//         })
+//         .then(data => {
+//             if (data.content) {
+//                 prompt.value = data.content;
+//                 user.message = data.content;
+//                 handleChatResponse(data.content);
+//             } else {
+//                 alert("File found but content was empty.");
+//             }
+//         })
+//         .catch(err => {
+//             console.error("File fetch error:", err);
+//             alert("Could not open the file. Please ensure it exists in the 'documents' folder.");
+//         });
+
+//     return;
+// }
+
+
+// voice docx 21-5-25
+
+
+    // voice doc 20-5-24
         // 👇 Paste your voice command action here
         if (transcript.includes("open notepad")) {
             fetch("http://localhost:3001/open-app/notepad");//0ri 4000
@@ -1086,51 +1733,495 @@ function showVideoPreview(file) {
 // uncomment if below video format dont work 11-5-25
 
 
-//  uncomment if below doc  format 11-5-25 dont work
+//  uncomment if below doc  format 11-5 dont work
+// if (imageinput) {
+//     imageinput.addEventListener("change", () => {
+//     const file = imageinput.files[0];
+//     if (!file) return;
+//     // doc format 11-5
+//     //    const fileIconPreview = document.getElementById("fileIconPreview");
+//     //     const ext = file.name.split('.').pop().toLowerCase();
+
+//     //     const iconMap = {
+//     //         pdf: "icons/pdf-icon.svg",
+//     //         doc: "icons/word-icon.svg",
+//     //         docx: "icons/word-icon.svg",
+//     //         txt: "icons/text-icon.svg",
+//     //         js: "icons/js-icon.svg",
+//     //         py: "icons/python-icon.svg",
+//     //         html: "icons/html-icon.svg",
+//     //         css: "icons/css-icon.svg",
+//     //         java: "icons/java-icon.svg",
+//     //         cpp: "icons/cpp-icon.svg",
+//     //         sql: "icons/sql-icon.svg"
+//     //     };
+//     //     fileIconPreview.src = iconMap[ext] || "icons/file-icon.svg";
+//     // doc format 11-5
+
+//     // Add size validation (100MB limit)
+//     if (file.size > 100 * 1024 * 1024) {
+//         alert('File size too large (max 100MB)');
+//         resetImageSelection();
+//         return;
+//     }
+
+//     user.file = {
+//         mime_type: file.type,
+//         isVideo: file.type.startsWith('video/')
+//     };
+
+//     let reader = new FileReader();
+//     reader.onload = (e) => {
+//         let base64string = e.target.result.split(",")[1];
+//         user.file.data = base64string;
+        
+//         if (user.file.isVideo) {
+//             // Show video icon
+//             defaultIcon.hidden = true;
+//             videoIcon.hidden = false;
+//             image.src = 'video-icon.svg';
+//         } else {
+//             // Show image preview
+//             defaultIcon.hidden = false;
+//             videoIcon.hidden = true;
+//             // uncomment if above doc format 11-5 dont work
+//             image.src = `data:${user.file.mime_type};base64,${user.file.data}`;
+//             // uncomment if above doc format 11-5 dont work
+//         }
+//         image.classList.add("choose");
+//     };
+//     reader.readAsDataURL(file);
+// });
+// }
+//  uncomment if below doc  format 11-5 dont work
+
+// uncomment if img format  11-5 dont work
+// if (imageinput) {
+//     imageinput.addEventListener("change", () => {
+//         const file = imageinput.files[0];
+//         if (!file) return;
+
+//         // Set icon based on file extension
+//         const fileIconPreview = document.getElementById("fileIconPreview");
+//         const ext = file.name.split('.').pop().toLowerCase();
+//         const iconMap = {
+//             pdf: "icons/pdf-icon.svg",
+//             doc: "icons/word-icon.svg",
+//             docx: "icons/word-icon.svg",
+//             txt: "icons/text-icon.svg",
+//             js: "icons/js-icon.svg",
+//             py: "icons/python-icon.svg",
+//             html: "icons/html-icon.svg",
+//             css: "icons/css-icon.svg",
+//             java: "icons/java-icon.svg",
+//             cpp: "icons/cpp-icon.svg",
+//             sql: "icons/sql-icon.svg"
+//         };
+//         fileIconPreview.src = iconMap[ext] || "icons/file-icon.svg";
+
+//         // File size check (max 100MB)
+//         if (file.size > 100 * 1024 * 1024) {
+//             alert('File size too large (max 100MB)');
+//             resetImageSelection();
+//             return;
+//         }
+
+//         // Initialize file object
+//         user.file = {
+//             fileName: file.name,
+//             mime_type: file.type,
+//             isVideo: file.type.startsWith('video/')
+//         };
+
+//         // Special handling for DOCX file
+//         if (ext === 'docx') {
+//             const formData = new FormData();
+//             formData.append('file', file);
+
+//             fetch("http://localhost:3001/upload-doc", {
+//                 method: "POST",
+//                 body: formData
+//             })
+//             .then(res => res.json())
+//         .then(data => {
+//     if (data.status === "success") {
+//         user.file.data = btoa(unescape(encodeURIComponent(data.textContent)));
+//         user.file.mime_type = "text/plain";
+//         user.file.fileName = file.name;
+
+//         defaultIcon.hidden = false;
+//         videoIcon.hidden = true;
+//         image.src = iconMap[ext] || "icons/file-icon.svg";
+//         image.classList.add("choose");
+//     } else {
+//         alert("Failed to process DOCX file.");
+//     }
+// })
+
+//             .catch(err => {
+//                 console.error("Upload error:", err);
+//                 alert("Error uploading DOCX file.");
+//             });
+//         } else {
+//             // Regular file: read as base64 directly
+//             let reader = new FileReader();
+//             reader.onload = (e) => {
+//                 const base64string = e.target.result.split(",")[1];
+//                 user.file.data = base64string;
+
+//                 if (user.file.isVideo) {
+//                     defaultIcon.hidden = true;
+//                     videoIcon.hidden = false;
+//                     image.src = 'video-icon.svg';
+//                 } else {
+//                     defaultIcon.hidden = false;
+//                     videoIcon.hidden = true;
+//                     // image.src = `data:${user.file.mime_type};base64,${user.file.data}`;
+//                     image.src = iconMap[ext] || "icons/file-icon.svg";
+//                 }
+
+//                 image.classList.add("choose");
+//             };
+//             reader.readAsDataURL(file);
+//         }
+//     });
+// }
+// uncomment if img format  11-5 dont work
+
+// uncomment if below java cpp sql 12-5 dont work
+// if (imageinput) {
+//     imageinput.addEventListener("change", () => {
+//         const file = imageinput.files[0];
+//         if (!file) return;
+
+//         const fileIconPreview = document.getElementById("fileIconPreview");
+//         const ext = file.name.split('.').pop().toLowerCase();
+//         const iconMap = {
+//             pdf: "icons/pdf-icon.svg",
+//             doc: "icons/word-icon.svg",
+//             docx: "icons/word-icon.svg",
+//             txt: "icons/text-icon.svg",
+//             js: "icons/js-icon.svg",
+//             py: "icons/python-icon.svg",
+//             html: "icons/html-icon.svg",
+//             css: "icons/css-icon.svg",
+//             java: "icons/java-icon.svg",
+//             cpp: "icons/cpp-icon.svg",
+//             sql: "icons/sql-icon.svg"
+//         };
+
+//         // File size check
+//         if (file.size > 100 * 1024 * 1024) {
+//             alert('File size too large (max 100MB)');
+//             resetImageSelection();
+//             return;
+//         }
+
+//         user.file = {
+//             fileName: file.name,
+//             mime_type: file.type,
+//             isVideo: file.type.startsWith('video/')
+//         };
+
+//         if (ext === 'docx') {
+//             const formData = new FormData();
+//             formData.append('file', file);
+
+//             fetch("http://localhost:3001/upload-doc", {
+//                 method: "POST",
+//                 body: formData
+//             })
+//             .then(res => res.json())
+//             .then(data => {
+//                 if (data.status === "success") {
+//                     user.file.data = btoa(unescape(encodeURIComponent(data.textContent)));
+//                     user.file.mime_type = "text/plain";
+
+//                     image.src = iconMap[ext] || "icons/file-icon.svg";
+//                     fileIconPreview.src = iconMap[ext] || "icons/file-icon.svg";
+//                     image.classList.add("choose");
+//                 } else {
+//                     alert("Failed to process DOCX file.");
+//                 }
+//             })
+//             .catch(err => {
+//                 console.error("Upload error:", err);
+//                 alert("Error uploading DOCX file.");
+//             });
+//         } else {
+//             const reader = new FileReader();
+//             reader.onload = (e) => {
+//                 const base64string = e.target.result.split(",")[1];
+//                 user.file.data = base64string;
+
+//                 if (file.type.startsWith('image/')) {
+//                     image.src = `data:${file.type};base64,${base64string}`;
+//                     fileIconPreview.src = `data:${file.type};base64,${base64string}`;
+//                 } else if (user.file.isVideo) {
+//                     image.src = 'video-icon.svg';
+//                     fileIconPreview.src = 'video-icon.svg';
+//                 } else {
+//                     image.src = iconMap[ext] || "icons/file-icon.svg";
+//                     fileIconPreview.src = iconMap[ext] || "icons/file-icon.svg";
+//                 }
+
+//                 image.classList.add("choose");
+//             };
+//             reader.readAsDataURL(file);
+//         }
+//     });
+// }
+// uncomment if below java cpp,sql dont work 12-5
+
+// java cpp,sql 12-5
 if (imageinput) {
     imageinput.addEventListener("change", () => {
-    const file = imageinput.files[0];
-    if (!file) return;
+        const file = imageinput.files[0];
+        if (!file) return;
 
-    // Add size validation (100MB limit)
-    if (file.size > 100 * 1024 * 1024) {
-        alert('File size too large (max 100MB)');
-        resetImageSelection();
-        return;
-    }
+        const fileIconPreview = document.getElementById("fileIconPreview");
+        const ext = file.name.split('.').pop().toLowerCase();
+        const iconMap = {
+            pdf: "icons/pdf-icon.svg",
+            doc: "icons/word-icon.svg",
+            docx: "icons/word-icon.svg",
+            txt: "icons/text-icon.svg",
+            js: "icons/js-icon.svg",
+            py: "icons/python-icon.svg",
+            html: "icons/html-icon.svg",
+            css: "icons/css-icon.svg",
+            java: "icons/java-icon.svg",
+            cpp: "icons/cpp-icon.svg",
+            sql: "icons/sql-icon.svg"
+        };
 
-    user.file = {
-        mime_type: file.type,
-        isVideo: file.type.startsWith('video/')
-    };
-
-    let reader = new FileReader();
-    reader.onload = (e) => {
-        let base64string = e.target.result.split(",")[1];
-        user.file.data = base64string;
-        
-        if (user.file.isVideo) {
-            // Show video icon
-            defaultIcon.hidden = true;
-            videoIcon.hidden = false;
-            image.src = 'video-icon.svg';
-        } else {
-            // Show image preview
-            defaultIcon.hidden = false;
-            videoIcon.hidden = true;
-            image.src = `data:${user.file.mime_type};base64,${user.file.data}`;
+        // File size check (100MB max)
+        if (file.size > 100 * 1024 * 1024) {
+            alert('File size too large (max 100MB)');
+            resetImageSelection();
+            return;
         }
-        image.classList.add("choose");
-    };
-    reader.readAsDataURL(file);
-});
-}
-//  uncomment if below doc  format 11-5-25 dont work
 
+        const isTextCodeFile = ['txt', 'js', 'py', 'html', 'css', 'java', 'cpp', 'sql'].includes(ext);
+
+        user.file = {
+            fileName: file.name,
+            mime_type: isTextCodeFile ? "text/plain" : file.type,
+            isVideo: file.type.startsWith('video/')
+        };
+
+        if (ext === 'docx') {
+            // Special handling for docx via backend
+            const formData = new FormData();
+            formData.append('file', file);
+
+            fetch("http://localhost:3001/upload-doc", {
+                method: "POST",
+                body: formData
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === "success") {
+                        user.file.data = btoa(unescape(encodeURIComponent(data.textContent)));
+                        image.src = iconMap[ext] || "icons/file-icon.svg";
+                        fileIconPreview.src = iconMap[ext] || "icons/file-icon.svg";
+                        image.classList.add("choose");
+                    } else {
+                        alert("Failed to process DOCX file.");
+                    }
+                })
+                .catch(err => {
+                    console.error("Upload error:", err);
+                    alert("Error uploading DOCX file.");
+                });
+        } else if (isTextCodeFile) {
+            // Read text/code content directly
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const textContent = e.target.result;
+                user.file.data = btoa(unescape(encodeURIComponent(textContent)));
+
+                image.src = iconMap[ext] || "icons/file-icon.svg";
+                fileIconPreview.src = iconMap[ext] || "icons/file-icon.svg";
+                image.classList.add("choose");
+            };
+            reader.readAsText(file);
+        } else {
+            // Default: image or video (read as base64)
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const base64string = e.target.result.split(",")[1];
+                user.file.data = base64string;
+
+                if (file.type.startsWith('image/')) {
+                    image.src = `data:${file.type};base64,${base64string}`;
+                    fileIconPreview.src = `data:${file.type};base64,${base64string}`;
+                } else if (user.file.isVideo) {
+                    image.src = 'video-icon.svg';
+                    fileIconPreview.src = 'video-icon.svg';
+                } else {
+                    image.src = iconMap[ext] || "icons/file-icon.svg";
+                    fileIconPreview.src = iconMap[ext] || "icons/file-icon.svg";
+                }
+
+                image.classList.add("choose");
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+}
+
+
+// java cpp,sql 12-5
 
 // doc format 11-5-25
 // if (imageinput) {
+// imageinput.addEventListener("change", async () => {
+//     const file = imageinput.files[0];
+//     if (!file) return;
 
+//     // Add size validation (100MB limit)
+//     if (file.size > 100 * 1024 * 1024) {
+//         alert('File size too large (max 100MB)');
+//         resetImageSelection();
+//         return;
+//     }
+
+//     // Check file type
+//     const fileType = file.type;
+//     const fileExt = file.name.split('.').pop().toLowerCase();
+//     const isImage = fileType.startsWith('image/');
+//     const isVideo = fileType.startsWith('video/');
+//     const isDocument = [
+//         'pdf', 'doc', 'docx', 'txt', 'rtf', 'odt', 
+//         'xls', 'xlsx', 'csv', 'pptx', 'ppt',
+//         'js', 'py', 'java', 'cpp', 'c', 'html', 'css', 
+//         'php', 'rb', 'go', 'rs', 'ts', 'json', 'xml', 'sql'
+//     ].includes(fileExt);
+
+//     if (isImage || isVideo) {
+//         // Existing image/video handling
+//         let reader = new FileReader();
+//         reader.onload = (e) => {
+//             let base64string = e.target.result.split(",")[1];
+//             user.file = {
+//                 mime_type: file.type,
+//                 data: base64string,
+//                 isVideo: isVideo,
+//                 fileName: file.name
+//             };
+            
+//             if (isVideo) {
+//                 defaultIcon.hidden = true;
+//                 videoIcon.hidden = false;
+//                 image.src = 'video-icon.svg';
+//             } else {
+//                 image.src = `data:${user.file.mime_type};base64,${user.file.data}`;
+//             }
+//             image.classList.add("choose");
+//         };
+//         reader.readAsDataURL(file);
+//     } else if (isDocument) {
+//         // New document handling
+//         user.file = {
+//             mime_type: file.type,
+//             fileName: file.name,
+//             isDocument: true,
+//             isCode: [
+//                 'js', 'py', 'java', 'cpp', 'c', 'html', 
+//                 'css', 'php', 'rb', 'go', 'rs', 'ts', 
+//                 'json', 'xml', 'sql'
+//             ].includes(fileExt),
+//             isSpreadsheet: ['xlsx', 'xls', 'csv'].includes(fileExt)
+//         };
+
+//         // Show appropriate icon
+//         if (user.file.isCode) {
+//             image.src = 'code-icon.svg';
+//         } else if (user.file.isSpreadsheet) {
+//             image.src = 'spreadsheet-icon.svg';
+//         } else if (fileExt === 'pdf') {
+//             image.src = 'pdf-icon.svg';
+//         } else if (['doc', 'docx'].includes(fileExt)) {
+//             image.src = 'word-icon.svg';
+//         } else if (['ppt', 'pptx'].includes(fileExt)) {
+//             image.src = 'ppt-icon.svg';
+//         } else {
+//             image.src = 'document-icon.svg';
+//         }
+//         image.classList.add("choose");
+
+//         // Process the file
+//         try {
+//             if (user.file.isCode || ['txt', 'csv'].includes(fileExt)) {
+//                 // Read text files directly
+//                 const content = await readFileAsText(file);
+//                 user.file.textContent = content;
+//             } else {
+//                 // Send other documents to server for processing
+//                 const base64Data = await readFileAsBase64(file);
+//                 const processed = await processDocumentWithServer(base64Data, file.type, file.name);
+//                 user.file.textContent = processed.textContent;
+//             }
+
+//             // Auto-prompt based on file type
+//             if (!prompt.value.trim()) {
+//                 if (user.file.isCode) {
+//                     prompt.value = "Please analyze this code:";
+//                 } else if (user.file.isSpreadsheet) {
+//                     prompt.value = "Please analyze this spreadsheet data:";
+//                 } else {
+//                     prompt.value = "Please summarize this document:";
+//                 }
+//             }
+//         } catch (error) {
+//             console.error('Document processing failed:', error);
+//             alert('Failed to process document');
+//             resetImageSelection();
+//         }
+//     } else {
+//         alert('Unsupported file type');
+//         resetImageSelection();
+//     }
+// });
+
+// // Helper functions for file reading
+// function readFileAsText(file) {
+//     return new Promise((resolve, reject) => {
+//         const reader = new FileReader();
+//         reader.onload = e => resolve(e.target.result);
+//         reader.onerror = reject;
+//         reader.readAsText(file);
+//     });
+// }
+
+// function readFileAsBase64(file) {
+//     return new Promise((resolve, reject) => {
+//         const reader = new FileReader();
+//         reader.onload = e => resolve(e.target.result.split(',')[1]);
+//         reader.onerror = reject;
+//         reader.readAsDataURL(file);
+//     });
+// }
+
+// async function processDocumentWithServer(base64Data, mimeType, fileName) {
+//     const response = await fetch('http://localhost:3001/process-document', {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify({
+//             fileData: base64Data,
+//             mimeType,
+//             fileName
+//         })
+//     });
+    
+//     if (!response.ok) {
+//         const error = await response.json().catch(() => ({}));
+//         throw new Error(error.message || 'Server processing failed');
+//     }
+    
+//     return await response.json();
+// }
 // }
 // doc format 11-5-25
 
@@ -1682,3 +2773,57 @@ if (ttsToggle) {
 //     }
 // });
 // video upload 10-5-25
+
+
+// image appear 11-5
+// document.getElementById('image-input').addEventListener('change', async function (event) {
+//   const file = event.target.files[0];
+//   if (!file) return;
+
+//   const formData = new FormData();
+//   formData.append('image', file);
+
+//   // Show image preview before upload
+//   const imgPreview = document.createElement('img');
+//   imgPreview.src = URL.createObjectURL(file);
+//   imgPreview.style.maxWidth = '200px';
+//   imgPreview.style.margin = '10px';
+//   appendMessage('user', imgPreview);
+
+//   try {
+//     const res = await fetch('/upload', {
+//       method: 'POST',
+//       body: formData
+//     });
+//     const data = await res.json();
+//     if (data.success && data.imageUrl) {
+//       const img = document.createElement('img');
+//       img.src = data.imageUrl;
+//       img.style.maxWidth = '200px';
+//       img.style.margin = '10px';
+//       appendMessage('user', img);
+//     } else {
+//       appendMessage('user', 'Image upload failed');
+//     }
+//   } catch (err) {
+//     console.error('Upload error:', err);
+//     appendMessage('user', 'Error uploading image');
+//   }
+// });
+
+// function appendMessage(sender, content) {
+//   const chat = document.getElementById('chat');
+//   const messageDiv = document.createElement('div');
+//   messageDiv.className = sender;
+  
+//   if (typeof content === 'string') {
+//     messageDiv.innerText = content;
+//   } else {
+//     messageDiv.appendChild(content);
+//   }
+
+//   chat.appendChild(messageDiv);
+//   chat.scrollTop = chat.scrollHeight;
+// }
+
+// image appear 11-5

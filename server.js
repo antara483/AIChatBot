@@ -38,6 +38,16 @@ const ffmpegInstaller = require('@ffmpeg-installer/ffmpeg');
 const ffprobeStatic = require('ffprobe-static');
 const fs = require('fs');
 const path = require('path');
+
+// doc 11-5
+const multer = require('multer');
+const pdf = require("pdf-parse");
+const mammoth = require("mammoth");
+const upload = multer(); // uses in-memory storage
+// try and see
+const pdfParse = require('pdf-parse'); // Add this
+// try and see
+// doc 11-5
 // voice open app
 // const express = require('express');
 const { exec } = require('child_process');
@@ -48,6 +58,11 @@ ffmpeg.setFfprobePath(ffprobeStatic.path);
 //18-3-2025 video
 
 const app = express();
+
+// image formt 11-5
+// app.use('/uploads', express.static('uploads'));
+
+// image format 11-5
 //18-3-2025
 app.use(bodyParser.json({ limit: '150mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '150mb' }));
@@ -369,7 +384,100 @@ app.post("/reset-password/:token", (req, res) => {
 //     }
 // });
 //sentiment
+// doc 11-5
+app.post('/upload', upload.array('files'), async (req, res) => {
+  if (!req.files || req.files.length === 0) {
+    return res.status(400).json({ error: "No files uploaded" });
+  }
 
+  const fileContents = [];
+
+  for (let file of req.files) {
+    const fileName = file.originalname;
+    const mimeType = file.mimetype;
+    const buffer = file.buffer;
+
+    let content = '';
+
+    if (mimeType === 'application/pdf') {
+      const pdf = require('pdf-parse');
+      const data = await pdf(buffer);
+      content = data.text;
+    } else if (mimeType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+      const mammoth = require('mammoth');
+      const result = await mammoth.extractRawText({ buffer });
+      content = result.value;
+    } else {
+      content = buffer.toString('utf8'); // plain text or code
+    }
+
+    fileContents.push({
+      filename: fileName,
+      content: content
+    });
+  }
+
+  res.json(fileContents); // send parsed text back to frontend
+});
+
+
+
+// doc 11-5
+
+// 
+app.post('/upload-doc', upload.single('file'), async (req, res) => {
+    const file = req.file;
+
+    if (!file) return res.status(400).json({ error: "No file uploaded" });
+
+    const buffer = file.buffer;
+    const ext = file.originalname.split('.').pop().toLowerCase();
+
+    try {
+        let content = "";
+
+        if (ext === 'docx') {
+            const result = await mammoth.extractRawText({ buffer });
+            content = result.value;
+        } else {
+            return res.status(400).json({ error: "Unsupported file type" });
+        }
+
+        res.json({ status: "success", textContent: content });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to process document" });
+    }
+});
+
+// doc 11-5 2
+
+
+
+// voice docx 21-5-25
+// const documentDir = path.join(__dirname, 'documents'); // Create this folder
+
+// app.get('/get-file/:filename', async (req, res) => {
+//     const filename = req.params.filename;
+//     const filePath = path.join(documentDir, filename);
+
+//     if (!fs.existsSync(filePath)) {
+//         return res.status(404).json({ error: "File not found" });
+//     }
+
+//     try {
+//         const buffer = fs.readFileSync(filePath);
+//         const result = await mammoth.extractRawText({ buffer });
+//         res.json({ content: result.value });
+//     } catch (err) {
+//         console.error("Error reading file:", err);
+//         res.status(500).json({ error: "Failed to process document" });
+//     }
+// });
+
+
+// voice docx 21-5-25
 // uncomment if below video format dont work 10-5-25
 app.post('/process-video', (req, res) => {
     const { videoData, mimeType } = req.body;
@@ -681,7 +789,105 @@ app.get('/send-whatsapp', (req, res) => {
 // app.listen(5000, () => console.log("Server running on port 4000"));
 // whatsapp
 
+// doc 11-5-25
+// app.use((req, res, next) => {
+//     res.header('Access-Control-Allow-Origin', '*');
+//     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+//     next();
+// });
 
+// app.use(express.json());
+
+// async function extractPptxText(filePath) {
+//     try {
+//         const presentation = await pptx.readFile(filePath);
+//         let textContent = '';
+        
+//         presentation.slides.forEach(slide => {
+//             slide.shapes.forEach(shape => {
+//                 if (shape.text) {
+//                     textContent += shape.text + '\n';
+//                 }
+//             });
+//         });
+        
+//         return textContent;
+//     } catch (error) {
+//         console.error('Error extracting PPTX text:', error);
+//         throw error;
+//     }
+// }
+
+// // Document processing endpoint
+// app.post('/process-document', upload.single('file'), async (req, res) => {
+//     try {
+//         if (!req.file) {
+//             return res.status(400).json({ error: 'No file uploaded' });
+//         }
+
+//         const filePath = req.file.path;
+//         const fileExt = path.extname(req.file.originalname).toLowerCase();
+//         let textContent = '';
+
+//         if (fileExt === '.pdf') {
+//             const dataBuffer = fs.readFileSync(filePath);
+//             const data = await pdf(dataBuffer);
+//             textContent = data.text;
+//         } 
+//         else if (fileExt === '.docx') {
+//             const result = await mammoth.extractText({ path: filePath });
+//             textContent = result.value;
+//         }
+//         else if (fileExt === '.pptx') {
+//             textContent = await extractPptxText(filePath);
+//         }
+//         else if (['.xlsx', '.xls', '.csv'].includes(fileExt)) {
+//             const workbook = xlsx.readFile(filePath);
+//             workbook.SheetNames.forEach(sheet => {
+//                 const sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[sheet]);
+//                 textContent += `Sheet: ${sheet}\n${JSON.stringify(sheetData, null, 2)}\n\n`;
+//             });
+//         }
+//         else {
+//             textContent = fs.readFileSync(filePath, 'utf-8');
+//         }
+
+//         // Clean up
+//         fs.unlinkSync(filePath);
+
+//         res.json({
+//             status: 'success',
+//             textContent: textContent,
+//             fileName: req.file.originalname,
+//             fileType: fileExt
+//         });
+
+//     } catch (error) {
+//         console.error('Document processing error:', error);
+//         if (req.file && fs.existsSync(req.file.path)) {
+//             fs.unlinkSync(req.file.path);
+//         }
+//         res.status(500).json({
+//             status: 'error',
+//             message: 'Failed to process document',
+//             error: error.message
+//         });
+//     }
+// });
+// doc 11-5-25
+
+
+
+// image  appear 11-5
+// app.post('/upload', upload.single('image'), (req, res) => {
+//   if (!req.file) {
+//     return res.status(400).json({ success: false });
+//   }
+//   const imageUrl = `/uploads/${req.file.filename}`;
+//   res.json({ success: true, imageUrl });
+// });
+
+// image appear 11-5
 // doc format
 // app.post("/process-document", upload.single("file"), (req, res) => {
 //     try {
@@ -702,6 +908,67 @@ app.get('/send-whatsapp', (req, res) => {
 //     }
 // });
 // doc format
+
+
+// voice doc 20-5-25
+
+
+const docsPath = path.join(__dirname, 'documents'); // Make sure this folder exists
+// try and see
+if (!fs.existsSync(docsPath)) {
+    fs.mkdirSync(docsPath);
+}
+// try and see
+// List available files
+app.get('/list-files', (req, res) => {
+    fs.readdir(docsPath, (err, files) => {
+        if (err) return res.status(500).json({ error: 'Failed to list files' });
+        res.json(files);
+    });
+});
+
+// Get content of a specific file
+app.get("/get-file/:filename", async (req, res) => {
+    const filename = req.params.filename;
+    const fullPath = path.join(docsPath, filename);
+
+    if (!fs.existsSync(fullPath)) {
+        return res.status(404).json({ error: "File not found" });
+    }
+
+    const ext = filename.split('.').pop().toLowerCase();
+
+    try {
+        const buffer = fs.readFileSync(fullPath);
+
+        let content = "";
+        if (ext === "pdf") {
+            // uncomment if below
+            // const pdfData = await pdfParse(buffer);
+            // uncomment if below
+            // try see
+           const pdfData = await pdfParse(buffer);
+            // try and see
+            content = pdfData.text;      
+        } 
+          // voice docx 21-5-25(soon)
+        //   else if (ext === "docx") {
+        //     const result = await mammoth.extractRawText({ buffer });
+        //     content = result.value;
+        // }
+            // voice docx 21-5-25(soon)
+        else {
+            content = buffer.toString("utf8");
+        }
+
+        res.json({ filename, content });
+    } catch (err) {
+        console.error("Error reading file:", err);
+        res.status(500).json({ error: "Failed to process file" });
+    }
+});
+
+// voice doc 20-5-25
 // Start Server
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
