@@ -61,24 +61,7 @@ Hello!How Can I Help You Today!
 </div>
 </div>
 </div>
-<!--my photo  -->
-<!-- <div id="cameraModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <video id="video" autoplay playsinline></video>
-        <button id="capture">Capture Photo</button>
-        <canvas id="canvas" style="display:none;"></canvas>
-    </div>
-</div>
 
-
-<div id="uploadOptionsModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <button id="fromComputer">From Computer</button>
-        <button id="takePhoto">Take a Photo</button>
-    </div>
-</div> -->
 
 <!-- my photo -->
 <div class="prompt-area">
@@ -111,39 +94,11 @@ Hello!How Can I Help You Today!
 
 
 
-<!-- doc format -->
- 
-<!-- <label for="fileUpload" id="image" style="cursor: pointer;">
-    <img src="img.svg" alt="Upload" class="default-icon">
-</label>
-<input type="file" id="fileUpload" accept=".pdf,.doc,.docx,.txt,image/*,video/*" multiple hidden />
-<button onclick="handleFileUpload()">Upload and Ask</button> -->
-
- 
- <!-- doc format -->
 
 
 
-     <!-- video -->
-     <!-- Update the file input button -->
-<!-- <button id="image">
-    <img src="img.svg" alt="Upload" class="default-icon">
-    <img src="video-icon.svg" alt="Video" class="video-icon" hidden>
-    <input type="file" accept="image/*,video/*" hidden>
-</button>  -->
-      <!-- video -->
-    <!-- //video -->
-    <!-- <button id="image">
-        <img src="img.svg" alt="Upload" class="default-icon">
-        <img src="video-icon.svg" alt="Video" class="video-icon" hidden>
-        <input type="file" accept="image/*,video/*" hidden>
-    </button> -->
-    <!-- <button id="image">
-        <img src="img.svg" alt="" class="default-icon">
-        <img src="video-icon.svg" alt="" class="video-icon" hidden>
-        <input type="file" accept="image/*,video/*" hidden>
-    </button> -->
-    <!-- //video -->
+
+     
      <!-- Update the file input button -->
       
     <!-- <button id="ttsToggle" title="Toggle Text-to-Speech">🔊 </button> -->
@@ -182,37 +137,7 @@ Hello!How Can I Help You Today!
             window.location.href = "login.html";
         }
        
-        //18-3-2025 video 2
-        // JavaScript
-// const fileInput = document.querySelector('#fileInput');
-// const defaultIcon = document.querySelector('.default-icon');
-// const videoIcon = document.querySelector('.video-icon');
-
-// fileInput.addEventListener('change', (e) => {
-//     const file = e.target.files[0];
-    
-//     if (file) {
-//         if (file.type.startsWith('video/')) {
-//             // Show video icon and hide default icon for video files
-//             defaultIcon.hidden = true;
-//             videoIcon.hidden = false;
-//         } else {
-//             // Show default icon for other files (images)
-//             defaultIcon.hidden = false;
-//             videoIcon.hidden = true;
-//         }
-//     } else {
-//         // Reset to default if no file selected
-//         defaultIcon.hidden = false;
-//         videoIcon.hidden = true;
-//     }
-// });
-        //18-3-2025 video 2
-
-
-        // chat history
         
-        // chat history
  // side bar menu
                 // Sidebar toggle logic
                 document.getElementById('menu-toggle').addEventListener('click', () => {
@@ -225,44 +150,9 @@ Hello!How Can I Help You Today!
 
         // side bar menu
 
-// real time image
-// doc format
-// async function handleFileUpload() {
-//   const input = document.getElementById('fileUpload');
-//   const files = input.files;
-//   const formData = new FormData();
-  
-//   // Append all files to the form data
-//   for (let file of files) {
-//     formData.append('files', file);
-//   }
 
-//   // Send files to the server
-//   const response = await fetch('/upload', {
-//     method: 'POST',
-//     body: formData
-//   });
 
-//   const data = await response.json();
-//   const extractedText = data.map(file => file.content).join('\n');
-  
-//   // Display extracted content for user to interact with
-// //   document.getElementById('output').innerText = JSON.stringify(data, null, 2);
-// document.getElementById('output').innerText = await fetchAnswerFromAI(extractedText);
-// }
 
-// async function fetchAnswerFromAI(text) {
-//   const response = await fetch('https://your-ai-endpoint', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify({ query: text }),
-//   });
-
-//   const result = await response.json();
-//   return result.answer;  // Assuming the AI returns an answer field
-// }
 
 
 
