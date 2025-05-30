@@ -263,6 +263,10 @@ function handleChatResponse(userMessage) {
     if (!userMessage.trim() && !user.file.data) return;
 
     user.message = userMessage || "Tell me about this file";
+    // 28
+    saveToChatHistory(user.message);
+
+    // 28
 
     // Determine file preview (icon + name)
     const filePreviewHTML = user.file.data ? (() => {
@@ -866,11 +870,40 @@ document.addEventListener("DOMContentLoaded", () => {
     // real time img
   });
   
+
+// 28
+const chatHistoryList = document.getElementById("chatHistoryList");
+
+// Load saved history from localStorage
+function loadChatHistory() {
+    const history = JSON.parse(localStorage.getItem("chatHistory")) || [];
+    chatHistoryList.innerHTML = "";
+    history.forEach(promptText => {
+        const li = document.createElement("li");
+        li.textContent = promptText;
+        li.style.cursor = "pointer";
+        li.addEventListener("click", () => {
+            prompt.value = promptText; // Set prompt field
+        });
+        chatHistoryList.appendChild(li);
+    });
+}
+
+// Save new prompt to history
+function saveToChatHistory(text) {
+    if (!text.trim()) return;
+    let history = JSON.parse(localStorage.getItem("chatHistory")) || [];
+    history.unshift(text); // Add to top
+    history = history.slice(0, 10); // Limit to 10 items
+    localStorage.setItem("chatHistory", JSON.stringify(history));
+    loadChatHistory(); // Refresh display
+}
+loadChatHistory();
+
+// 28
 // real time image
 });
-// real time image
 
-// real time image
 
 
 
