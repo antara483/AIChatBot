@@ -452,6 +452,24 @@ app.get("/get-file/:filename", async (req, res) => {
         res.status(500).json({ error: "Failed to process file" });
     }
 });
+// interview
+// const axios = require('axios');
+// const cheerio = require('cheerio');
+
+// app.post("/api/extract-url", async (req, res) => {
+//     const { url } = req.body;
+//     try {
+//         const response = await axios.get(url, { timeout: 10000 });
+//         const $ = cheerio.load(response.data);
+//         let content = $('body').text().replace(/\s+/g, ' ').trim();
+//         content = content.slice(0, 5000); // Trim to reduce token overload
+//         res.json({ content });
+//     } catch (error) {
+//         res.status(500).json({ error: "Failed to fetch or parse URL content." });
+//     }
+// });
+
+// interview
 
 // voice doc 20-5-25
 // Start Server

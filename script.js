@@ -259,10 +259,40 @@ function createChatBox(html, classes) {
 
 
 // doc 11-5
+// time
 function handleChatResponse(userMessage) {
-    if (!userMessage.trim() && !user.file.data) return;
 
+    // time uncomment after everything
+    // async function handleChatResponse(userMessage) {
+
+    if (!userMessage.trim() && !user.file.data) return;
+    // time
     user.message = userMessage || "Tell me about this file";
+    // time uncomment after commenting below
+    // interview
+
+//     const urlRegex = /(https?:\/\/[^\s]+)/;
+// const match = userMessage.match(urlRegex);
+
+// if (match) {
+//     const url = match[0];
+//     try {
+//         const response = await fetch("http://localhost:3000/api/extract-url", {
+//             method: "POST",
+//             headers: { "Content-Type": "application/json" },
+//             body: JSON.stringify({ url })
+//         });
+//         const data = await response.json();
+//         user.message = `${userMessage}\n\nHere is the content from the URL:\n${data.content}`;
+//     } catch (err) {
+//         user.message = `${userMessage}\n\n(Warning: Failed to fetch content from the URL)`;
+//     }
+// } else {
+//     user.message = userMessage;
+// }
+
+    // interview
+
     // 28
     saveToChatHistory(user.message);
 
