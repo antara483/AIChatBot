@@ -370,8 +370,8 @@ app.get('/open-app/:app', (req, res) => {
 
 // whatsapp
 const contacts = {
-    mummy: '919483064646',
-    papa: '919482786946'
+    mummy: '5357357467',
+    papa: '5636356359'
    
 };
 
